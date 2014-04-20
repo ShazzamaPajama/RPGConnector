@@ -19,7 +19,9 @@ public class DBCharacterManager {
     private ArrayList<Character> CharacterResults;
     private Connection Database;
     
-    
+    /**
+     *
+     */
     public DBCharacterManager(){
         CharacterResults = new ArrayList<>();
         

@@ -15,7 +15,12 @@ public class Cell {
     private String  Color;
     private Grid    Parent;
     
-    
+    /**
+     *
+     * @param x
+     * @param y
+     * @param p
+     */
     public Cell(int x, int y, Grid p){
         Xcoordinate =   x;
         Ycoordinate =   y;
@@ -24,19 +29,35 @@ public class Cell {
         Parent =        p;
     }
    
-   public void setToken(Token t){
+    /**
+     *
+     * @param t
+     */
+    public void setToken(Token t){
        Token = t;
    }
    
-   public void setColor(String c){
+    /**
+     *
+     * @param c
+     */
+    public void setColor(String c){
        Color = c;
    }
    
-   public int getX(){
+    /**
+     *
+     * @return
+     */
+    public int getX(){
        return Xcoordinate;
    }
    
-   public int getY(){
+    /**
+     *
+     * @return
+     */
+    public int getY(){
        return Ycoordinate;
    }
    

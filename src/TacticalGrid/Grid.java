@@ -12,8 +12,10 @@ public class Grid {
     private Cell[][] Board;
     private String Name;
     
-    
-    
+    /**
+     *
+     * @param name
+     */
     public Grid(String name){
         Board = new Cell[20][20];
         Name = name;
@@ -25,10 +27,22 @@ public class Grid {
         }
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param color
+     */
     public void setCellColor(int x, int y, String color){
         Board[x][y].setColor(color);
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param t
+     */
     public void setCellToken(int x, int y, Token t){
         Board[x][y].setToken(t);
     }
