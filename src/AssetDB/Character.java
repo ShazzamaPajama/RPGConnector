@@ -20,6 +20,7 @@ public class Character {
     private String  Class;
     private Integer Level;
     private String  Alignment;
+    private Integer Hitpoints;
     private final HashMap<String, Integer> Abilities;
     private final HashMap<String, Integer>   Skills;
     
@@ -27,10 +28,12 @@ public class Character {
      *Creates a Dungeons and Dragons 4.0 character with user provided Stats.
      * 
      * @param name Name of the Character
+     * @param type Character's type (Player,NPC, Monster etc)
      * @param race Race of the Character
      * @param classname Class of the Character
      * @param level Character's current Level
      * @param alignment Character's current Alignment
+     * @param hitpoints Character's HitPoints
      * @param AbilityScores HashMap Containing Ability Scores for the character
      * @param SkillScores   HashMap containing Skill Scores for the character
      */
@@ -41,6 +44,7 @@ public class Character {
             String classname,
             Integer level,
             String alignment,
+            Integer hitpoints,
             HashMap<String, Integer> AbilityScores,
             HashMap<String, Integer> SkillScores)
     {
@@ -51,6 +55,7 @@ public class Character {
      Level = level;
      Abilities = AbilityScores;
      Skills = SkillScores;
+     Hitpoints = hitpoints;
     }
     
     /*
@@ -90,6 +95,14 @@ public class Character {
     
     public void setLevel(Integer level){
         this.Level = level;
+    }
+    
+    public void setAlignment(String alignment){
+        this.Alignment = alignment;
+    }
+    
+    public void setHP(Integer hp){
+        this.Hitpoints = hp;
     }
     
     public void setAbilityScore(String ability, Integer score){
@@ -151,6 +164,10 @@ public class Character {
      */
     public Integer getLevel(){
         return this.Level;
+    }
+    
+    public Integer getHP(){
+        return this.Hitpoints;
     }
     
     /**
