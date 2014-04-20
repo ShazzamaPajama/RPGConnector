@@ -15,20 +15,26 @@ import java.util.logging.Logger;
  *
  * @author paul.koroski
  */
-public class DBCharacterManager {
-    private ArrayList<Character> CharacterResults;
+public class DBManager {
+    private ArrayList<Character> Characters;
     private Connection Database;
+    private Statement stmt;
+    private String SQLString;
     
     /**
      *
      */
-    public DBCharacterManager(){
-        CharacterResults = new ArrayList<>();
+    public DBManager(){
+        Characters = new ArrayList<>();
         
         try {
             Database = DriverManager.getConnection("jdbc:sqlite:Characters.db");
+            stmt = Database.createStatement();
+            SQLString = "CREATE TABLE IF NOT EXISTS Characters "
+                    + "( ";
+            
         } catch (SQLException ex) {
-            Logger.getLogger(DBCharacterManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

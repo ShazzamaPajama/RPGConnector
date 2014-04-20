@@ -15,12 +15,13 @@ import java.util.HashMap;
 public class Character {
     
     private String  Name;
+    private String  Type;
     private String  Race;
     private String  Class;
     private Integer Level;
     private String  Alignment;
-    private HashMap<String, Integer> Abilities;
-    private HashMap<String, Integer>   Skills;
+    private final HashMap<String, Integer> Abilities;
+    private final HashMap<String, Integer>   Skills;
     
     /**
      *Creates a Dungeons and Dragons 4.0 character with user provided Stats.
@@ -35,6 +36,7 @@ public class Character {
      */
     public Character (
             String name,
+            String type,
             String race,
             String classname,
             Integer level,
@@ -43,6 +45,7 @@ public class Character {
             HashMap<String, Integer> SkillScores)
     {
      Name = name;
+     Type = type;
      Race = race;
      Class = classname;
      Level = level;
@@ -62,6 +65,13 @@ public class Character {
         this.Name = name;
     }
     
+    /**
+     * Set the Type of this character (Player, NPC , Monster, etc).
+     * @param type Name of the type.
+     */
+    public void setType(String type){
+        this.Type = type;
+    }
     /**
      * Changes the Character's race attribute.
      * @param race Race you would like to change the character to.
@@ -101,6 +111,14 @@ public class Character {
      */
     public String getName(){
         return this.Name;
+    }
+    
+    /**
+     * Returns a String containing the type of this character.
+     * @return Character's type attribute.
+     */
+    public String getType(){
+        return this.Type;
     }
     
     /**
@@ -144,6 +162,11 @@ public class Character {
         return this.Abilities.get(ability);
     }
     
+    /**
+     * Returns the score of a given sill name
+     * @param skill name of a skill
+     * @return score associated with the parameter skill
+     */
     public Integer getSkillScore(String skill){
         return this.Skills.get(skill);
     }
