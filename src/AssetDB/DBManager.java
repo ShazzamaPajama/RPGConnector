@@ -89,11 +89,30 @@ public class DBManager {
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }
     
-    
+    public ResultSet GeneralQuery(String name, String race, String type){
+        String NameString = "Name = " + name + " AND ";
+        String RaceString = "Race = " + race + " AND ";
+        String TypeString = "Type = " + type;
+        ResultSet result = null;
+        
+        if (name.equals("") || race.equals("") || type.equals("")){
+            return null;
+        } else{
+            String SQLString = "SELECT Characters*"
+                + " WHERE " + NameString + RaceString + TypeString;
+            
+            try {
+                result = stmt.executeQuery(SQLString);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            return result;
+        }
+        
+    }
     
 }
