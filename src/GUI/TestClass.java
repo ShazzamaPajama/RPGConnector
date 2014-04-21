@@ -15,11 +15,10 @@ import javax.swing.JTextField;
 public class TestClass {
     
     public static void main(String [] args){
-        JTextField test = new JTextField();
+        DnDDatabase form = new DnDDatabase();
         
-        if (test.getText().equals("")){
-            System.out.println("EMPTY");
-        }
+        form.setVisible(true);
+        
     }
 
     
