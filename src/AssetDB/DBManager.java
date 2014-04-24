@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import org.sqlite.SQLiteConfig;
 
 /**
- *
+ *Class used to edit databases used by RPGConnector
  * @author paul.koroski
  */
 public class DBManager {
@@ -23,7 +23,7 @@ public class DBManager {
     
     /**
      *Creates and connects to a file named DND.db if it does not already exist.
-     * Creates empty character, skillset, and abilityset tables if they do not exist.
+     * Creates empty character, item, skillset, and abilityset tables if they do not exist.
      */
     public DBManager(){
         Characters = new ArrayList<>();
@@ -88,6 +88,13 @@ public class DBManager {
                     + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
             this.stmt.executeUpdate(SQLString);
            
+            SQLString = "CREATE TABLE IF NOT EXISTS Items "
+                    + "(Name TEXT NOT NULL, "
+                    + "Type TEXT NOT NULL, "
+                    + "Price TEXT NOT NULL, "
+                    + "Magic NUMERIC NOT NULL, "
+                    + "Description TEXT NOT NULL,"
+                    + "PRIMARY KEY (Name, Type))";
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,11 +103,12 @@ public class DBManager {
     //Query Methods
     
     /**
-     *
-     * @param Stat
-     * @param Val
-     * @return
-     * @throws SQLException
+     *Executes a query for a character with a specific stat in the Character's table
+     * 
+     * @param Stat Name of the stat the user is looking for
+     * @param Val Value of the stat the user is looking for
+     * @return set of characters that have corresponding value for the given stat
+     * @throws SQLException syntax error / wrong column name
      */
         
     public ResultSet QueryBasicStat(String Stat, String Val) throws SQLException{
@@ -131,11 +139,12 @@ public class DBManager {
     }
     
     /**
-     *
-     * @param ability
-     * @param value
-     * @return
-     * @throws SQLException
+     *Execute Query for a character with a specific ability score
+     * @param ability name of an ability
+     * @param value value of the ability the user is searching for
+     * @return set of character with the given ability score
+     * 
+     * @throws SQLException if the query fails, syntax error / wrong column name
      */
     public ResultSet AbilityQuery(String ability, Integer value) throws SQLException{
         String SQL;
@@ -150,11 +159,11 @@ public class DBManager {
     }
     
     /**
-     *
-     * @param skill
-     * @param value
-     * @return
-     * @throws SQLException
+     *Executes a query for a character with a specific Skill score
+     * @param skill name of a skill
+     * @param value value of the skill the user is looking for
+     * @return set of characters with the given skill score
+     * @throws SQLException if query fails, syntax error / wrong column name
      */
     public ResultSet SkillQuery(String skill, Integer value) throws SQLException{
         String SQL;
@@ -169,12 +178,13 @@ public class DBManager {
     }
     
     /**
-     *
-     * @param name
-     * @param race
-     * @param type
-     * @return
-     * @throws SQLException
+     *Executes a query for a specific character
+     * 
+     * @param name name of the character
+     * @param race race of the character
+     * @param type type of the character
+     * @return the character with the given name, race and type
+     * @throws SQLException if query fails, syntax error
      */
     public ResultSet CharacterQuery(String name, String race, String type) throws SQLException{
         String SQL;
@@ -193,12 +203,12 @@ public class DBManager {
     }
     
     /**
-     *
-     * @param name
-     * @param race
-     * @param type
-     * @return
-     * @throws SQLException
+     *Creates object from a specified character in the database
+     * @param name name of a character
+     * @param race race of a character
+     * @param type type of a character
+     * @return character object constructed from retrieved data
+     * @throws SQLException if query fails
      */
     public Character getCharacter(String name, String race, String type) throws SQLException{
         return null;

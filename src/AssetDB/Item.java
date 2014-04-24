@@ -7,7 +7,7 @@
 package AssetDB;
 
 /**
- *
+ *This class represents a D&D 4.0 item
  * @author paul.koroski
  */
 public class Item {

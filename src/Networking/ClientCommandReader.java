@@ -7,9 +7,9 @@
 package Networking;
 
 /**
- *
+ *This 
  * @author Shazzama.Pajama
  */
-public class ClientCommandReader {
+public class ClientCommandReader extends Thread {
     
 }

@@ -22,6 +22,12 @@ public class UserThread extends Thread {
     private BufferedReader ClientInput;
     private String ClientName;
     
+    /**
+     *
+     * @param server
+     * @param client
+     * @throws IOException
+     */
     public UserThread(ServerSocket server, Socket client) throws IOException {
         Server = server;
         Client = client;

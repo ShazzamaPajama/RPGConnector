@@ -36,8 +36,8 @@ public class Character {
      * @param level Character's current Level
      * @param alignment Character's current Alignment
      * @param hitpoints Character's HitPoints
-     * @param atkbonus
-     * @param description
+     * @param atkbonus Character's Basic attack bonus   
+     * @param description String Description of the Character
      * @param AbilityScores HashMap Containing Ability Scores for the character
      * @param SkillScores   HashMap containing Skill Scores for the character
      */
@@ -103,58 +103,58 @@ public class Character {
     }
     
     /**
-     *
-     * @param level
+     *Changes the Character's class attribute.
+     * @param level The Level that will be assigned to the character
      */
     public void setLevel(Integer level){
         this.Level = level;
     }
     
     /**
-     *
-     * @param alignment
+     *Changes the Character's Alignment attribute
+     * @param alignment The Alignment that will be assigned to the character;
      */
     public void setAlignment(String alignment){
         this.Alignment = alignment;
     }
     
     /**
-     *
-     * @param hp
+     *Changes the Character's Hitpoint attribute
+     * @param hp Hitpoint amount that will be assigned to the character
      */
     public void setHP(Integer hp){
         this.Hitpoints = hp;
     }
     
     /**
-     *
-     * @param bonus
+     *Changes the Character's AtkBonus attribute
+     * @param bonus value that will be assigned to the character's AtkBonus
      */
     public void setAtkBonus(Integer bonus){
         this.AtkBonus = bonus;
     }
     
     /**
-     *
-     * @param desc
+     *Sets a description of the character
+     * @param desc Description that will be assigned to the character
      */
     public void setDescription(String desc){
         this.Description = desc;
     }
     
     /**
-     *
-     * @param ability
-     * @param score
+     *Sets an ability score for the character
+     * @param ability name of a D&D ability score
+     * @param score Score Value
      */
     public void setAbilityScore(String ability, Integer score){
         this.Abilities.put(ability, score);
     }
     
     /**
-     *
-     * @param skill
-     * @param score
+     *Sets a skill score for the character
+     * @param skill name of a D&D skill
+     * @param score Score Value
      */
     public void setSkillScore(String skill, Integer score){
         this.Skills.put(skill, score);
@@ -214,24 +214,24 @@ public class Character {
     }
     
     /**
-     *
-     * @return
+     *Returns Character's Hitpoint attribute
+     * @return Character's Hitpoint attribute
      */
     public Integer getHP(){
         return this.Hitpoints;
     }
     
     /**
-     *
-     * @return
+     * Returns character's basic Atk Bonus value 
+     * @return Character's AtkBonus attribute
      */
     public Integer getAtkBonus(){
         return this.AtkBonus;
     }
     
     /**
-     *
-     * @return
+     *Returns the description string of the character.
+     * @return Description string attribute of the character
      */
     public String getDescription(){
         return this.Description;
@@ -258,7 +258,8 @@ public class Character {
     //Methods to Make sure important abilities and skills are not null
     
     /**
-     *
+     *Checks the Abilities hash map to make sure the main D&D abilities are not null.
+     * Converts Null values to 0
      */
         
     public void AbNullToZero(){
@@ -284,7 +285,8 @@ public class Character {
     }
     
     /**
-     *
+     *Checks to Make sure important D&D skill values are not null.
+     * Converts Null Values to 0
      */
     public void SkillNullToZero(){
         

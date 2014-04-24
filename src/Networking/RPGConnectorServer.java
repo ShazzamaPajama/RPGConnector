@@ -26,6 +26,11 @@ public class RPGConnectorServer extends Thread {
     private ServerSocket                    Server;
     private Socket                          Incoming;
     
+    /**
+     *
+     * @param Gridname
+     * @throws IOException
+     */
     public RPGConnectorServer(String Gridname) throws IOException{
         TacticalGrid = new Grid(Gridname);
         ClientOutput = new Vector<>();
