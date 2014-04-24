@@ -6,6 +6,7 @@
 
 package Networking;
 
+import javax.json.*;
 import TacticalGrid.Grid;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *RPGConnectorServer hosts a Tactical grid that multiple clients are able to edit.
+ * RPGConnectorServer also supports connections from android devices that wish to
+ * import the server's database.
  * @author Shazzama.Pajama
  */
 public class RPGConnectorServer extends Thread {
@@ -27,9 +30,10 @@ public class RPGConnectorServer extends Thread {
     private Socket                          Incoming;
     
     /**
-     *
-     * @param Gridname
-     * @throws IOException
+     *Creates an RPGConnector Server thread on port 1337 that multiple clients
+     * can connect to.
+     * @param Gridname name of the grid being used.
+     * @throws IOException If server cannot start
      */
     public RPGConnectorServer(String Gridname) throws IOException{
         TacticalGrid = new Grid(Gridname);
@@ -39,6 +43,9 @@ public class RPGConnectorServer extends Thread {
         
     }
     
+    /**
+     * Executes the RPGConnector Thread to start accepting connections
+     */
     @Override
     public void run(){
         while(true){

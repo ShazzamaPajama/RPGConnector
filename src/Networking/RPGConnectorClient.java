@@ -5,9 +5,12 @@
  */
 
 package Networking;
+import javax.json.*;
 
 /**
- *
+ *RPGConnectorClient represents a connection to an RPGConnectorServer.
+ * RPGConnectorClient can be used to send messages to the server
+ * via JSON
  * @author Shazzama.Pajama
  */
 public class RPGConnectorClient{

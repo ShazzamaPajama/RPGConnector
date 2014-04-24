@@ -5,9 +5,11 @@
  */
 
 package Networking;
+import javax.json.*;
 
 /**
- *This 
+ *ClientCommandReader is a thread used by a client to read incoming messages
+ * from an RPGConnectorServer
  * @author Shazzama.Pajama
  */
 public class ClientCommandReader extends Thread {

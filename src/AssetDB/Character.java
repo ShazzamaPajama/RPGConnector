@@ -9,7 +9,7 @@ package AssetDB;
 import java.util.HashMap;
 
 /**
- *
+ *This Class represents a Dungeons and Dragons 4.0 character
  * @author paul.koroski
  */
 public class Character {
@@ -67,6 +67,13 @@ public class Character {
      
     }
     
+    /**
+     * Creates an empty Character object
+     */
+    public Character (){
+        Abilities = new HashMap<>();
+        Skills = new HashMap<>();
+    }
     /*
     Atribute Changing Methods
     */
