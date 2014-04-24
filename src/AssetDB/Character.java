@@ -36,6 +36,8 @@ public class Character {
      * @param level Character's current Level
      * @param alignment Character's current Alignment
      * @param hitpoints Character's HitPoints
+     * @param atkbonus
+     * @param description
      * @param AbilityScores HashMap Containing Ability Scores for the character
      * @param SkillScores   HashMap containing Skill Scores for the character
      */
@@ -100,30 +102,60 @@ public class Character {
         this.Class = classname;
     }
     
+    /**
+     *
+     * @param level
+     */
     public void setLevel(Integer level){
         this.Level = level;
     }
     
+    /**
+     *
+     * @param alignment
+     */
     public void setAlignment(String alignment){
         this.Alignment = alignment;
     }
     
+    /**
+     *
+     * @param hp
+     */
     public void setHP(Integer hp){
         this.Hitpoints = hp;
     }
     
+    /**
+     *
+     * @param bonus
+     */
     public void setAtkBonus(Integer bonus){
         this.AtkBonus = bonus;
     }
     
+    /**
+     *
+     * @param desc
+     */
     public void setDescription(String desc){
         this.Description = desc;
     }
     
+    /**
+     *
+     * @param ability
+     * @param score
+     */
     public void setAbilityScore(String ability, Integer score){
         this.Abilities.put(ability, score);
     }
     
+    /**
+     *
+     * @param skill
+     * @param score
+     */
     public void setSkillScore(String skill, Integer score){
         this.Skills.put(skill, score);
     }
@@ -181,14 +213,26 @@ public class Character {
         return this.Level;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getHP(){
         return this.Hitpoints;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getAtkBonus(){
         return this.AtkBonus;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getDescription(){
         return this.Description;
     }
@@ -213,6 +257,10 @@ public class Character {
     
     //Methods to Make sure important abilities and skills are not null
     
+    /**
+     *
+     */
+        
     public void AbNullToZero(){
         
         if(this.Abilities.get("STR") == null){
@@ -235,6 +283,9 @@ public class Character {
         }
     }
     
+    /**
+     *
+     */
     public void SkillNullToZero(){
         
     }

@@ -95,6 +95,14 @@ public class DBManager {
     
     //Query Methods
     
+    /**
+     *
+     * @param Stat
+     * @param Val
+     * @return
+     * @throws SQLException
+     */
+        
     public ResultSet QueryBasicStat(String Stat, String Val) throws SQLException{
         ResultSet result;
         String SQL;
@@ -122,6 +130,13 @@ public class DBManager {
         }
     }
     
+    /**
+     *
+     * @param ability
+     * @param value
+     * @return
+     * @throws SQLException
+     */
     public ResultSet AbilityQuery(String ability, Integer value) throws SQLException{
         String SQL;
         ResultSet result;
@@ -134,6 +149,13 @@ public class DBManager {
         
     }
     
+    /**
+     *
+     * @param skill
+     * @param value
+     * @return
+     * @throws SQLException
+     */
     public ResultSet SkillQuery(String skill, Integer value) throws SQLException{
         String SQL;
         ResultSet result;
@@ -146,6 +168,14 @@ public class DBManager {
         return result;
     }
     
+    /**
+     *
+     * @param name
+     * @param race
+     * @param type
+     * @return
+     * @throws SQLException
+     */
     public ResultSet CharacterQuery(String name, String race, String type) throws SQLException{
         String SQL;
         ResultSet result;
@@ -162,6 +192,14 @@ public class DBManager {
         return result;
     }
     
+    /**
+     *
+     * @param name
+     * @param race
+     * @param type
+     * @return
+     * @throws SQLException
+     */
     public Character getCharacter(String name, String race, String type) throws SQLException{
         return null;
     }

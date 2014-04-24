@@ -17,7 +17,7 @@ public class Grid {
      * @param name
      */
     public Grid(String name){
-        Board = new Cell[20][20];
+        Board = new Cell[25][25];
         Name = name;
         
         for(int x=0; x<20; x++){
