@@ -11,5 +11,9 @@ package AssetDB;
  * @author paul.koroski
  */
 public class Item {
-    
+    private String Name;
+    private String Type;
+    private String Description;
+    private String Price;
+    private boolean MagicItem;
 }
