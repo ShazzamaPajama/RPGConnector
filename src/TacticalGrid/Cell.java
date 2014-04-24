@@ -5,7 +5,8 @@
 package TacticalGrid;
 
 /**
- *test comment
+ * A Cell represents a single cell in a tactical grid
+ * 
  * @author Shazzama.Pajama
  */
 public class Cell {
@@ -16,21 +17,21 @@ public class Cell {
     private Grid    Parent;
     
     /**
-     *
-     * @param x
-     * @param y
-     * @param p
+     *Creates a new Cell object with specifiec coordinates
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param parent Grid that the cell belongs to. 
      */
-    public Cell(int x, int y, Grid p){
+    public Cell(int x, int y, Grid parent){
         Xcoordinate =   x;
         Ycoordinate =   y;
         Token =         null;
         Color =         "White";
-        Parent =        p;
+        Parent =        parent;
     }
    
     /**
-     *
+     *Changes the token that is currently in this cell
      * @param t
      */
     public void setToken(Token t){
@@ -38,24 +39,25 @@ public class Cell {
    }
    
     /**
-     *
+     *Changes the color that is currently in this cell
      * @param c
      */
     public void setColor(String c){
-       Color = c;
+       //change or rgb
+        Color = c;
    }
    
     /**
-     *
-     * @return
+     *Returns the Cell's X coordinate
+     * @return X coordinate
      */
     public int getX(){
        return Xcoordinate;
    }
    
     /**
-     *
-     * @return
+     *Returns the Cells Y coordinate
+     * @return Y coordinate
      */
     public int getY(){
        return Ycoordinate;
