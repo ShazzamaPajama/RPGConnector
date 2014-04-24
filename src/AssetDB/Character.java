@@ -18,9 +18,11 @@ public class Character {
     private String  Type;
     private String  Race;
     private String  Class;
-    private Integer Level;
     private String  Alignment;
+    private Integer Level;
     private Integer Hitpoints;
+    private Integer AtkBonus;
+    private String  Description;
     private final HashMap<String, Integer> Abilities;
     private final HashMap<String, Integer>   Skills;
     
@@ -42,20 +44,25 @@ public class Character {
             String type,
             String race,
             String classname,
-            Integer level,
             String alignment,
+            Integer level,
             Integer hitpoints,
+            Integer atkbonus,
+            String description,
             HashMap<String, Integer> AbilityScores,
             HashMap<String, Integer> SkillScores)
     {
      Name = name;
-     Type = type;
      Race = race;
+     Type = type;
      Class = classname;
      Level = level;
+     Hitpoints = hitpoints;
+     AtkBonus = atkbonus;
+     Description = description;
      Abilities = AbilityScores;
      Skills = SkillScores;
-     Hitpoints = hitpoints;
+     
     }
     
     /*
@@ -103,6 +110,14 @@ public class Character {
     
     public void setHP(Integer hp){
         this.Hitpoints = hp;
+    }
+    
+    public void setAtkBonus(Integer bonus){
+        this.AtkBonus = bonus;
+    }
+    
+    public void setDescription(String desc){
+        this.Description = desc;
     }
     
     public void setAbilityScore(String ability, Integer score){
@@ -170,6 +185,14 @@ public class Character {
         return this.Hitpoints;
     }
     
+    public Integer getAtkBonus(){
+        return this.AtkBonus;
+    }
+    
+    public String getDescription(){
+        return this.Description;
+    }
+    
     /**
      * Returns the score of a given ability name.
      * @param ability name of the ability.
@@ -186,5 +209,33 @@ public class Character {
      */
     public Integer getSkillScore(String skill){
         return this.Skills.get(skill);
+    }
+    
+    //Methods to Make sure important abilities and skills are not null
+    
+    public void AbNullToZero(){
+        
+        if(this.Abilities.get("STR") == null){
+            this.Abilities.put("STR", 0);
+        }
+        if(this.Abilities.get("CON") == null){
+            this.Abilities.put("CON", 0);
+        }
+        if(this.Abilities.get("DEX") == null){
+            this.Abilities.put("DEX", 0);
+        }
+        if(this.Abilities.get("INT") == null){
+            this.Abilities.put("INT", 0);
+        }
+        if(this.Abilities.get("WIS") == null){
+            this.Abilities.put("WIS", 0);
+        }
+        if(this.Abilities.get("CHA") == null){
+            this.Abilities.put("CHA", 0);
+        }
+    }
+    
+    public void SkillNullToZero(){
+        
     }
 }
