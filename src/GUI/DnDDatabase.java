@@ -142,6 +142,11 @@ public class DnDDatabase extends javax.swing.JFrame {
         jButton2.setText("ViewCharacter");
 
         jButton3.setText("Add Character");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -293,6 +298,10 @@ public class DnDDatabase extends javax.swing.JFrame {
     private void jTextFieldTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldTypeActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        new CharacterSheet().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
