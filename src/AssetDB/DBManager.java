@@ -162,4 +162,8 @@ public class DBManager {
         return result;
     }
     
+    public Character getCharacter(String name, String race, String type) throws SQLException{
+        return null;
+    }
+    
 }
