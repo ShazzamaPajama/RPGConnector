@@ -46,7 +46,7 @@ public class DBManager {
                     + " AtkBonus INTEGER NOT NULL,"
                     + " Description TEXT,"
                     + " PRIMARY KEY (Name, Race, Type))";
-            stmt.executeUpdate(SQLString);
+            this.stmt.executeUpdate(SQLString);
             
             
             SQLString = "CREATE TABLE IF NOT EXISTS SkillSets "
@@ -72,7 +72,7 @@ public class DBManager {
                     + " Thievery INTEGER,"
                     + " PRIMARY KEY (Name, Race, Type),"
                     + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
-            stmt.executeUpdate(SQLString);
+            this.stmt.executeUpdate(SQLString);
             
             SQLString = "CREATE TABLE IF NOT EXISTS AbilitySets "
                     + "(Name TEXT NOT NULL,"
@@ -86,7 +86,7 @@ public class DBManager {
                     + " Charisma INTEGER NOT NULL,"
                     + " PRIMARY KEY (Name, Race, Type)"
                     + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
-            stmt.executeUpdate(SQLString);
+            this.stmt.executeUpdate(SQLString);
            
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,7 +106,7 @@ public class DBManager {
                 
                 SQL = "SELECT * FROM Characters "
                 + "WHERE " + Stat + "= " + value;
-                result = stmt.executeQuery(SQL);
+                result = this.stmt.executeQuery(SQL);
                 return result;
             }catch(NumberFormatException e){
                 return null;
@@ -117,9 +117,21 @@ public class DBManager {
             SQL = "SELECT * FROM Characters "
                 + "WHERE " + Stat + "='" + Val + "'";
             
-            result = stmt.executeQuery(SQL);
+            result = this.stmt.executeQuery(SQL);
             return result;
         }
+    }
+    
+    public ResultSet AbilityQuery(String ability, Integer value) throws SQLException{
+        String SQL;
+        ResultSet result;
+        
+        SQL = "SELECT * FROM Abilities "
+                + "WHERE ability = " + value;
+        
+        result = this.stmt.executeQuery(SQL);
+        return result;
+        
     }
     
 }
