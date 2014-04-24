@@ -126,12 +126,40 @@ public class DBManager {
         String SQL;
         ResultSet result;
         
-        SQL = "SELECT * FROM Abilities "
-                + "WHERE ability = " + value;
+        SQL = "SELECT * FROM AbilitySets "
+                + "WHERE " + ability + "= " + value;
         
         result = this.stmt.executeQuery(SQL);
         return result;
         
+    }
+    
+    public ResultSet SkillQuery(String skill, Integer value) throws SQLException{
+        String SQL;
+        ResultSet result;
+        
+        SQL = "SELECT * FROM SkillSets "
+                + "WHERE " + skill + "= " + value;
+        
+        result = this.stmt.executeQuery(SQL);
+        
+        return result;
+    }
+    
+    public ResultSet CharacterQuery(String name, String race, String type) throws SQLException{
+        String SQL;
+        ResultSet result;
+        String Name = "'"+name+"'";
+        String Race = "'"+race+"'";
+        String Type = "'"+type+"'";
+        
+        SQL = "SELECT * FROM Characters"
+                + " WHERE Name = " + Type +","
+                + " Race = " + Race + ","
+                + " Type = " + Type;
+        
+        result = this.stmt.executeQuery(SQL);
+        return result;
     }
     
 }
