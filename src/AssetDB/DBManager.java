@@ -93,6 +93,33 @@ public class DBManager {
         }
     }
     
+    //Query Methods
     
+    public ResultSet QueryBasicStat(String Stat, String Val) throws SQLException{
+        ResultSet result;
+        String SQL;
+        
+        //Check to see if Stat being Queried is a Integer
+        if(Stat.equals("Level") || Stat.equals("Hitpoints") || Stat.equals("AtkBonus")){
+            try{
+                Integer value = Integer.parseInt(Val);
+                
+                SQL = "SELECT * FROM Characters "
+                + "WHERE " + Stat + "= " + value;
+                result = stmt.executeQuery(SQL);
+                return result;
+            }catch(NumberFormatException e){
+                return null;
+            }
+        
+            // Stat being queries is a String
+        }else{
+            SQL = "SELECT * FROM Characters "
+                + "WHERE " + Stat + "='" + Val + "'";
+            
+            result = stmt.executeQuery(SQL);
+            return result;
+        }
+    }
     
 }
