@@ -91,15 +91,7 @@ public class CharacterSheet extends javax.swing.JFrame {
             new String [] {
                 "Ability", "Score"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jLabel8.setText("AC:");
@@ -129,15 +121,7 @@ public class CharacterSheet extends javax.swing.JFrame {
             new String [] {
                 "Skill", "Score"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane2.setViewportView(jTable2);
 
         jTextArea1.setColumns(20);
