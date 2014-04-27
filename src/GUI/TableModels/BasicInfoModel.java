@@ -17,16 +17,17 @@ public class BasicInfoModel extends ArrayOfRowsModel {
     
     
     public BasicInfoModel(){
-        ColumnNames = new String[]{"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AtkBonus"};
+        ColumnNames = new String[]{
+            "Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "AtkBonus"};
         rows = new ArrayList<>();
     }
     
     public BasicInfoModel(ArrayList<ArrayList<Object>> rowset){
-        ColumnNames = new String[]{"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AtkBonus"};
+        ColumnNames = new String[]{"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC" , "AtkBonus"};
         rows = rowset;
     }
     
-    public void addRow(String Name, String Race, String Type, String Class, String Alignment, Integer Level, Integer HP, Integer AtkBonus){
+    public void addRow(String Name, String Race, String Type, String Class, String Alignment, Integer Level, Integer HP, Integer AC, Integer AtkBonus){
         ArrayList<Object> newrow = new ArrayList<>();
         newrow.add(Name);
         newrow.add(Race);
@@ -35,6 +36,7 @@ public class BasicInfoModel extends ArrayOfRowsModel {
         newrow.add(Alignment);
         newrow.add(Level);
         newrow.add(HP);
+        newrow.add(AC);
         newrow.add(AtkBonus);
         
         rows.add(newrow);

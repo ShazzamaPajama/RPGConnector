@@ -43,4 +43,9 @@ public abstract class ArrayOfRowsModel extends AbstractTableModel {
         return row.get(columnIndex);
         
     }
+    
+    public ArrayList<Object> getRow(int RowIndex){
+        return rows.get(RowIndex);
+    }
+    
 }

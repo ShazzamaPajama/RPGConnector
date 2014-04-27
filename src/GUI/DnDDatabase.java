@@ -10,6 +10,10 @@ import GUI.TableModels.BasicInfoModel;
 import GUI.TableModels.AbilityModel;
 import AssetDB.DBManager;
 import GUI.TableModels.SkillsModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,16 +21,12 @@ import GUI.TableModels.SkillsModel;
  */
 public class DnDDatabase extends javax.swing.JFrame {
     private DBManager dbManager;
-    private BasicInfoModel BasicInfo;
-    private AbilityModel AbilityInfo;
-    private SkillsModel SkillInfo;
+    
     
     /**
      * Creates new form DnDDatabase
      */
     public DnDDatabase() {
-        SkillInfo = new SkillsModel("Perception");
-        SkillInfo.addRow("John", "orc", "player", 9);
         initComponents();
         dbManager = new DBManager();
         
@@ -42,7 +42,7 @@ public class DnDDatabase extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableCharacters = new javax.swing.JTable();
         jLabelTitle = new javax.swing.JLabel();
         jTextFieldName = new javax.swing.JTextField();
         jTextFieldRace = new javax.swing.JTextField();
@@ -53,28 +53,26 @@ public class DnDDatabase extends javax.swing.JFrame {
         jButtonSearchCharacter = new javax.swing.JButton();
         jLabelAbility = new javax.swing.JLabel();
         jComboBoxAb = new javax.swing.JComboBox();
-        jButtonPageLeft = new javax.swing.JButton();
-        jButtonPageRight = new javax.swing.JButton();
         jButtonSearchAb = new javax.swing.JButton();
         jTextFieldAb = new javax.swing.JTextField();
         jLabelAbVal = new javax.swing.JLabel();
         jLabelBasic = new javax.swing.JLabel();
         jComboBoxBasic = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldStatVal = new javax.swing.JTextField();
         jLabelStatVal = new javax.swing.JLabel();
         jButtonSearchBasic = new javax.swing.JButton();
         jLabelSkill = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBoxSkills = new javax.swing.JComboBox();
         jTextFieldSkillVal = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonSkillSearch = new javax.swing.JButton();
         jLabelSkillVal = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable2.setModel(SkillInfo);
-        jScrollPane2.setViewportView(jTable2);
+        jTableCharacters.setModel(new BasicInfoModel());
+        jScrollPane2.setViewportView(jTableCharacters);
 
         jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelTitle.setText("D&D Asset Database");
@@ -92,34 +90,48 @@ public class DnDDatabase extends javax.swing.JFrame {
         jLabelType.setText("Type");
 
         jButtonSearchCharacter.setText("Search");
+        jButtonSearchCharacter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchCharacterActionPerformed(evt);
+            }
+        });
 
         jLabelAbility.setText("Ability:");
 
         jComboBoxAb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "STR", "CON", "DEX", "INT", "WIS", "CHA" }));
 
-        jButtonPageLeft.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButtonPageLeft.setText("<");
-
-        jButtonPageRight.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButtonPageRight.setText(">");
-
         jButtonSearchAb.setText("Search");
+        jButtonSearchAb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchAbActionPerformed(evt);
+            }
+        });
 
         jLabelAbVal.setText("Value:");
 
         jLabelBasic.setText("Basic Stat:");
 
-        jComboBoxBasic.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AtkBonus" }));
+        jComboBoxBasic.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "AtkBonus" }));
 
         jLabelStatVal.setText("Value:");
 
         jButtonSearchBasic.setText("Search");
+        jButtonSearchBasic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchBasicActionPerformed(evt);
+            }
+        });
 
         jLabelSkill.setText("Skill:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Acrobatics", "Arcana", "Athletics", "Bluff", "Diplomacy", "Dungeoneering", "Endurance", "Heal", "History", "Insight", "Intimidate", "Nature", "Perception", "Religion", "Stealth", "Streetwise", "Thievery" }));
+        jComboBoxSkills.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Acrobatics", "Arcana", "Athletics", "Bluff", "Diplomacy", "Dungeoneering", "Endurance", "Heal", "History", "Insight", "Intimidate", "Nature", "Perception", "Religion", "Stealth", "Streetwise", "Thievery" }));
 
-        jButton1.setText("Search");
+        jButtonSkillSearch.setText("Search");
+        jButtonSkillSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSkillSearchActionPerformed(evt);
+            }
+        });
 
         jLabelSkillVal.setText("Value:");
 
@@ -144,36 +156,39 @@ public class DnDDatabase extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabelType)
-                                    .addGap(53, 53, 53)
-                                    .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextFieldRace, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabelName)
+                                        .addGap(46, 46, 46))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelType)
+                                        .addGap(53, 53, 53)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextFieldType, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextFieldRace, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldName))))
                             .addComponent(jLabelRace)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(124, 124, 124)
                                 .addComponent(jButtonSearchCharacter)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(92, 92, 92)
                                 .addComponent(jButtonSearchAb)
                                 .addGap(33, 33, 33))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabelBasic)
                                     .addComponent(jLabelStatVal))
-                                .addGap(34, 34, 34)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButtonSearchBasic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jComboBoxBasic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))
+                                    .addComponent(jTextFieldStatVal))
                                 .addGap(61, 61, 61)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabelAbility)
@@ -191,20 +206,17 @@ public class DnDDatabase extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextFieldSkillVal)
-                                    .addComponent(jComboBox1, 0, 125, Short.MAX_VALUE))
+                                    .addComponent(jComboBoxSkills, 0, 125, Short.MAX_VALUE))
                                 .addGap(48, 48, 48))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(jButtonSkillSearch)
                                 .addGap(78, 78, 78))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jButtonPageLeft)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(49, 49, 49)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonPageRight)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 49, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2)
@@ -217,16 +229,8 @@ public class DnDDatabase extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabelTitle)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(jButtonPageLeft))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jButtonPageRight))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -236,8 +240,7 @@ public class DnDDatabase extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldRace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelRace)
-                            .addComponent(jLabelStatVal))
+                            .addComponent(jLabelRace))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelType)
@@ -258,19 +261,21 @@ public class DnDDatabase extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextFieldAb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabelAbVal))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextFieldStatVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelStatVal)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonSearchBasic)
                             .addComponent(jButtonSearchAb)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxSkills, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelSkillVal)
-                            .addComponent(jTextFieldSkillVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldSkillVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelSkillVal))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonSkillSearch)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -289,23 +294,66 @@ public class DnDDatabase extends javax.swing.JFrame {
         new CharacterSheet().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButtonSkillSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSkillSearchActionPerformed
+        String Skill = (String)jComboBoxSkills.getSelectedItem();
+        SkillsModel newmodel = new SkillsModel(Skill);
+        
+        jTableCharacters.setModel(newmodel);
+    }//GEN-LAST:event_jButtonSkillSearchActionPerformed
+
+    private void jButtonSearchAbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchAbActionPerformed
+        AbilityModel newmodel = new AbilityModel();
+        
+        jTableCharacters.setModel(newmodel);
+    }//GEN-LAST:event_jButtonSearchAbActionPerformed
+
+    private void jButtonSearchCharacterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchCharacterActionPerformed
+        BasicInfoModel newmodel = new BasicInfoModel();
+        
+        jTableCharacters.setModel(newmodel);
+    }//GEN-LAST:event_jButtonSearchCharacterActionPerformed
+
+    private void jButtonSearchBasicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchBasicActionPerformed
+        String Stat = (String)jComboBoxBasic.getSelectedItem();
+        String Val  = jTextFieldStatVal.getText().trim();
+        BasicInfoModel newmodel = new BasicInfoModel();
+        
+        try {
+            ResultSet data = dbManager.QueryBasicStat(Stat, Val);
+            
+            while(data.next()){
+                String Name = data.getString("Name");
+                String Race = data.getString("Race");
+                String Type = data.getString("Type");
+                String Class = data.getString("Class");
+                String Alignment = data.getString("Alignment");
+                Integer HP = data.getInt("HitPoints");
+                Integer AC = data.getInt("ArmorClass");
+                Integer AtkBonus = data.getInt("AtkBonus");
+                
+                newmodel.addRow(Name, Race, Type, Class, Alignment, AC, HP, AC, AtkBonus);
+            }
+            jTableCharacters.setModel(newmodel);
+        } catch (SQLException ex) {
+            Logger.getLogger(DnDDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSearchBasicActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButtonPageLeft;
-    private javax.swing.JButton jButtonPageRight;
     private javax.swing.JButton jButtonSearchAb;
     private javax.swing.JButton jButtonSearchBasic;
     private javax.swing.JButton jButtonSearchCharacter;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton jButtonSkillSearch;
     private javax.swing.JComboBox jComboBoxAb;
     private javax.swing.JComboBox jComboBoxBasic;
+    private javax.swing.JComboBox jComboBoxSkills;
     private javax.swing.JLabel jLabelAbVal;
     private javax.swing.JLabel jLabelAbility;
     private javax.swing.JLabel jLabelBasic;
@@ -317,12 +365,12 @@ public class DnDDatabase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelType;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTableCharacters;
     private javax.swing.JTextField jTextFieldAb;
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldRace;
     private javax.swing.JTextField jTextFieldSkillVal;
+    private javax.swing.JTextField jTextFieldStatVal;
     private javax.swing.JTextField jTextFieldType;
     // End of variables declaration//GEN-END:variables
 }

@@ -39,13 +39,13 @@ public class DBManager {
                     + "(Name TEXT NOT NULL,"
                     + " Race TEXT NOT NULL,"
                     + " Type TEXT NOT NULL,"
-                    + " Class TEXT,"
+                    + " Class TEXT NOT NULL,"
                     + " Alignment TEXT NOT NULL,"
-                    + " Level INTEGER,"
+                    + " Level INTEGER NOT NULL,"
                     + " HitPoints INTEGER NOT NULL,"
                     + " ArmorClass INTEGER NOT NULL,"
                     + " AtkBonus INTEGER NOT NULL,"
-                    + " Description TEXT,"
+                    + " Description TEXT NOT NULL,"
                     + " PRIMARY KEY (Name, Race, Type))";
             this.stmt.executeUpdate(SQLString);
             
@@ -118,7 +118,7 @@ public class DBManager {
         String SQL;
         
         //Check to see if Stat being Queried is a Integer
-        if(Stat.equals("Level") || Stat.equals("Hitpoints") || Stat.equals("AtkBonus")){
+        if(Stat.equals("Level") || Stat.equals("Hitpoints") || Stat.equals("ArmorClass") || Stat.equals("AtkBonus")){
             try{
                 Integer value = Integer.parseInt(Val);
                 
@@ -204,16 +204,92 @@ public class DBManager {
         return result;
     }
     
-    /**
-     *Creates object from a specified character in the database
-     * @param name name of a character
-     * @param race race of a character
-     * @param type type of a character
-     * @return character object constructed from retrieved data
-     * @throws SQLException if query fails
-     */
-    public Character getCharacter(String name, String race, String type) throws SQLException{
-        return null;
+    
+    public void addBasicInfo(
+            String Name, 
+            String Race, 
+            String Type, 
+            String Class, 
+            String Alignment,
+            Integer Level,
+            Integer HP, 
+            Integer AC, 
+            Integer ATK, 
+            String Desc) throws SQLException{
+        
+        //Prepare strings for sql statement
+        String name = "'" + Name + "'";
+        String race = "'" + Race + "'";
+        String type = "'" + Type + "'";
+        String classname = "'" + Class + "'";
+        String align = "'" + Alignment + "'";
+        String desc = "'" + Desc + "'";
+        
+        
+        
+        
+        String SQL = "INSERT OR REPLACE INTO Characters "
+                + "VALUES ("
+                +  name + ", "
+                +  race + ", "
+                +  type + ", "
+                +  classname +", "
+                +  align + ", "
+                +  Level + ", "
+                +  HP + ", "
+                +  AC + ", "
+                +  ATK + ", "
+                +  desc + ")";
+        
+        stmt.executeUpdate(SQL);
     }
+    
+    public void addAbilitySet(String Name, String Race, String Type, Integer STR, Integer CON, Integer DEX, Integer INT, Integer WIS, Integer CHA) throws SQLException{
+        String name = "'" + Name + "'";
+        String race = "'" + Race + "'";
+        String type = "'" + Type + "'";
+        
+        String SQL = "INSERT OR REPLACE INTO AbilitySets VALUES ("
+                + name + ", "
+                + race + ", "
+                + type + ", "
+                + STR + ", "
+                + CON + ", "
+                + DEX + ", "
+                + INT + ", "
+                + WIS + ", "
+                + CHA + ")";
+        
+        stmt.execute(SQL);
+    }
+    
+    public void addSkillSet(String Name, String Race, String Type) throws SQLException{
+        String name = "'" + Name + "'";
+        String race = "'" + Race + "'";
+        String type = "'" + Type + "'";
+        
+        String SQL = "INSERT OR REPLACE INTO SkillSets (Name, Race, Type) VALUES ("
+                + name + ", "
+                + race + ", "
+                + type + ")";
+        
+        stmt.executeUpdate(SQL);
+    }
+    
+    public void updateSkill(String Name, String Race, String Type, String Skill, Integer Value) throws SQLException{
+        String name = "'" + Name + "'";
+        String race = "'" + Race + "'";
+        String type = "'" + Type + "'";
+        
+        String SQL = "UPDATE SkillSets "
+                + "SET " + Skill + " = " + Value
+                + " WHERE Name = " + name
+                + " AND Race = " + race
+                + " AND Type = " + type;
+        
+        stmt.executeUpdate(SQL);
+    }
+    
+    
     
 }
