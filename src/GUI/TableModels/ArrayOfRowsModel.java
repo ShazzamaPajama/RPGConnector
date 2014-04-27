@@ -17,6 +17,10 @@ public abstract class ArrayOfRowsModel extends AbstractTableModel {
     protected String[]  ColumnNames;
     protected ArrayList<ArrayList<Object>> rows;
     
+    public void removeAll(){
+        rows.removeAll(rows);
+    }
+    
     @Override
     public int getRowCount() {
         return rows.size();

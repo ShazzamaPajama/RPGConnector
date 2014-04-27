@@ -9,7 +9,7 @@ package GUI;
 import GUI.TableModels.BasicInfoModel;
 import GUI.TableModels.AbilityModel;
 import AssetDB.DBManager;
-import javax.swing.table.DefaultTableModel;
+import GUI.TableModels.SkillsModel;
 
 /**
  *
@@ -19,18 +19,14 @@ public class DnDDatabase extends javax.swing.JFrame {
     private DBManager dbManager;
     private BasicInfoModel BasicInfo;
     private AbilityModel AbilityInfo;
+    private SkillsModel SkillInfo;
     
     /**
      * Creates new form DnDDatabase
      */
     public DnDDatabase() {
-        BasicInfo = new BasicInfoModel();
-        AbilityInfo = new AbilityModel();
-        
-        AbilityInfo.addRow(12, 13, 32, 24,5, 7);
-        AbilityInfo.addRow(3, 5, 9, 2, 0, 85);
-        BasicInfo.addRow("John", "orc", "NPC", "Paladin", "Neutral Good", 12, 85, 10);
-        BasicInfo.addRow("bobby", "human", "player", "rogue", "Neutral evil", 10, 40, 13);
+        SkillInfo = new SkillsModel("Perception");
+        SkillInfo.addRow("John", "orc", "player", 9);
         initComponents();
         dbManager = new DBManager();
         
@@ -77,7 +73,7 @@ public class DnDDatabase extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable2.setModel(AbilityInfo);
+        jTable2.setModel(SkillInfo);
         jScrollPane2.setViewportView(jTable2);
 
         jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
