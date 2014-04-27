@@ -43,6 +43,7 @@ public class DBManager {
                     + " Alignment TEXT NOT NULL,"
                     + " Level INTEGER,"
                     + " HitPoints INTEGER NOT NULL,"
+                    + " ArmorClass INTEGER NOT NULL,"
                     + " AtkBonus INTEGER NOT NULL,"
                     + " Description TEXT,"
                     + " PRIMARY KEY (Name, Race, Type))";
@@ -95,6 +96,8 @@ public class DBManager {
                     + "Magic NUMERIC NOT NULL, "
                     + "Description TEXT NOT NULL,"
                     + "PRIMARY KEY (Name, Type))";
+            this.stmt.executeUpdate(SQLString);
+            
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,8 +112,7 @@ public class DBManager {
      * @param Val Value of the stat the user is looking for
      * @return set of characters that have corresponding value for the given stat
      * @throws SQLException syntax error / wrong column name
-     */
-        
+     */  
     public ResultSet QueryBasicStat(String Stat, String Val) throws SQLException{
         ResultSet result;
         String SQL;
