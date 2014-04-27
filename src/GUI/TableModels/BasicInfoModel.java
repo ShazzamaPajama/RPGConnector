@@ -4,19 +4,16 @@
  * and open the template in the editor.
  */
 
-package GUI;
+package GUI.TableModels;
 
+import GUI.TableModels.ArrayOfRowsModel;
 import java.util.ArrayList;
-import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Shazzama.Pajama
  */
-public class BasicInfoModel extends AbstractTableModel {
-    String[]  ColumnNames;
-    ArrayList<ArrayList<Object>> rows;
-    
+public class BasicInfoModel extends ArrayOfRowsModel {
     
     
     public BasicInfoModel(){
@@ -43,27 +40,5 @@ public class BasicInfoModel extends AbstractTableModel {
         rows.add(newrow);
     }
     
-    @Override
-    public int getRowCount() {
-        return rows.size();
-    }
-    
-    @Override
-    public String getColumnName(int col){
-        return ColumnNames[col];
-    }
-    
-    @Override
-    public int getColumnCount() {
-        return ColumnNames.length;
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        ArrayList<Object> row = rows.get(rowIndex);
-        
-        return row.get(columnIndex);
-        
-    }
     
 }
