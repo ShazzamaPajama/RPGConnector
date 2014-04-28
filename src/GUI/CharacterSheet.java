@@ -6,24 +6,46 @@
 
 package GUI;
 
-import GUI.TableModels.ParallelValueModel;
+import GUI.TableModels.ParallelAbilityModel;
+import GUI.TableModels.ParallelBasicModel;
+import GUI.TableModels.ParallelSkillModel;
+import java.util.ArrayList;
 
 /**
  *
  * @author Shazzama.Pajama
  */
 public class CharacterSheet extends javax.swing.JFrame {
-    private ParallelValueModel BasicInfo;
-    private ParallelValueModel AbilityInfo;
-    private ParallelValueModel SkillInfo;
+    private ParallelBasicModel BasicInfo;
+    private ParallelAbilityModel AbilityInfo;
+    private ParallelSkillModel SkillInfo;
     
     /**
      * Creates new form NewJFrame
      */
     public CharacterSheet() {
         initComponents();
-  
+        BasicInfo = new ParallelBasicModel();
+        AbilityInfo = new ParallelAbilityModel();
+        SkillInfo = new ParallelSkillModel();
         
+        jTableBasic.setModel(BasicInfo);
+        jTableAbility.setModel(AbilityInfo);
+        jTableSkill.setModel(SkillInfo);
+        
+    }
+    
+    public CharacterSheet(ArrayList<Object> basic, ArrayList<Object> ability, ArrayList<Object> skill, String Description, String Extras){
+        initComponents();
+        BasicInfo = new ParallelBasicModel(basic);
+        AbilityInfo = new ParallelAbilityModel(ability);
+        SkillInfo = new ParallelSkillModel(skill);
+        
+        jTableBasic.setModel(BasicInfo);
+        jTableAbility.setModel(AbilityInfo);
+        jTableSkill.setModel(SkillInfo);
+        jTextAreaDescription.setText(Description);
+        jTextAreaExtras.setText(Extras);
     }
 
     /**
@@ -43,10 +65,10 @@ public class CharacterSheet extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableSkill = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaDescription = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaExtras = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -75,19 +97,19 @@ public class CharacterSheet extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jTableSkill);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane3.setViewportView(jTextArea1);
+        jTextAreaDescription.setColumns(20);
+        jTextAreaDescription.setLineWrap(true);
+        jTextAreaDescription.setRows(5);
+        jTextAreaDescription.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(jTextAreaDescription);
 
         jLabel10.setText("Description:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(5);
-        jTextArea2.setWrapStyleWord(true);
-        jScrollPane4.setViewportView(jTextArea2);
+        jTextAreaExtras.setColumns(20);
+        jTextAreaExtras.setLineWrap(true);
+        jTextAreaExtras.setRows(5);
+        jTextAreaExtras.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(jTextAreaExtras);
 
         jLabel11.setText("Extra Attacks / Spells / Abilities:");
 
@@ -130,9 +152,9 @@ public class CharacterSheet extends javax.swing.JFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(92, 92, 92)
+                .addGap(82, 82, 82)
                 .addComponent(jButton1)
-                .addGap(107, 107, 107)
+                .addGap(67, 67, 67)
                 .addComponent(jButton2)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -191,7 +213,7 @@ public class CharacterSheet extends javax.swing.JFrame {
     private javax.swing.JTable jTableAbility;
     private javax.swing.JTable jTableBasic;
     private javax.swing.JTable jTableSkill;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextAreaDescription;
+    private javax.swing.JTextArea jTextAreaExtras;
     // End of variables declaration//GEN-END:variables
 }

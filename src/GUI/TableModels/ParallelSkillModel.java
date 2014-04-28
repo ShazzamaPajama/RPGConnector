@@ -33,7 +33,7 @@ public class ParallelSkillModel extends ParallelValueModel {
             "Religion",
             "Stealth",
             "Streetwise",
-            "Tievery"
+            "Thievery"
         };
         
         
@@ -71,7 +71,7 @@ public class ParallelSkillModel extends ParallelValueModel {
         
         
         Labels = new ArrayList<>();
-        Values = new ArrayList<>();
+        Values = values;
         Columns = new String[]{"Skill", "Values"};
         
         Labels.addAll(Arrays.asList(titles));        

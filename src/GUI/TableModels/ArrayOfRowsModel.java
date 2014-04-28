@@ -35,6 +35,7 @@ public abstract class ArrayOfRowsModel extends AbstractTableModel {
     public int getColumnCount() {
         return ColumnNames.length;
     }
+    
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {

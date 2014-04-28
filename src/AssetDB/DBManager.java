@@ -249,7 +249,8 @@ public class DBManager {
             Integer HP, 
             Integer AC, 
             Integer ATK, 
-            String Desc) throws SQLException{
+            String Desc,
+            String Extra) throws SQLException{
         
         //Prepare strings for sql statement
         String name = "'" + Name + "'";
@@ -258,6 +259,7 @@ public class DBManager {
         String classname = "'" + Class + "'";
         String align = "'" + Alignment + "'";
         String desc = "'" + Desc + "'";
+        String extra = "'"+Extra+"'";
         
         
         
@@ -273,7 +275,8 @@ public class DBManager {
                 +  HP + ", "
                 +  AC + ", "
                 +  ATK + ", "
-                +  desc + ")";
+                +  desc + ", "
+                +  extra +" )";
         
         stmt.executeUpdate(SQL);
     }
@@ -405,5 +408,127 @@ public class DBManager {
             ModelArray.add(row);
         }
         return ModelArray;
+    }
+    
+    public ArrayList<Object> getCharacterBasicInfo(String name, String race, String type) throws SQLException{
+        ArrayList<Object> BasicInfo = new ArrayList<>();
+        ResultSet results;
+        String SQL;
+        String Name = "'"+name+"'";
+        String Race = "'"+race+"'";
+        String Type = "'"+type+"'";
+        
+        SQL = "SELECT * FROM Characters WHERE "
+                + "Name = " + Name + " AND Race = " + Race + " AND " + "Type = " + Type;
+        
+        results = stmt.executeQuery(SQL);
+        
+        results.next();
+        
+        BasicInfo.add(results.getString("Name"));
+        BasicInfo.add(results.getString("Race"));
+        BasicInfo.add(results.getString("Type"));
+        BasicInfo.add(results.getString("Class"));
+        BasicInfo.add(results.getString("Alignment"));
+        BasicInfo.add(results.getInt("Level"));
+        BasicInfo.add(results.getInt("Hitpoints"));
+        BasicInfo.add(results.getInt("ArmorClass"));
+        BasicInfo.add(results.getInt("AtkBonus"));
+        
+        return BasicInfo;
+    }
+    
+    public ArrayList<Object> getCharacterAbilities(String name, String race, String type) throws SQLException{
+        ArrayList<Object> AbilityInfo = new ArrayList<>();
+        ResultSet results;
+        String SQL;
+        String Name = "'"+name+"'";
+        String Race = "'"+race+"'";
+        String Type = "'"+type+"'";
+        
+        SQL = "SELECT * FROM AbilitySets WHERE "
+                + "Name = " + Name + " AND Race = " + Race + " AND " + "Type = " + Type;
+        
+        results = stmt.executeQuery(SQL);
+        results.next();
+        
+        AbilityInfo.add(results.getInt("Strength"));
+        AbilityInfo.add(results.getInt("Constitution"));
+        AbilityInfo.add(results.getInt("Dexterity"));
+        AbilityInfo.add(results.getInt("Intelligence"));
+        AbilityInfo.add(results.getInt("Wisdom"));
+        AbilityInfo.add(results.getInt("Charisma"));
+        
+        return AbilityInfo;
+        
+    }
+    
+    public ArrayList<Object> getCharacterSkills(String name, String race, String type) throws SQLException{
+        ArrayList<Object> SkillInfo = new ArrayList<>();
+        ResultSet results;
+        String SQL;
+        String Name = "'"+name+"'";
+        String Race = "'"+race+"'";
+        String Type = "'"+type+"'";
+        
+        SQL = "SELECT * FROM SkillSets WHERE "
+                + "Name = " + Name + " AND Race = " + Race + " AND " + "Type = " + Type;
+        
+        results = stmt.executeQuery(SQL);
+        
+        results.next();
+        
+        SkillInfo.add(results.getInt("Acrobatics"));
+        SkillInfo.add(results.getInt("Arcana"));
+        SkillInfo.add(results.getInt("Athletics"));
+        SkillInfo.add(results.getInt("Bluff"));
+        SkillInfo.add(results.getInt("Diplomacy"));
+        SkillInfo.add(results.getInt("Dungeoneering"));
+        SkillInfo.add(results.getInt("Endurance"));
+        SkillInfo.add(results.getInt("Heal"));
+        SkillInfo.add(results.getInt("History"));
+        SkillInfo.add(results.getInt("Insight"));
+        SkillInfo.add(results.getInt("Intimidate"));
+        SkillInfo.add(results.getInt("Nature"));
+        SkillInfo.add(results.getInt("Perception"));
+        SkillInfo.add(results.getInt("Religion"));
+        SkillInfo.add(results.getInt("Stealth"));
+        SkillInfo.add(results.getInt("Streetwise"));
+        SkillInfo.add(results.getInt("Thievery"));
+        
+        return SkillInfo;
+        
+    }
+    
+    public String getCharacterDescription(String name, String race, String type) throws SQLException{
+        String Name = "'"+name+"'";
+        String Race = "'"+race+"'";
+        String Type = "'"+type+"'";
+        ResultSet result;
+        
+        String SQL = "SELECT Description FROM Characters WHERE "
+                + "Name = " + Name + "AND Race = " + Race + "AND Type = " + Type;
+        
+        result = stmt.executeQuery(SQL);
+        result.next();
+        
+        String Description = result.getString("Description");
+        return Description;
+    }
+    
+    public String getCharacterExtras(String name, String race, String type) throws SQLException{
+        String Name = "'"+name+"'";
+        String Race = "'"+race+"'";
+        String Type = "'"+type+"'";
+        ResultSet result;
+        
+        String SQL = "SELECT ExtraAbilities FROM Characters WHERE "
+                + "Name = " + Name + "AND Race = " + Race + "AND Type = " + Type;
+        
+        result = stmt.executeQuery(SQL);
+        result.next();
+        
+        String Extras = result.getString("ExtraAbilities");
+        return Extras;        
     }
 }

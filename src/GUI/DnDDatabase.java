@@ -9,6 +9,7 @@ package GUI;
 import GUI.TableModels.BasicInfoModel;
 import GUI.TableModels.AbilityModel;
 import AssetDB.DBManager;
+import GUI.TableModels.ArrayOfRowsModel;
 import GUI.TableModels.SkillsModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -85,6 +86,11 @@ public class DnDDatabase extends javax.swing.JFrame {
 
         jTableCharacters.setAutoCreateRowSorter(true);
         jTableCharacters.setModel(new BasicInfoModel());
+        jTableCharacters.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCharactersMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableCharacters);
 
         jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -149,6 +155,11 @@ public class DnDDatabase extends javax.swing.JFrame {
         jLabelSkillVal.setText("Value:");
 
         jButton2.setText("ViewCharacter");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Add Character");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -434,6 +445,61 @@ public class DnDDatabase extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButtonViewAllActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int rowindex = jTableCharacters.getSelectedRow();
+        if(rowindex >= 0){
+            ArrayOfRowsModel model = (ArrayOfRowsModel)jTableCharacters.getModel();
+            ArrayList<Object> row = model.getRow(rowindex);
+            String Name = (String)row.get(0);
+            String Race = (String)row.get(1);
+            String Type = (String)row.get(2);
+            
+            try {
+                ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
+                ArrayList<Object> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
+                ArrayList<Object> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                String Desc = dbManager.getCharacterDescription(Name, Race, Type);
+                String Extra = dbManager.getCharacterExtras(Name, Race, Type);
+                
+                
+                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra).setVisible(true);
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(DnDDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTableCharactersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCharactersMouseClicked
+        if(evt.getClickCount() == 2){
+            int rowindex = jTableCharacters.getSelectedRow();
+            if(rowindex >= 0){
+                ArrayOfRowsModel model = (ArrayOfRowsModel)jTableCharacters.getModel();
+                ArrayList<Object> row = model.getRow(rowindex);
+                String Name = (String)row.get(0);
+                String Race = (String)row.get(1);
+                String Type = (String)row.get(2);
+            
+                try {
+                    ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
+                    ArrayList<Object> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
+                    ArrayList<Object> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                    String Desc = dbManager.getCharacterDescription(Name, Race, Type);
+                    String Extra = dbManager.getCharacterExtras(Name, Race, Type);
+                
+                
+                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra).setVisible(true);
+                
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(DnDDatabase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTableCharactersMouseClicked
 
     /**
      * @param args the command line arguments
