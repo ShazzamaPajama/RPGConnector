@@ -12,6 +12,7 @@ import AssetDB.DBManager;
 import GUI.TableModels.SkillsModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,16 @@ public class DnDDatabase extends javax.swing.JFrame {
         initComponents();
         dbManager = new DBManager();
         
+        //initialize table
+        try {
+            ArrayList<ArrayList<Object>> table = dbManager.getBasicInfoRows(dbManager.getAllCharacters());
+            BasicInfoModel newmodel = new BasicInfoModel(table);
+            jTableCharacters.setModel(newmodel);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DnDDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -44,7 +55,6 @@ public class DnDDatabase extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCharacters = new javax.swing.JTable();
         jLabelTitle = new javax.swing.JLabel();
-        jTextFieldName = new javax.swing.JTextField();
         jTextFieldRace = new javax.swing.JTextField();
         jTextFieldType = new javax.swing.JTextField();
         jLabelName = new javax.swing.JLabel();
@@ -68,9 +78,12 @@ public class DnDDatabase extends javax.swing.JFrame {
         jLabelSkillVal = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        NameField = new javax.swing.JTextField();
+        jButtonViewAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTableCharacters.setAutoCreateRowSorter(true);
         jTableCharacters.setModel(new BasicInfoModel());
         jScrollPane2.setViewportView(jTableCharacters);
 
@@ -98,7 +111,7 @@ public class DnDDatabase extends javax.swing.JFrame {
 
         jLabelAbility.setText("Ability:");
 
-        jComboBoxAb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "STR", "CON", "DEX", "INT", "WIS", "CHA" }));
+        jComboBoxAb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL", "Strength", "Constitution", "Dexterity", "Intelligence", "Wisdom", "Charisma", " " }));
 
         jButtonSearchAb.setText("Search");
         jButtonSearchAb.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +124,7 @@ public class DnDDatabase extends javax.swing.JFrame {
 
         jLabelBasic.setText("Basic Stat:");
 
-        jComboBoxBasic.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "AtkBonus" }));
+        jComboBoxBasic.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Name", "Race", "Type", "Class", "Alignment", "Level", "HitPoints", "ArmorClass", "AtkBonus" }));
 
         jLabelStatVal.setText("Value:");
 
@@ -144,6 +157,13 @@ public class DnDDatabase extends javax.swing.JFrame {
             }
         });
 
+        jButtonViewAll.setText("View All");
+        jButtonViewAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonViewAllActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,9 +187,8 @@ public class DnDDatabase extends javax.swing.JFrame {
                                         .addGap(53, 53, 53)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTextFieldType, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextFieldRace, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldName))))
+                                    .addComponent(jTextFieldRace, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                    .addComponent(NameField, javax.swing.GroupLayout.Alignment.LEADING)))
                             .addComponent(jLabelRace)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(124, 124, 124)
@@ -218,7 +237,9 @@ public class DnDDatabase extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 49, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonViewAll, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton2)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3)))
@@ -231,12 +252,12 @@ public class DnDDatabase extends javax.swing.JFrame {
                 .addComponent(jLabelTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelName)
-                            .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldRace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,10 +297,11 @@ public class DnDDatabase extends javax.swing.JFrame {
                             .addComponent(jLabelSkillVal))
                         .addGap(18, 18, 18)
                         .addComponent(jButtonSkillSearch)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButtonViewAll))
                 .addContainerGap())
         );
 
@@ -296,48 +318,122 @@ public class DnDDatabase extends javax.swing.JFrame {
 
     private void jButtonSkillSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSkillSearchActionPerformed
         String Skill = (String)jComboBoxSkills.getSelectedItem();
-        SkillsModel newmodel = new SkillsModel(Skill);
+        SkillsModel newmodel;
+        ResultSet data;
+        ArrayList<ArrayList<Object>> table;
         
-        jTableCharacters.setModel(newmodel);
+        if (jTextFieldSkillVal.getText().isEmpty()){
+            try{
+                data = dbManager.getOneSkillAll(Skill);
+                table = dbManager.getSkillRows(Skill, data);
+                
+                newmodel = new SkillsModel(Skill, table);
+                jTableCharacters.setModel(newmodel);
+            }catch(SQLException ex){
+            
+            }            
+        }else{
+             try{
+                data = dbManager.SkillQuery(Skill, jTextFieldSkillVal.getText());
+                table = dbManager.getSkillRows(Skill, data);
+                
+                newmodel = new SkillsModel(Skill, table);
+                jTableCharacters.setModel(newmodel);
+            }catch(SQLException ex){
+            
+            }            
+        }
+
+        
+        
     }//GEN-LAST:event_jButtonSkillSearchActionPerformed
 
     private void jButtonSearchAbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchAbActionPerformed
-        AbilityModel newmodel = new AbilityModel();
+        String Ability = (String)jComboBoxAb.getSelectedItem();
+        String Value = jTextFieldAb.getText().trim();
         
-        jTableCharacters.setModel(newmodel);
+        if (Ability.equals("ALL") == false){
+            try{
+                ResultSet tabledata = dbManager.AbilityQuery(Ability, Value);
+                ArrayList<ArrayList<Object>> table = dbManager.getAbilityRows(tabledata);
+                AbilityModel newmodel = new AbilityModel(table);
+                jTableCharacters.setModel(newmodel);
+            }catch(SQLException ex){
+                ex.getMessage();
+            }
+        }else{
+            try{
+                ResultSet tabledata = dbManager.getAllAbilitySets();
+                ArrayList<ArrayList<Object>> table = dbManager.getAbilityRows(tabledata);
+                AbilityModel newmodel = new AbilityModel(table);
+                jTableCharacters.setModel(newmodel);
+            }catch(SQLException ex){
+                ex.getMessage();
+            }            
+        }
+        
+        
     }//GEN-LAST:event_jButtonSearchAbActionPerformed
 
     private void jButtonSearchCharacterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchCharacterActionPerformed
         BasicInfoModel newmodel = new BasicInfoModel();
         
+        String Name = NameField.getText().trim();
+        String Race = jTextFieldRace.getText().trim();
+        String Type = jTextFieldType.getText().trim();
+        
+        try {
+            ResultSet character = dbManager.CharacterQuery(Name, Race, Type);
+            ArrayList<ArrayList<Object>> rowset = dbManager.getBasicInfoRows(character);
+            newmodel.setTable(rowset);
+            jTableCharacters.setModel(newmodel);
+            System.out.println("Action completed");
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println(ex.getSQLState());
+        }
+        
         jTableCharacters.setModel(newmodel);
+        
+        
+        
     }//GEN-LAST:event_jButtonSearchCharacterActionPerformed
 
     private void jButtonSearchBasicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchBasicActionPerformed
         String Stat = (String)jComboBoxBasic.getSelectedItem();
         String Val  = jTextFieldStatVal.getText().trim();
-        BasicInfoModel newmodel = new BasicInfoModel();
+        ArrayList<ArrayList<Object>> table = new ArrayList<>();
         
+        try{
+            ResultSet Rows = dbManager.QueryBasicStat(Stat, Val);
+            table = dbManager.getBasicInfoRows(Rows);
+            BasicInfoModel newmodel = new BasicInfoModel(table);
+            jTableCharacters.setModel(newmodel);
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButtonSearchBasicActionPerformed
+
+    private void jButtonViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewAllActionPerformed
+        ArrayList<ArrayList<Object>> table;
         try {
-            ResultSet data = dbManager.QueryBasicStat(Stat, Val);
-            
-            while(data.next()){
-                String Name = data.getString("Name");
-                String Race = data.getString("Race");
-                String Type = data.getString("Type");
-                String Class = data.getString("Class");
-                String Alignment = data.getString("Alignment");
-                Integer HP = data.getInt("HitPoints");
-                Integer AC = data.getInt("ArmorClass");
-                Integer AtkBonus = data.getInt("AtkBonus");
-                
-                newmodel.addRow(Name, Race, Type, Class, Alignment, AC, HP, AC, AtkBonus);
-            }
+            table = dbManager.getBasicInfoRows(dbManager.getAllCharacters());
+            BasicInfoModel newmodel = new BasicInfoModel(table);
             jTableCharacters.setModel(newmodel);
         } catch (SQLException ex) {
             Logger.getLogger(DnDDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButtonSearchBasicActionPerformed
+        
+        
+        
+        
+    }//GEN-LAST:event_jButtonViewAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -345,12 +441,14 @@ public class DnDDatabase extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField NameField;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonSearchAb;
     private javax.swing.JButton jButtonSearchBasic;
     private javax.swing.JButton jButtonSearchCharacter;
     private javax.swing.JButton jButtonSkillSearch;
+    private javax.swing.JButton jButtonViewAll;
     private javax.swing.JComboBox jComboBoxAb;
     private javax.swing.JComboBox jComboBoxBasic;
     private javax.swing.JComboBox jComboBoxSkills;
@@ -367,7 +465,6 @@ public class DnDDatabase extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableCharacters;
     private javax.swing.JTextField jTextFieldAb;
-    private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldRace;
     private javax.swing.JTextField jTextFieldSkillVal;
     private javax.swing.JTextField jTextFieldStatVal;

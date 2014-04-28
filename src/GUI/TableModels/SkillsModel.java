@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class SkillsModel extends ArrayOfRowsModel{
     
-    public SkillsModel(String skill){
+    public SkillsModel(String skill, ArrayList<ArrayList<Object>> table){
         ColumnNames = new String[]{"Name", "Race", "Type", skill};
-        rows = new ArrayList<>();
+        rows = table;
     }
     
     public void addRow(String Name, String Race, String Type, Integer Value){

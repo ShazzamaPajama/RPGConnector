@@ -16,8 +16,13 @@ import java.util.ArrayList;
 public class AbilityModel extends ArrayOfRowsModel {
     
     public AbilityModel(){
-        ColumnNames = new String[]{"Name", "Race", "Type", "STR", "CON", "DEX", "INT", "WIS", "CHA"};
+        
         rows = new ArrayList<>();
+    }
+    
+    public AbilityModel(ArrayList<ArrayList<Object>> table){
+        ColumnNames = new String[]{"Name", "Race", "Type", "STR", "CON", "DEX", "INT", "WIS", "CHA"};
+        rows = table;
     }
     
     public void addRow(String Name, String Race, String Type, Integer str, Integer con, Integer dex, Integer intelligence, Integer wis, Integer cha){

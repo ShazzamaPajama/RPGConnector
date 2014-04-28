@@ -42,5 +42,9 @@ public class BasicInfoModel extends ArrayOfRowsModel {
         rows.add(newrow);
     }
     
+    public void setTable(ArrayList<ArrayList<Object>> rowset){
+        rows = rowset;
+    }
+    
     
 }

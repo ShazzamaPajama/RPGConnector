@@ -46,6 +46,7 @@ public class DBManager {
                     + " ArmorClass INTEGER NOT NULL,"
                     + " AtkBonus INTEGER NOT NULL,"
                     + " Description TEXT NOT NULL,"
+                    + " ExtraAbilities TEXT NOT NULL,"
                     + " PRIMARY KEY (Name, Race, Type))";
             this.stmt.executeUpdate(SQLString);
             
@@ -105,6 +106,16 @@ public class DBManager {
     
     //Query Methods
     
+    public ResultSet getAllCharacters() throws SQLException{
+        ResultSet result;
+        
+        String SQL = "SELECT * FROM Characters";
+        
+        result = stmt.executeQuery(SQL);
+        
+        return result;
+    }
+    
     /**
      *Executes a query for a character with a specific stat in the Character's table
      * 
@@ -148,7 +159,7 @@ public class DBManager {
      * 
      * @throws SQLException if the query fails, syntax error / wrong column name
      */
-    public ResultSet AbilityQuery(String ability, Integer value) throws SQLException{
+    public ResultSet AbilityQuery(String ability, String value) throws SQLException{
         String SQL;
         ResultSet result;
         
@@ -160,6 +171,17 @@ public class DBManager {
         
     }
     
+    public ResultSet getAllAbilitySets() throws SQLException{
+        String SQL;
+        ResultSet result;
+        
+        SQL = "SELECT * FROM AbilitySets";
+        
+        result = stmt.executeQuery(SQL);
+        
+        return result;
+    }
+    
     /**
      *Executes a query for a character with a specific Skill score
      * @param skill name of a skill
@@ -167,7 +189,7 @@ public class DBManager {
      * @return set of characters with the given skill score
      * @throws SQLException if query fails, syntax error / wrong column name
      */
-    public ResultSet SkillQuery(String skill, Integer value) throws SQLException{
+    public ResultSet SkillQuery(String skill, String value) throws SQLException{
         String SQL;
         ResultSet result;
         
@@ -175,6 +197,17 @@ public class DBManager {
                 + "WHERE " + skill + "= " + value;
         
         result = this.stmt.executeQuery(SQL);
+        
+        return result;
+    }
+    
+    public ResultSet getOneSkillAll(String Skill) throws SQLException{
+        String SQL;
+        ResultSet result;
+        
+        SQL = "SELECT Name, Race, Type, " + Skill + " FROM SkillSets";
+        
+        result = stmt.executeQuery(SQL);
         
         return result;
     }
@@ -196,10 +229,11 @@ public class DBManager {
         String Type = "'"+type+"'";
         
         SQL = "SELECT * FROM Characters"
-                + " WHERE Name = " + Type +","
-                + " Race = " + Race + ","
+                + " WHERE Name = " + Name +" AND "
+                + " Race = " + Race + " AND "
                 + " Type = " + Type;
         
+        System.out.println(SQL);
         result = this.stmt.executeQuery(SQL);
         return result;
     }
@@ -292,4 +326,84 @@ public class DBManager {
     
     
     
+    //Methods for creating jtable rows
+    public ArrayList<ArrayList<Object>> getBasicInfoRows(ResultSet table) throws SQLException{
+        ArrayList<ArrayList<Object>> ModelArray = new ArrayList<>();
+        
+        while(table.next()){
+            String Name = table.getString("Name");
+            String Race = table.getString("Race");
+            String Type = table.getString("Type");
+            String Class = table.getString("Class");
+            String Align = table.getString("Alignment");
+            Integer Level = table.getInt("Level");
+            Integer HP = table.getInt("HitPoints");
+            Integer AC = table.getInt("ArmorClass");
+            Integer ATK = table.getInt("AtkBonus");
+            
+            ArrayList<Object> row = new ArrayList<>();
+            row.add(Name);
+            row.add(Race);
+            row.add(Type);
+            row.add(Class);
+            row.add(Align);
+            row.add(Level);
+            row.add(HP);
+            row.add(AC);
+            row.add(ATK);
+            
+            ModelArray.add(row);
+        }
+        return ModelArray;
+    }
+    
+    public ArrayList<ArrayList<Object>> getAbilityRows(ResultSet table) throws SQLException{
+        ArrayList<ArrayList<Object>> ModelArray = new ArrayList<>();
+        
+        while(table.next()){
+            String Name = table.getString("Name");
+            String Race = table.getString("Race");
+            String Type = table.getString("Type");
+            Integer STR = table.getInt("Strength");
+            Integer CON = table.getInt("Constitution");
+            Integer DEX = table.getInt("Dexterity");
+            Integer INT = table.getInt("Intelligence");
+            Integer WIS = table.getInt("Wisdom");
+            Integer CHA = table.getInt("Charisma");
+            
+            ArrayList<Object> row = new ArrayList<>();
+            row.add(Name);
+            row.add(Race);
+            row.add(Type);
+            row.add(STR);
+            row.add(CON);
+            row.add(DEX);
+            row.add(INT);
+            row.add(WIS);
+            row.add(CHA);
+            
+            ModelArray.add(row);
+        }
+        return ModelArray;
+    }
+    
+    public ArrayList<ArrayList<Object>> getSkillRows(String skill, ResultSet table) throws SQLException{
+        ArrayList<ArrayList<Object>> ModelArray = new ArrayList<>();
+        
+        while(table.next()){
+            String Name = table.getString("Name");
+            String Race = table.getString("Race");
+            String Type = table.getString("Type");
+            Integer Skill = table.getInt(skill);
+            
+            ArrayList<Object> row = new ArrayList<>();
+            row.add(Name);
+            row.add(Race);
+            row.add(Type);
+            row.add(Skill);
+            
+            ModelArray.add(row);
+        }
+        return ModelArray;
+    }
 }
