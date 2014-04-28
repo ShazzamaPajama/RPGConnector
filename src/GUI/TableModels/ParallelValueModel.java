@@ -14,30 +14,11 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Shazzama.Pajama
  */
-public class ParallelValueModel extends AbstractTableModel {
-    ArrayList<String> Labels;
-    ArrayList<Object> Values;
-    String[] Columns;
+public abstract class ParallelValueModel extends AbstractTableModel {
+   protected ArrayList<String> Labels;
+   protected ArrayList<Object> Values;
+   protected String[] Columns;
     
-    public ParallelValueModel(String[] labels, Object[] values, String[] ColumnNames){
-        Labels = new ArrayList<>();
-        Values = new ArrayList<>();
-        Columns = ColumnNames;
-        
-        Labels.addAll(Arrays.asList(labels));
-        Values.addAll(Arrays.asList(values));
-    }
-    
-    public ParallelValueModel(String[]labels, String[] ColumnNames){
-        Labels = new ArrayList<>();
-        Values = new ArrayList<>();
-        Columns = ColumnNames;
-        
-        Labels.addAll(Arrays.asList(labels));
-        for(String i : Labels){
-            Values.add("");
-        }
-    }
 
     @Override
     public String getColumnName(int col){
