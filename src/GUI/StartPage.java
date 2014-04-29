@@ -58,6 +58,11 @@ public class StartPage extends javax.swing.JFrame {
         jButton2.setText("Start Server");
 
         jButton3.setText("Join Server");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Item Database");
 
@@ -114,6 +119,11 @@ public class StartPage extends javax.swing.JFrame {
         new DnDDatabase().setVisible(true);
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new PlayArea().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

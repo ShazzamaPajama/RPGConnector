@@ -14,38 +14,38 @@ public class Grid {
     private String Name;
     
     /**
-     *Creates a new 25 X 25 Grid object with
+     *Creates a new 20 X 20 Grid object with
      * @param name Name of the grid
      */
     public Grid(String name){
-        Board = new Cell[25][25];
+        Board = new Cell[20][20];
         Name = name;
         
-        for(int x=0; x<25; x++){
-            for(int y=0; y<25; y++){
-             Board[x][y] = new Cell(x,y,this);   
+        for(int row=0; row<20; row++){
+            for(int col=0; col<20; col++){
+             Board[row][col] = new Cell(row,col,this);   
             }
         }
     }
     
     /**
      *
-     * @param x
-     * @param y
+     * @param row
+     * @param col
      * @param color
      */
-    public void setCellColor(int x, int y, String color){
-        Board[x][y].setColor(color);
+    public void setCellColor(int row, int col, String color){
+        Board[row][col].setColor(color);
     }
     
     /**
      *
-     * @param x
-     * @param y
+     * @param row
+     * @param col
      * @param t
      */
-    public void setCellToken(int x, int y, Token t){
-        Board[x][y].setToken(t);
+    public void setCellToken(int row, int col, String t){
+        Board[row][col].setToken(t);
     }
     
 }

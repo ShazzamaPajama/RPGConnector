@@ -12,12 +12,12 @@ package TacticalGrid;
 public class Cell {
     private int     Xcoordinate;
     private int     Ycoordinate;
-    private Token   Token;
+    private String  Token;
     private String  Color;
     private Grid    Parent;
     
     /**
-     *Creates a new Cell object with specifiec coordinates
+     *Creates a new Cell object with specific coordinates
      * @param x X coordinate
      * @param y Y coordinate
      * @param parent Grid that the cell belongs to. 
@@ -34,7 +34,7 @@ public class Cell {
      *Changes the token that is currently in this cell
      * @param t
      */
-    public void setToken(Token t){
+    public void setToken(String t){
        Token = t;
    }
    
