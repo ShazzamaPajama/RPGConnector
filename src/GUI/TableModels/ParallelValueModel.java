@@ -55,7 +55,7 @@ public abstract class ParallelValueModel extends AbstractTableModel {
     
    @Override
     public void setValueAt(Object val, int row, int col){
-        
+        Values.add(row, val);
     }
     
     public ListIterator<Object> getIterator(){

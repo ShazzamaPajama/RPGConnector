@@ -324,7 +324,7 @@ public class DnDDatabase extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldTypeActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new CharacterSheet().setVisible(true);
+        new CharacterSheet(this.dbManager).setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButtonSkillSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSkillSearchActionPerformed
@@ -462,8 +462,7 @@ public class DnDDatabase extends javax.swing.JFrame {
                 String Desc = dbManager.getCharacterDescription(Name, Race, Type);
                 String Extra = dbManager.getCharacterExtras(Name, Race, Type);
                 
-                
-                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra).setVisible(true);
+                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
                 
                 
             } catch (SQLException ex) {
@@ -491,7 +490,7 @@ public class DnDDatabase extends javax.swing.JFrame {
                     String Extra = dbManager.getCharacterExtras(Name, Race, Type);
                 
                 
-                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra).setVisible(true);
+                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
                 
                 
                 } catch (SQLException ex) {

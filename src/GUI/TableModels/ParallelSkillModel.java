@@ -38,13 +38,13 @@ public class ParallelSkillModel extends ParallelValueModel {
         
         
         Labels = new ArrayList<>();
-        Values = new ArrayList<>(17);
+        Values = new ArrayList<>();
         Columns = new String[]{"Skill", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
         for (String i: Labels){
             Values.add("");
-        }
+        }        
     }
     
     
