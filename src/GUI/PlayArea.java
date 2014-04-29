@@ -27,7 +27,6 @@ public class PlayArea extends javax.swing.JFrame {
        for (int i = 0; i<20; i++){
            for (int j = 0; j<20; j++){
                JTextField button = new JTextField("x");
-               button.setSize(200, 200);
                button.setBackground(Color.green);
                jPanelGrid.add(button);
            }
