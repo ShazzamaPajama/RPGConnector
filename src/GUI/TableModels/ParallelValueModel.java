@@ -7,7 +7,7 @@
 package GUI.TableModels;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.ListIterator;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -51,5 +51,14 @@ public abstract class ParallelValueModel extends AbstractTableModel {
         }else{
             return true;
         }
+    }
+    
+   @Override
+    public void setValueAt(Object val, int row, int col){
+        
+    }
+    
+    public ListIterator<Object> getIterator(){
+        return this.Values.listIterator();
     }
 }

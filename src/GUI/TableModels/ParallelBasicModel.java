@@ -18,13 +18,11 @@ public class ParallelBasicModel extends ParallelValueModel {
     public ParallelBasicModel(){
         String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "ATKBonus"};
         Labels = new ArrayList<>();
-        Values = new ArrayList<>();
+        Values = new ArrayList<>(9);
         Columns = new String[]{"BasicInfo", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
-        for (String i: Labels){
-            Values.add("");
-        }
+        
     }
     
     public ParallelBasicModel(ArrayList<Object> values){

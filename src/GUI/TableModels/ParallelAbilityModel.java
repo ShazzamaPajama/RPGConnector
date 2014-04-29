@@ -18,7 +18,7 @@ public class ParallelAbilityModel extends ParallelValueModel{
     public ParallelAbilityModel(){
         String[] titles = new String[] {"STR", "CON", "DEX", "INT", "WIS", "CHA"};
         Labels = new ArrayList<>();
-        Values = new ArrayList<>();
+        Values = new ArrayList<>(6);
         Columns = new String[]{"Ability", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
