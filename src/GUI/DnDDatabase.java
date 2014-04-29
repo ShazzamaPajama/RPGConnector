@@ -82,7 +82,7 @@ public class DnDDatabase extends javax.swing.JFrame {
         NameField = new javax.swing.JTextField();
         jButtonViewAll = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTableCharacters.setAutoCreateRowSorter(true);
         jTableCharacters.setModel(new BasicInfoModel());

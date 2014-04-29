@@ -54,7 +54,7 @@ public class PlayArea extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanelGrid.setBorder(javax.swing.BorderFactory.createTitledBorder("Tactical Grid"));
         jPanelGrid.setMinimumSize(new java.awt.Dimension(500, 500));
@@ -68,7 +68,7 @@ public class PlayArea extends javax.swing.JFrame {
         );
         jPanelGridLayout.setVerticalGroup(
             jPanelGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 578, Short.MAX_VALUE)
         );
 
         jTextArea1.setColumns(20);

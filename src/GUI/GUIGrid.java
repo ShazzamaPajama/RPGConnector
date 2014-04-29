@@ -16,22 +16,16 @@ import javax.swing.JTextField;
  * @author Shazzama.Pajama
  */
 public class GUIGrid {
-    private JTextField[][] Grid;
+    private GUICell[][] Grid;
+    private Color ColorChanger;
     
     public GUIGrid(){
-        Grid = new JTextField[20][20];
+        Grid = new GUICell[20][20];
+        ColorChanger = Color.WHITE;
         
         for(int row=0; row<20; row++){
             for(int col=0; col<20; col++){
-                JTextField cell = new JTextField();
-                cell.addMouseListener(new java.awt.event.MouseAdapter(){
-                    @Override
-                    public void mouseClicked(java.awt.event.MouseEvent evt){
-                        changeColor(evt);
-                        
-                    }
-                });
-                
+                GUICell cell = new GUICell(this);
                 
                 cell.setBorder(BorderFactory.createLineBorder(Color.black));
                 Grid[row][col] = cell;
@@ -47,11 +41,11 @@ public class GUIGrid {
         return this.Grid;
     }
     
-    public void changeColor(java.awt.event.MouseEvent evt){
-        if(evt.getClickCount() == 2){
-            JTextField textfield = (JTextField)evt.getSource();
-            textfield.setBackground(Color.green);
-        }
-        
+    public void changeColorValue(Color c){
+        ColorChanger = c;
+    }
+    
+    public Color getColorChanger(){
+        return this.ColorChanger;
     }
 }
