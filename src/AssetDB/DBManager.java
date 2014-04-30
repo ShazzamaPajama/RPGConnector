@@ -19,6 +19,7 @@ import org.sqlite.SQLiteConfig;
 public class DBManager {
     private Connection Database;
     private Statement stmt;
+    private PreparedStatement PrepStmt;
     
     /**
      *Creates and connects to a file named DND.db if it does not already exist.
@@ -31,6 +32,7 @@ public class DBManager {
             config.enforceForeignKeys(true);
             Database = DriverManager.getConnection("jdbc:sqlite:DND.db", config.toProperties());
             stmt = Database.createStatement();
+            
             
             //Create Tables
             this.initCharacters();
@@ -316,33 +318,26 @@ public class DBManager {
             String Desc,
             String Extra) throws SQLException{
         
-        //Prepare strings for sql statement
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
-        String classname = "'" + Class + "'";
-        String align = "'" + Alignment + "'";
-        String desc = "'" + Desc + "'";
-        String extra = "'"+Extra+"'";
-        
-        
-        
         
         String SQL = "INSERT OR REPLACE INTO Characters "
-                + "VALUES ("
-                +  name + ", "
-                +  race + ", "
-                +  type + ", "
-                +  classname +", "
-                +  align + ", "
-                +  Level + ", "
-                +  HP + ", "
-                +  AC + ", "
-                +  ATK + ", "
-                +  desc + ", "
-                +  extra +" )";
+                + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?)";
         
-        stmt.executeUpdate(SQL);
+        
+        this.PrepStmt = Database.prepareStatement(SQL);
+        this.PrepStmt.setString(1, Name);
+        this.PrepStmt.setString(2, Race);
+        this.PrepStmt.setString(3, Type);
+        this.PrepStmt.setString(4, Class);
+        this.PrepStmt.setString(5, Alignment);
+        this.PrepStmt.setInt(6, Level);
+        this.PrepStmt.setInt(7, HP);
+        this.PrepStmt.setInt(8, AC);
+        this.PrepStmt.setInt(9, ATK);
+        this.PrepStmt.setString(10, Desc);
+        this.PrepStmt.setString(11, Extra);
+        
+        this.PrepStmt.executeUpdate();
+            
     }
     
     public void addAbilitySet(String Name, String Race, String Type, Integer STR, Integer CON, Integer DEX, Integer INT, Integer WIS, Integer CHA) throws SQLException{
