@@ -17,7 +17,6 @@ import org.sqlite.SQLiteConfig;
  * @author paul.koroski
  */
 public class DBManager {
-    private ArrayList<Character> Characters;
     private Connection Database;
     private Statement stmt;
     
@@ -26,32 +25,81 @@ public class DBManager {
      * Creates empty character, item, skillset, and abilityset tables if they do not exist.
      */
     public DBManager(){
-        Characters = new ArrayList<>();
-        String SQLString;
+        String SQL;
         try {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
             Database = DriverManager.getConnection("jdbc:sqlite:DND.db", config.toProperties());
             stmt = Database.createStatement();
             
-            //Character basic data table creation
-            SQLString = "CREATE TABLE IF NOT EXISTS Characters "
-                    + "(Name TEXT NOT NULL,"
-                    + " Race TEXT NOT NULL,"
-                    + " Type TEXT NOT NULL,"
-                    + " Class TEXT NOT NULL,"
-                    + " Alignment TEXT NOT NULL,"
-                    + " Level INTEGER NOT NULL,"
-                    + " HitPoints INTEGER NOT NULL,"
-                    + " ArmorClass INTEGER NOT NULL,"
-                    + " AtkBonus INTEGER NOT NULL,"
-                    + " Description TEXT NOT NULL,"
-                    + " ExtraAbilities TEXT NOT NULL,"
-                    + " PRIMARY KEY (Name, Race, Type))";
-            this.stmt.executeUpdate(SQLString);
+            //Create Tables
+            this.initCharacters();
+            this.initAbilitySets();
+            this.initSkillSets();
+            this.initItems();
+            this.initGrids();
             
-            
-            SQLString = "CREATE TABLE IF NOT EXISTS SkillSets "
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not establish Connection");
+        }
+    }
+    
+    
+    //Tablie Initialization Methods
+    
+    private void initCharacters(){
+        String SQL;
+        //Character basic data table creation
+            SQL = "CREATE TABLE IF NOT EXISTS Characters "
+                + "(Name TEXT NOT NULL,"
+                + " Race TEXT NOT NULL,"
+                + " Type TEXT NOT NULL,"
+                + " Class TEXT NOT NULL,"
+                + " Alignment TEXT NOT NULL,"
+                + " Level INTEGER NOT NULL,"
+                + " HitPoints INTEGER NOT NULL,"
+                + " ArmorClass INTEGER NOT NULL,"
+                + " AtkBonus INTEGER NOT NULL,"
+                + " Description TEXT NOT NULL,"
+                + " ExtraAbilities TEXT NOT NULL,"
+                + " PRIMARY KEY (Name, Race, Type))";        
+        try {            
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize Characters Table");
+        }
+    }
+    
+    private void initAbilitySets(){
+        String SQL;
+        SQL = "CREATE TABLE IF NOT EXISTS AbilitySets "
+                + "(Name TEXT NOT NULL,"
+                + " Race TEXT NOT NULL,"
+                + " Type TEXT NOT NULL,"
+                + " Strength INTEGER NOT NULL,"
+                + " Constitution INTEGER NOT NULL,"
+                + " Dexterity INTEGER NOT NULL,"
+                + " Intelligence INTEGER NOT NULL,"
+                + " Wisdom INTEGER NOT NULL,"
+                + " Charisma INTEGER NOT NULL,"
+                + " PRIMARY KEY (Name, Race, Type)"
+                + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
+        try {                
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize AbilitySets Table");
+        }
+                                
+        
+    }
+    
+    private void initSkillSets(){
+    String SQL;
+    
+        SQL = "CREATE TABLE IF NOT EXISTS SkillSets "
                     + "(Name TEXT NOT NULL,"
                     + " Race TEXT NOT NULL,"
                     + " Type TEXT NOT NULL,"
@@ -74,35 +122,50 @@ public class DBManager {
                     + " Thievery INTEGER,"
                     + " PRIMARY KEY (Name, Race, Type),"
                     + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
-            this.stmt.executeUpdate(SQLString);
-            
-            SQLString = "CREATE TABLE IF NOT EXISTS AbilitySets "
-                    + "(Name TEXT NOT NULL,"
-                    + " Race TEXT NOT NULL,"
-                    + " Type TEXT NOT NULL,"
-                    + " Strength INTEGER NOT NULL,"
-                    + " Constitution INTEGER NOT NULL,"
-                    + " Dexterity INTEGER NOT NULL,"
-                    + " Intelligence INTEGER NOT NULL,"
-                    + " Wisdom INTEGER NOT NULL,"
-                    + " Charisma INTEGER NOT NULL,"
-                    + " PRIMARY KEY (Name, Race, Type)"
-                    + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
-            this.stmt.executeUpdate(SQLString);
-           
-            SQLString = "CREATE TABLE IF NOT EXISTS Items "
-                    + "(Name TEXT NOT NULL, "
-                    + "Type TEXT NOT NULL, "
-                    + "Price TEXT NOT NULL, "
-                    + "Magic NUMERIC NOT NULL, "
-                    + "Description TEXT NOT NULL,"
-                    + "PRIMARY KEY (Name, Type))";
-            this.stmt.executeUpdate(SQLString);
-            
+        try {    
+            this.stmt.executeUpdate(SQL);
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize SkillSets Table");
         }
     }
+    
+    private void initItems() {
+        String SQL;
+
+        SQL = "CREATE TABLE IF NOT EXISTS Items "
+                + "(Name TEXT NOT NULL, "
+                + "Type TEXT NOT NULL, "
+                + "Price TEXT NOT NULL, "
+                + "Magic NUMERIC NOT NULL, "
+                + "Description TEXT NOT NULL,"
+                + "PRIMARY KEY (Name, Type))";
+        try {
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize Items Table");
+        }
+    }
+    
+    private void initGrids(){
+        String SQL;
+        
+        SQL = "CREATE TABLE IF NOT EXISTS Grids "
+                + "(Name TEXT PRIMARY KEY NOT NULL, "
+                + "Row INTEGER NOT NULL, "
+                + "Column INTEGER NOT NULL, "
+                + "Token TEXT NOT NULL, "
+                + "Color TEXT NOT NULL)";
+        
+        try {
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize Grids Table");
+        }
+    }
+    
     
     //Query Methods
     
@@ -115,6 +178,7 @@ public class DBManager {
         
         return result;
     }
+    
     
     /**
      *Executes a query for a character with a specific stat in the Character's table
