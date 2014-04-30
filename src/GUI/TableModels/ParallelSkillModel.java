@@ -8,6 +8,7 @@ package GUI.TableModels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ListIterator;
 
 /**
  *
@@ -97,6 +98,10 @@ public class ParallelSkillModel extends ParallelValueModel {
                 
             } 
         }
+    }
+    
+    public ListIterator getIterator(){
+        return Values.listIterator();
     }
     
 }

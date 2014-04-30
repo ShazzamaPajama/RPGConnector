@@ -43,7 +43,7 @@ public class CharacterSheet extends javax.swing.JFrame {
         
     }
     
-    public CharacterSheet(ArrayList<Object> basic, ArrayList<Integer> BasicScores, ArrayList<Integer> ability, ArrayList<Integer> skill, String Description, String Extras, DBManager DB){
+    public CharacterSheet(ArrayList<String> basic, ArrayList<Integer> BasicScores, ArrayList<Integer> ability, ArrayList<Integer> skill, String Description, String Extras, DBManager DB){
         initComponents();
         BasicInfo = new ParallelBasicModel(basic);
         AbilityInfo = new ParallelAbilityModel(ability);
@@ -222,7 +222,7 @@ public class CharacterSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- 
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

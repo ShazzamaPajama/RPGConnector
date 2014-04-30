@@ -470,8 +470,8 @@ public class DBManager {
         return ModelArray;
     }
     
-    public ArrayList<Object> getCharacterBasicInfo(String name, String race, String type) throws SQLException{
-        ArrayList<Object> BasicInfo = new ArrayList<>();
+    public ArrayList<String> getCharacterBasicInfo(String name, String race, String type) throws SQLException{
+        ArrayList<String> BasicInfo = new ArrayList<>();
         ResultSet results;
         String SQL;
         String Name = "'"+name+"'";

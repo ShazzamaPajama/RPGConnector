@@ -8,13 +8,14 @@ package GUI.TableModels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ListIterator;
 
 /**
  *
  * @author Shazzama.Pajama
  */
 public class ParallelBasicModel extends ParallelValueModel {
-    private ArrayList<Object> Values;
+    private ArrayList<String> Values;
     
     public ParallelBasicModel(){
         String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment"};
@@ -28,7 +29,7 @@ public class ParallelBasicModel extends ParallelValueModel {
         }        
     }
     
-    public ParallelBasicModel(ArrayList<Object> values){
+    public ParallelBasicModel(ArrayList<String> values){
         String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment"};
         Labels = new ArrayList<>();
         Values = values;
@@ -46,5 +47,8 @@ public class ParallelBasicModel extends ParallelValueModel {
         }
     }
     
+    public ListIterator getIterator(){
+        return Values.listIterator();
+    }
     
 }

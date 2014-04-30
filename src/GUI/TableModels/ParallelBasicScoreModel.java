@@ -8,6 +8,7 @@ package GUI.TableModels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ListIterator;
 
 /**
  *
@@ -47,4 +48,7 @@ public class ParallelBasicScoreModel extends ParallelValueModel {
         }
     }
     
+    public ListIterator getIterator(){
+        return Values.listIterator();
+    }
 }

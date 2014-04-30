@@ -457,7 +457,7 @@ public class DnDDatabase extends javax.swing.JFrame {
             String Type = (String)row.get(2);
             
             try {
-                ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
+                ArrayList<String> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
                 ArrayList<Integer> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
                 ArrayList<Integer> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
                 ArrayList<Integer> BasicScoreInfo = dbManager.getCharacterBasicScores(Name, Race, Type);
@@ -486,7 +486,7 @@ public class DnDDatabase extends javax.swing.JFrame {
                 String Type = (String)row.get(2);
             
                 try {
-                    ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
+                    ArrayList<String> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
                     ArrayList<Integer> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
                     ArrayList<Integer> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
                     ArrayList<Integer> BasicScores = dbManager.getCharacterBasicScores(Name, Race, Type);
