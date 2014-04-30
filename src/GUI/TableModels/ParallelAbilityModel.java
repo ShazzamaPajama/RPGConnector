@@ -14,7 +14,8 @@ import java.util.Arrays;
  * @author Shazzama.Pajama
  */
 public class ParallelAbilityModel extends ParallelValueModel{
-   
+   private ArrayList<Integer> Values;
+    
     public ParallelAbilityModel(){
         String[] titles = new String[] {"STR", "CON", "DEX", "INT", "WIS", "CHA"};
         Labels = new ArrayList<>();
@@ -23,16 +24,25 @@ public class ParallelAbilityModel extends ParallelValueModel{
         
         Labels.addAll(Arrays.asList(titles));
         for (String i: Labels){
-            Values.add("");
+            Values.add(0);
         }        
     }
     
-    public ParallelAbilityModel(ArrayList<Object> values){
+    public ParallelAbilityModel(ArrayList<Integer> values){
         String[] titles = new String[] {"STR", "CON", "DEX", "INT", "WIS", "CHA"};
         Labels = new ArrayList<>();
         Values = values;
         Columns = new String[]{"Ability", "Values"};
         
         Labels.addAll(Arrays.asList(titles));       
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if(columnIndex == 0){
+            return Labels.get(rowIndex);
+        }else{
+            return Values.get(rowIndex);
+        }
     }
 }

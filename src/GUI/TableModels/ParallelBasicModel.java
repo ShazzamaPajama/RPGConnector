@@ -14,6 +14,7 @@ import java.util.Arrays;
  * @author Shazzama.Pajama
  */
 public class ParallelBasicModel extends ParallelValueModel {
+    private ArrayList<Object> Values;
     
     public ParallelBasicModel(){
         String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "ATKBonus"};
@@ -34,6 +35,15 @@ public class ParallelBasicModel extends ParallelValueModel {
         Columns = new String[]{"BasicInfo", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if(columnIndex == 0){
+            return Labels.get(rowIndex);
+        }else{
+            return Values.get(rowIndex);
+        }
     }
     
 }
