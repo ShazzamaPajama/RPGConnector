@@ -490,12 +490,35 @@ public class DBManager {
         BasicInfo.add(results.getString("Type"));
         BasicInfo.add(results.getString("Class"));
         BasicInfo.add(results.getString("Alignment"));
-        BasicInfo.add(results.getInt("Level"));
-        BasicInfo.add(results.getInt("Hitpoints"));
-        BasicInfo.add(results.getInt("ArmorClass"));
-        BasicInfo.add(results.getInt("AtkBonus"));
         
         return BasicInfo;
+    }
+    
+    public ArrayList<Integer> getCharacterBasicScores(String name, String race, String type) throws SQLException{
+        ArrayList<Integer> Scores = new ArrayList<>();
+        String SQL;
+        ResultSet results;
+        
+        SQL = "SELECT Level, Hitpoints, ArmorClass, AtkBonus FROM Characters "
+                + "WHERE Name = ? "
+                + "AND Race = ?"
+                + "AND Type = ?";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, name);
+        PrepStmt.setString(2, race);
+        PrepStmt.setString(3, type);
+        results = PrepStmt.executeQuery();
+        
+        results.next();
+        
+        Scores.add(results.getInt("Level"));
+        Scores.add(results.getInt("Hitpoints"));
+        Scores.add(results.getInt("ArmorClass"));
+        Scores.add(results.getInt("AtkBonus"));
+        
+        return Scores;
+        
     }
     
     public ArrayList<Integer> getCharacterAbilities(String name, String race, String type) throws SQLException{
