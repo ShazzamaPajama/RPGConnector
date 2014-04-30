@@ -48,6 +48,18 @@ public class ParallelBasicScoreModel extends ParallelValueModel {
         }
     }
     
+    @Override
+    public void setValueAt(Object val, int row, int col){
+        if(col == 1){
+            try{
+                Values.add(row, Integer.parseInt(val.toString()));
+            }catch(NumberFormatException ex){
+                
+            }
+            
+        }
+    }
+    
     public ListIterator getIterator(){
         return Values.listIterator();
     }

@@ -47,6 +47,18 @@ public class ParallelBasicModel extends ParallelValueModel {
         }
     }
     
+    @Override
+    public void setValueAt(Object val, int row, int col){
+        if(col == 1){
+            try{
+                Values.add(row, (String)val);
+            }catch(NumberFormatException ex){
+                
+            }
+            
+        }
+    }
+    
     public ListIterator getIterator(){
         return Values.listIterator();
     }
