@@ -17,7 +17,7 @@ public class ParallelBasicModel extends ParallelValueModel {
     private ArrayList<Object> Values;
     
     public ParallelBasicModel(){
-        String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "ATKBonus"};
+        String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment"};
         Labels = new ArrayList<>();
         Values = new ArrayList<>();
         Columns = new String[]{"BasicInfo", "Values"};
@@ -29,7 +29,7 @@ public class ParallelBasicModel extends ParallelValueModel {
     }
     
     public ParallelBasicModel(ArrayList<Object> values){
-        String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment", "Level", "HP", "AC", "ATKBonus"};
+        String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment"};
         Labels = new ArrayList<>();
         Values = values;
         Columns = new String[]{"BasicInfo", "Values"};
@@ -45,5 +45,6 @@ public class ParallelBasicModel extends ParallelValueModel {
             return Values.get(rowIndex);
         }
     }
+    
     
 }

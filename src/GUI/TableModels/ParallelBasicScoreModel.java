@@ -13,14 +13,14 @@ import java.util.Arrays;
  *
  * @author Shazzama.Pajama
  */
-public class ParallelAbilityModel extends ParallelValueModel{
-   private ArrayList<Integer> Values;
+public class ParallelBasicScoreModel extends ParallelValueModel {
+    private ArrayList<Integer> Values;
     
-    public ParallelAbilityModel(){
-        String[] titles = new String[] {"STR", "CON", "DEX", "INT", "WIS", "CHA"};
+    public ParallelBasicScoreModel(){
+        String[] titles = new String[] {"Level", "HP", "AC", "ATKBonus"};
         Labels = new ArrayList<>();
         Values = new ArrayList<>();
-        Columns = new String[]{"Ability", "Values"};
+        Columns = new String[]{"BasicInfo", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
         for (String i: Labels){
@@ -28,15 +28,16 @@ public class ParallelAbilityModel extends ParallelValueModel{
         }        
     }
     
-    public ParallelAbilityModel(ArrayList<Integer> values){
-        String[] titles = new String[] {"STR", "CON", "DEX", "INT", "WIS", "CHA"};
+    public ParallelBasicScoreModel(ArrayList<Integer> values){
+        String[] titles = new String[] {"Level", "HP", "AC", "ATKBonus"};
         Labels = new ArrayList<>();
         Values = values;
-        Columns = new String[]{"Ability", "Values"};
+        Columns = new String[]{"BasicValues", "Values"};
         
-        Labels.addAll(Arrays.asList(titles));       
+        Labels.addAll(Arrays.asList(titles));
     }
-
+    
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if(columnIndex == 0){
@@ -46,15 +47,4 @@ public class ParallelAbilityModel extends ParallelValueModel{
         }
     }
     
-   @Override
-    public void setValueAt(Object val, int rowIndex, int colIndex){
-        if(colIndex == 1){
-            try{
-                Values.add(rowIndex, Integer.parseInt(val.toString()));
-            }catch(NumberFormatException ex){
-                
-            }
-            
-        }
-    }
 }

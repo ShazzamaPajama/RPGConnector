@@ -86,4 +86,17 @@ public class ParallelSkillModel extends ParallelValueModel {
             return Values.get(rowIndex);
         }
     }
+    
+    
+    @Override
+    public void setValueAt(Object val, int rowIndex, int colIndex){
+        if(colIndex == 1){
+            try{
+                Values.add(rowIndex, Integer.parseInt(val.toString()));
+            }catch(NumberFormatException ex){
+                
+            } 
+        }
+    }
+    
 }
