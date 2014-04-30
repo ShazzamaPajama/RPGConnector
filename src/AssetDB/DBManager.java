@@ -318,7 +318,7 @@ public class DBManager {
             String Extra) throws SQLException{
         
         
-        String SQL = "INSERT OR REPLACE INTO Characters "
+        String SQL = "INSERT OR REPLACE INTO  Characters "
                 + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?)";
         
         PreparedStatement PrepStmt = Database.prepareStatement(SQL);
@@ -373,17 +373,16 @@ public class DBManager {
     public void updateSkill(String Name, String Race, String Type, String Skill, Integer Value) throws SQLException{
         
         String SQL = "UPDATE SkillSets "
-                + "SET ? = ? "
+                + "SET "+Skill+" = ? "
                 + "WHERE Name = ? "
                 + "AND Race = ? "
                 + "AND Type = ? ";
         
         PreparedStatement PrepStmt = Database.prepareStatement(SQL);
-        PrepStmt.setString(1, Skill);
-        PrepStmt.setInt(2, Value);
-        PrepStmt.setString(3, Name);
-        PrepStmt.setString(4, Race);
-        PrepStmt.setString(5, Type);
+        PrepStmt.setInt(1, Value);
+        PrepStmt.setString(2, Name);
+        PrepStmt.setString(3, Race);
+        PrepStmt.setString(4, Type);
         
         
     }
@@ -499,8 +498,8 @@ public class DBManager {
         return BasicInfo;
     }
     
-    public ArrayList<Object> getCharacterAbilities(String name, String race, String type) throws SQLException{
-        ArrayList<Object> AbilityInfo = new ArrayList<>();
+    public ArrayList<Integer> getCharacterAbilities(String name, String race, String type) throws SQLException{
+        ArrayList<Integer> AbilityInfo = new ArrayList<>();
         ResultSet results;
         String SQL;
         String Name = "'"+name+"'";
@@ -524,8 +523,8 @@ public class DBManager {
         
     }
     
-    public ArrayList<Object> getCharacterSkills(String name, String race, String type) throws SQLException{
-        ArrayList<Object> SkillInfo = new ArrayList<>();
+    public ArrayList<Integer> getCharacterSkills(String name, String race, String type) throws SQLException{
+        ArrayList<Integer> SkillInfo = new ArrayList<>();
         ResultSet results;
         String SQL;
         String Name = "'"+name+"'";
