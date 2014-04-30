@@ -19,7 +19,6 @@ import org.sqlite.SQLiteConfig;
 public class DBManager {
     private Connection Database;
     private Statement stmt;
-    private PreparedStatement PrepStmt;
     
     /**
      *Creates and connects to a file named DND.db if it does not already exist.
@@ -322,68 +321,71 @@ public class DBManager {
         String SQL = "INSERT OR REPLACE INTO Characters "
                 + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?)";
         
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Race);
+        PrepStmt.setString(3, Type);
+        PrepStmt.setString(4, Class);
+        PrepStmt.setString(5, Alignment);
+        PrepStmt.setInt(6, Level);
+        PrepStmt.setInt(7, HP);
+        PrepStmt.setInt(8, AC);
+        PrepStmt.setInt(9, ATK);
+        PrepStmt.setString(10, Desc);
+        PrepStmt.setString(11, Extra);
         
-        this.PrepStmt = Database.prepareStatement(SQL);
-        this.PrepStmt.setString(1, Name);
-        this.PrepStmt.setString(2, Race);
-        this.PrepStmt.setString(3, Type);
-        this.PrepStmt.setString(4, Class);
-        this.PrepStmt.setString(5, Alignment);
-        this.PrepStmt.setInt(6, Level);
-        this.PrepStmt.setInt(7, HP);
-        this.PrepStmt.setInt(8, AC);
-        this.PrepStmt.setInt(9, ATK);
-        this.PrepStmt.setString(10, Desc);
-        this.PrepStmt.setString(11, Extra);
-        
-        this.PrepStmt.executeUpdate();
+        PrepStmt.executeUpdate();
             
     }
     
     public void addAbilitySet(String Name, String Race, String Type, Integer STR, Integer CON, Integer DEX, Integer INT, Integer WIS, Integer CHA) throws SQLException{
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
         
-        String SQL = "INSERT OR REPLACE INTO AbilitySets VALUES ("
-                + name + ", "
-                + race + ", "
-                + type + ", "
-                + STR + ", "
-                + CON + ", "
-                + DEX + ", "
-                + INT + ", "
-                + WIS + ", "
-                + CHA + ")";
+        String SQL = "INSERT OR REPLACE INTO AbilitySets (Name, Race, Type, Strength, Constitution, Dexterity, Intelligence, Wisdom, Charisma)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
-        stmt.execute(SQL);
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Race);
+        PrepStmt.setString(3, Type);
+        PrepStmt.setInt(4, STR);
+        PrepStmt.setInt(5, CON);
+        PrepStmt.setInt(6, DEX);
+        PrepStmt.setInt(7, INT);
+        PrepStmt.setInt(8, WIS);
+        PrepStmt.setInt(9, CHA);
+        
+        PrepStmt.executeUpdate();
+        
     }
     
     public void addSkillSet(String Name, String Race, String Type) throws SQLException{
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
         
-        String SQL = "INSERT OR REPLACE INTO SkillSets (Name, Race, Type) VALUES ("
-                + name + ", "
-                + race + ", "
-                + type + ")";
+        String SQL = "INSERT OR REPLACE INTO SkillSets (Name, Race, Type) VALUES (?, ?, ?)";
         
-        stmt.executeUpdate(SQL);
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Race);
+        PrepStmt.setString(3, Type);
+        
+        PrepStmt.executeUpdate();
     }
     
     public void updateSkill(String Name, String Race, String Type, String Skill, Integer Value) throws SQLException{
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
         
         String SQL = "UPDATE SkillSets "
-                + "SET " + Skill + " = " + Value
-                + " WHERE Name = " + name
-                + " AND Race = " + race
-                + " AND Type = " + type;
+                + "SET ? = ? "
+                + "WHERE Name = ? "
+                + "AND Race = ? "
+                + "AND Type = ? ";
         
-        stmt.executeUpdate(SQL);
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Skill);
+        PrepStmt.setInt(2, Value);
+        PrepStmt.setString(3, Name);
+        PrepStmt.setString(4, Race);
+        PrepStmt.setString(5, Type);
+        
+        
     }
     
     
