@@ -317,6 +317,7 @@ public class DnDDatabase extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTypeActionPerformed
@@ -459,10 +460,12 @@ public class DnDDatabase extends javax.swing.JFrame {
                 ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
                 ArrayList<Integer> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
                 ArrayList<Integer> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                ArrayList<Integer> BasicScoreInfo = dbManager.getCharacterBasicScores(Name, Race, Type);
+                
                 String Desc = dbManager.getCharacterDescription(Name, Race, Type);
                 String Extra = dbManager.getCharacterExtras(Name, Race, Type);
                 
-                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
+                new CharacterSheet(BasicInfo,BasicScoreInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
                 
                 
             } catch (SQLException ex) {
@@ -486,11 +489,12 @@ public class DnDDatabase extends javax.swing.JFrame {
                     ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
                     ArrayList<Integer> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
                     ArrayList<Integer> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                    ArrayList<Integer> BasicScores = dbManager.getCharacterBasicScores(Name, Race, Type);
                     String Desc = dbManager.getCharacterDescription(Name, Race, Type);
                     String Extra = dbManager.getCharacterExtras(Name, Race, Type);
                 
                 
-                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
+                new CharacterSheet(BasicInfo, BasicScores, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
                 
                 
                 } catch (SQLException ex) {
