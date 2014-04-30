@@ -41,7 +41,7 @@ public class CharacterSheet extends javax.swing.JFrame {
         
     }
     
-    public CharacterSheet(ArrayList<Object> basic, ArrayList<Object> ability, ArrayList<Object> skill, String Description, String Extras, DBManager DB){
+    public CharacterSheet(ArrayList<Object> basic, ArrayList<Integer> ability, ArrayList<Integer> skill, String Description, String Extras, DBManager DB){
         initComponents();
         BasicInfo = new ParallelBasicModel(basic);
         AbilityInfo = new ParallelAbilityModel(ability);
@@ -206,44 +206,7 @@ public class CharacterSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ParallelValueModel Basic = (ParallelValueModel)jTableBasic.getModel();
-        ParallelValueModel Abilities = (ParallelValueModel)jTableAbility.getModel();
-        ParallelValueModel Skills = (ParallelValueModel)jTableSkill.getModel();
-        
-        ListIterator BasicIterator = Basic.getIterator();
-        ListIterator AbilityIterator = Abilities.getIterator();
-        ListIterator SkillIterator = Skills.getIterator();
-        
-        String Name = BasicIterator.next().toString();
-        System.out.println("Name = " + Name) ;
-        String Race = BasicIterator.next().toString();
-        System.out.println("race = " + Race);
-        String Type = BasicIterator.next().toString();
-        System.out.println("Type = " + Type);
-        
-        try{
-            
-            
-            Database.addSkillSet(Name, Race, Type);
-            
-            while(SkillIterator.hasNext()){
-                String value = SkillIterator.next().toString();
-                Integer Score;
-                if(value.equals("")){
-                   Score = 0;
-                }else{
-                    Score = Integer.parseInt(value);
-                }
-                
-                Database.updateSkill(Name, Race, Type, Type, Score );
-            }
-            
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
-        }
-        
-        
-        
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
