@@ -11,7 +11,9 @@ import GUI.TableModels.ParallelAbilityModel;
 import GUI.TableModels.ParallelBasicModel;
 import GUI.TableModels.ParallelBasicScoreModel;
 import GUI.TableModels.ParallelSkillModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  *
@@ -222,7 +224,42 @@ public class CharacterSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        ParallelBasicModel BasicModel = (ParallelBasicModel)jTableBasic.getModel();
+        ParallelBasicScoreModel ScoresModel = (ParallelBasicScoreModel)jTableScores.getModel();
+        ParallelAbilityModel AbilitiesModel = (ParallelAbilityModel)jTableAbility.getModel();
+        ParallelSkillModel SkillsModel = (ParallelSkillModel)jTableSkill.getModel();
+        
+        ListIterator<String> Basic = BasicModel.getIterator();
+        ListIterator<Integer> Scores = ScoresModel.getIterator();
+        ListIterator<Integer> Abilities = AbilitiesModel.getIterator();
+        ListIterator<Integer> Skills = SkillsModel.getIterator();
+        ListIterator<String> SkillNames = SkillsModel.getSkillNames();
+        
+        String Name = Basic.next();
+        String Race = Basic.next();
+        String Type = Basic.next();
+        
+        try{
+            this.Database.addBasicInfo(Name, Race, Type,
+                    Basic.next(), Basic.next(), Scores.next(), Scores.next(),
+                    Scores.next(), Scores.next(), jTextAreaDescription.getText(),
+                    jTextAreaExtras.getText());
+            
+            this.Database.addAbilitySet(Name, Race, Type, Abilities.next(),
+                    Abilities.next(), Abilities.next(), Abilities.next(),
+                    Abilities.next(), Abilities.next());
+            
+            this.Database.addSkillSet(Name, Race, Type);
+            
+            while(Skills.hasNext()){
+                this.Database.updateSkill(Name, Race, Type, SkillNames.next(), Skills.next());
+            }
+            
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            System.out.println(ex.getSQLState());
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

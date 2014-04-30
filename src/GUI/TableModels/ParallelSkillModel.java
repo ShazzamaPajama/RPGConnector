@@ -68,7 +68,7 @@ public class ParallelSkillModel extends ParallelValueModel {
             "Religion",
             "Stealth",
             "Streetwise",
-            "Tievery"
+            "Thievery"
         };
         
         
@@ -104,4 +104,7 @@ public class ParallelSkillModel extends ParallelValueModel {
         return Values.listIterator();
     }
     
+    public ListIterator<String> getSkillNames(){
+        return Labels.listIterator();
+    }
 }

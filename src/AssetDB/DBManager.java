@@ -384,6 +384,8 @@ public class DBManager {
         PrepStmt.setString(3, Race);
         PrepStmt.setString(4, Type);
         
+        PrepStmt.executeUpdate();
+        
         
     }
     
