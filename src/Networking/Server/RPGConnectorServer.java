@@ -46,19 +46,29 @@ public class RPGConnectorServer {
         
     }
     
+    //Adding Client Methods
     
-    
-    public synchronized void UpdateCellToken(int x, int y, String t){
-        //Update Cell Token
-        TacticalGrid.setCellToken(x, y, null);
+    public synchronized void addUser(User newuser){
         
-        //Sent update message to all users
     }
+    
+    public synchronized void addClientOutput(PrintWriter clientwriter){
+        
+    }
+    
+
+    
+    //Cell Updating Methods
     
     public synchronized  void UpdateCellColor(){
         //Udate Cell Color
         
-        //Sent update message to all users
+        //Send update message to all users
+    }
+    
+    public synchronized void UpdateCellToken(){
+        //update cell token
         
+        //Send Update message to all users
     }
 }
