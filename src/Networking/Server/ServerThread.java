@@ -32,6 +32,7 @@ public class ServerThread extends Thread{
         while(true){
             try {
                 Socket client = ServerConnection.accept();
+                new UserThread(client, Server).start();
                 
             } catch (IOException ex) {
                 Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
