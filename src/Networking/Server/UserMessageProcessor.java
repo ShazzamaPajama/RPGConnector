@@ -6,18 +6,22 @@
 
 package Networking.Server;
 
+import javax.json.JsonObject;
+
 /**
  *
  * @author Shazzama.Pajama
  */
 public class UserMessageProcessor {
     private RPGConnectorServer Server;
-    private User client;
     
     
-    public UserMessageProcessor(User c, RPGConnectorServer server){
+    public UserMessageProcessor(RPGConnectorServer server){
         Server = server;
-        client = c; 
+    }
+    
+    public void ProcessMessage(JsonObject message){
+        
     }
     
     

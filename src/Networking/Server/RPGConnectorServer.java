@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * @author Shazzama.Pajama
  */
 public class RPGConnectorServer {
-    private ArrayList<User> Users;
     private ArrayList<PrintWriter> ClientOutputStreams;
     private ServerMessageBuilder MessageBuilder;
     private ServerThread ConnectionReceiver;
@@ -27,7 +26,6 @@ public class RPGConnectorServer {
     private ServerSocket ServerConnection;
     
     public RPGConnectorServer(){
-        Users = new ArrayList<>();
         ClientOutputStreams = new ArrayList<>();
         MessageBuilder = new ServerMessageBuilder();
         TacticalGrid = new Grid("NewGrid");
@@ -48,9 +46,6 @@ public class RPGConnectorServer {
     
     //Adding Client Methods
     
-    public synchronized void addUser(User newuser){
-        
-    }
     
     public synchronized void addClientOutput(PrintWriter clientwriter){
         
