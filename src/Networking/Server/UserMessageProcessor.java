@@ -14,15 +14,32 @@ import javax.json.JsonObject;
  */
 public class UserMessageProcessor {
     private RPGConnectorServer Server;
+    private String UserName;
     
     
     public UserMessageProcessor(RPGConnectorServer server){
         Server = server;
+        UserName = "";
     }
     
     public void ProcessMessage(JsonObject message){
         
+        switch(message.getString("Message")){
+            case "UpdateName": 
+                this.UpdateName(message);
+                break;
+             
+        }
     }
     
+    
+    public void UpdateName(JsonObject message){
+        try{
+            this.UserName = message.getString("Name");
+            
+        }catch(NullPointerException ex){
+            
+        }
+    }
     
 }
