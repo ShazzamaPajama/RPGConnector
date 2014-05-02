@@ -13,6 +13,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.JsonObject;
 
 /**
  *
@@ -29,15 +30,6 @@ public class RPGConnectorServer {
         ClientOutputStreams = new ArrayList<>();
         MessageBuilder = new ServerMessageBuilder();
         TacticalGrid = new Grid("NewGrid");
-        
-        try {
-            ServerConnection = new ServerSocket(1337);
-        } catch (IOException ex) {
-            Logger.getLogger(RPGConnectorServer.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
-        }
-        
-        
     }
     
     public RPGConnectorServer(Grid oldergrid){
@@ -48,7 +40,7 @@ public class RPGConnectorServer {
     
     
     public synchronized void addClientOutput(PrintWriter clientwriter){
-        
+        this.ClientOutputStreams.add(clientwriter);
     }
     
 
@@ -56,23 +48,48 @@ public class RPGConnectorServer {
     //Cell Updating Methods
     
     public synchronized  void UpdateCellColor(int row, int col, String Color){
-        //Udate Cell Color
+        //Update Cell Color
+        this.TacticalGrid.setCellColor(row, col, Color);
+        
         
         //Send update message to all users
+        JsonObject message = MessageBuilder.UpdateCellColorMessage(row, col, Color);
+        for(PrintWriter client : ClientOutputStreams){
+            client.println(message.toString());
+        }
+        
     }
     
     public synchronized void UpdateCellToken(int row, int col, String Token){
         //update cell token
+        this.TacticalGrid.setCellToken(row, col, Token);
         
         //Send Update message to all users
+        JsonObject message = MessageBuilder.UpdateCellTokenMessage(row, col, Token);
+        for(PrintWriter client : ClientOutputStreams){
+            client.println(message.toString());
+        }
     }
     
     //Chat Methods
     
     public synchronized void Updatechat(String name, String chatmsg){
+        JsonObject message = MessageBuilder.UpdateChatMessage(name, chatmsg);
         
+        for(PrintWriter client : ClientOutputStreams){
+            client.println(message);
+        }
         
     }
     
     
+    
+    //Server Thread messages
+    public void StarServerThread(){
+        try {
+            ServerConnection = new ServerSocket(1337);
+        } catch (IOException ex) {
+            Logger.getLogger(RPGConnectorServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
