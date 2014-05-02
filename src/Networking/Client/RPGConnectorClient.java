@@ -32,6 +32,6 @@ public class RPGConnectorClient {
     }
     
     public void StartClientThread(){
-        new ClientThread(ServerReader).start();
+        new ClientThread(ServerReader, new ClientMessageProcessor(this)).start();
     }
 }

@@ -6,10 +6,20 @@
 
 package Networking.Client;
 
+import javax.json.JsonObject;
+
 /**
  *
  * @author Shazzama.Pajama
  */
-public class CllientMessageProcessor {
+public class ClientMessageProcessor {
     
+    public ClientMessageProcessor(RPGConnectorClient client){
+        
+    }
+    
+    
+    public synchronized void ProcessMessage(JsonObject message){
+        
+    } 
 }
