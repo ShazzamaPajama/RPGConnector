@@ -31,7 +31,7 @@ public class DBManager {
         try {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
-            Database = DriverManager.getConnection("jdbc:sqlite:DND.db", config.toProperties());
+            Database = DriverManager.getConnection("jdbc:sqlite:DND.db");
             stmt = Database.createStatement();
             
             //Character basic data table creation
