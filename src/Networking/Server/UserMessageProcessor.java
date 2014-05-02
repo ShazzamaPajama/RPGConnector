@@ -24,7 +24,7 @@ public class UserMessageProcessor {
     
     public void ProcessMessage(JsonObject message){
         try{
-        switch(message.getString("Message")){
+        switch(message.getString("MessageType")){
             case "UpdateName": 
                 this.UpdateName(message);
                 break;

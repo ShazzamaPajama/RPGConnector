@@ -55,13 +55,13 @@ public class RPGConnectorServer {
     
     //Cell Updating Methods
     
-    public synchronized  void UpdateCellColor(){
+    public synchronized  void UpdateCellColor(int row, int col, String Color){
         //Udate Cell Color
         
         //Send update message to all users
     }
     
-    public synchronized void UpdateCellToken(){
+    public synchronized void UpdateCellToken(int row, int col, String Token){
         //update cell token
         
         //Send Update message to all users
@@ -70,8 +70,9 @@ public class RPGConnectorServer {
     //Chat Methods
     
     public synchronized void Updatechat(String name, String chatmsg){
-        String Name = name;
-        String ChatMessage = chatmsg;
+        
         
     }
+    
+    
 }
