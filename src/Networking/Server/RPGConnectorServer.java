@@ -66,4 +66,12 @@ public class RPGConnectorServer {
         
         //Send Update message to all users
     }
+    
+    //Chat Methods
+    
+    public synchronized void Updatechat(String name, String chatmsg){
+        String Name = name;
+        String ChatMessage = chatmsg;
+        
+    }
 }

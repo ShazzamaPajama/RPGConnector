@@ -28,7 +28,11 @@ public class UserMessageProcessor {
             case "UpdateName": 
                 this.UpdateName(message);
                 break;
-             
+            
+            case "UpdateChat":
+                
+            
+                
         }
     }
     
@@ -36,10 +40,43 @@ public class UserMessageProcessor {
     public void UpdateName(JsonObject message){
         try{
             this.UserName = message.getString("Name");
+        }catch(NullPointerException ex){   
+        }
+    }
+    
+    public void UpdateChat(String name, JsonObject message){
+        try{
+            String Name = name;
+            String ChatMessage = message.getString("ChatMessage");
+            Server.Updatechat(name, Name);
             
         }catch(NullPointerException ex){
             
         }
     }
+    
+    public void UpdateColor (JsonObject message){
+        try{
+            int row = message.getInt("CellRow");
+            int col = message.getInt("CellCol");
+            String Color = message.getString("Color");
+            
+            
+        }catch(NullPointerException ex){
+            
+        }
+    }
+    
+    public void UpdateToken(JsonObject message){
+        try{
+            int row = message.getInt("CellRow");
+            int col = message.getInt("CellCol");
+            String Token = message.getString("Token");
+            
+        }catch(NullPointerException ex){
+            
+        }
+    }
+    
     
 }

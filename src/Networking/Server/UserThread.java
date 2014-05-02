@@ -50,7 +50,7 @@ public class UserThread extends Thread {
                 MessageReader.ProcessMessage(JsonMessage);
                 
                 
-            } catch (IOException ex) {
+            } catch (IOException | JsonException ex) {
                 Logger.getLogger(UserThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
