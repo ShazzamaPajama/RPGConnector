@@ -23,16 +23,26 @@ public class UserMessageProcessor {
     }
     
     public void ProcessMessage(JsonObject message){
-        
+        try{
         switch(message.getString("Message")){
             case "UpdateName": 
                 this.UpdateName(message);
                 break;
             
             case "UpdateChat":
+                this.UpdateChat(UserName, message);
+                break;
                 
+            case "UpdateToken":
+                this.UpdateToken(message);
+                break;
+                
+            case "UpdateColor":
+                this.UpdateColor(message);
+                break;
+        }
+        }catch(NullPointerException ex){
             
-                
         }
     }
     
@@ -48,7 +58,7 @@ public class UserMessageProcessor {
         try{
             String Name = name;
             String ChatMessage = message.getString("ChatMessage");
-            Server.Updatechat(name, Name);
+            this.Server.Updatechat(name, Name);
             
         }catch(NullPointerException ex){
             
@@ -61,6 +71,7 @@ public class UserMessageProcessor {
             int col = message.getInt("CellCol");
             String Color = message.getString("Color");
             
+            this.Server.UpdateCellColor(row, col, Color);
             
         }catch(NullPointerException ex){
             
@@ -73,6 +84,7 @@ public class UserMessageProcessor {
             int col = message.getInt("CellCol");
             String Token = message.getString("Token");
             
+            this.Server.UpdateCellToken(row, col, Token);
         }catch(NullPointerException ex){
             
         }
