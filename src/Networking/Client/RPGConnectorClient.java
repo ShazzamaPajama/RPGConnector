@@ -34,4 +34,19 @@ public class RPGConnectorClient {
     public void StartClientThread(){
         new ClientThread(ServerReader, new ClientMessageProcessor(this)).start();
     }
+    
+    
+    //Update Methods
+    
+    public synchronized void UpdateCellToken(int row, int col, String Token){
+        
+    }
+    
+    public synchronized void UpdateCellColor(int row, int col, String Color){
+        
+    }
+    
+    public synchronized void UpdateChat(String User, String ChatMessage){
+        
+    }
 }

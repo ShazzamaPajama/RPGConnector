@@ -6,10 +6,19 @@
 
 package Networking.Client;
 
+import javax.json.JsonObject;
+
 /**
  *
  * @author Shazzama.Pajama
  */
 public class ClientMessageBuilder {
     
+    public ClientMessageBuilder(){
+        
+    }
+    
+    public JsonObject ChatUpdateMessage(String ChatMessage){
+        JsonObject
+    }
 }
