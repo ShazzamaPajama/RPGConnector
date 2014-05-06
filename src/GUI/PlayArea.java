@@ -6,8 +6,14 @@
 
 package GUI;
 
+import Networking.Client.RPGConnectorClient;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -15,14 +21,26 @@ import javax.swing.JTextField;
  * @author Shazzama.Pajama
  */
 public class PlayArea extends javax.swing.JFrame {
-    LocalGUIGrid Grid;
+    private MPGUIGrid Grid;
+    private RPGConnectorClient Client;
     /**
      * Creates new form PlayArea
      */
-    public PlayArea() {
-        initComponents();
-        jPanelGrid.setLayout(new GridLayout(20,20));
+    public PlayArea(String host) {
+        try {
+            initComponents();
+            jPanelGrid.setLayout(new GridLayout(20,20));
+            Grid = new MPGUIGrid(); 
+            Client = new RPGConnectorClient(host, this);
+        } catch (IOException ex) {
+            Logger.getLogger(PlayArea.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,9 +53,9 @@ public class PlayArea extends javax.swing.JFrame {
 
         jPanelGrid = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaChatLog = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaChatField = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -61,17 +79,26 @@ public class PlayArea extends javax.swing.JFrame {
         );
         jPanelGridLayout.setVerticalGroup(
             jPanelGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 576, Short.MAX_VALUE)
         );
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chat"));
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaChatLog.setColumns(20);
+        jTextAreaChatLog.setLineWrap(true);
+        jTextAreaChatLog.setRows(5);
+        jTextAreaChatLog.setWrapStyleWord(true);
+        jTextAreaChatLog.setBorder(javax.swing.BorderFactory.createTitledBorder("Chat"));
+        jScrollPane1.setViewportView(jTextAreaChatLog);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextAreaChatField.setColumns(20);
+        jTextAreaChatField.setLineWrap(true);
+        jTextAreaChatField.setRows(5);
+        jTextAreaChatField.setWrapStyleWord(true);
+        jTextAreaChatField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextAreaChatFieldKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextAreaChatField);
 
         jList1.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
         jList1.setModel(new javax.swing.AbstractListModel() {
@@ -140,49 +167,24 @@ public class PlayArea extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PlayArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PlayArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PlayArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PlayArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void jTextAreaChatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaChatFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String ChatMessage = jTextAreaChatField.getText();
+            Client.sendChatUpdate(ChatMessage);
+            jTextAreaChatField.setText("");
         }
-        //</editor-fold>
+    }//GEN-LAST:event_jTextAreaChatFieldKeyPressed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PlayArea().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList jList1;
@@ -196,7 +198,7 @@ public class PlayArea extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextAreaChatField;
+    private javax.swing.JTextArea jTextAreaChatLog;
     // End of variables declaration//GEN-END:variables
 }

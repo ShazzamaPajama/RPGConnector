@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -27,14 +28,14 @@ public class RPGConnectorClient {
     private ClientThread ProcessingThread;
     private BufferedReader ServerReader;
     private PlayArea ClientScreen;
-    private MPGUIGrid Grid;
     
     
-    public RPGConnectorClient(String Host) throws IOException{
+    public RPGConnectorClient(String Host, PlayArea MPGUI) throws IOException{
         Client = new Socket(Host, 1337);
         ServerWriter = new PrintWriter(Client.getOutputStream(), true);
         MessageBuilder = new ClientMessageBuilder();
         ServerReader = new BufferedReader(new InputStreamReader(Client.getInputStream()));
+        ClientScreen = MPGUI;
     }
     
     public void StartClientThread(){
