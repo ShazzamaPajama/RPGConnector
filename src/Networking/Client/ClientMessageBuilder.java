@@ -6,6 +6,8 @@
 
 package Networking.Client;
 
+import java.math.BigDecimal;
+import javax.json.Json;
 import javax.json.JsonObject;
 
 /**
@@ -19,6 +21,11 @@ public class ClientMessageBuilder {
     }
     
     public JsonObject ChatUpdateMessage(String ChatMessage){
-        JsonObject
+        JsonObject message = Json.createObjectBuilder()
+                .add("MessageType", "UpdateChat")
+                .add("ChatMessage", ChatMessage)
+                .build();
+        
+        return message;
     }
 }

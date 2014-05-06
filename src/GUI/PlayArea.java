@@ -15,26 +15,13 @@ import javax.swing.JTextField;
  * @author Shazzama.Pajama
  */
 public class PlayArea extends javax.swing.JFrame {
-    GUIGrid Grid;
+    LocalGUIGrid Grid;
     /**
      * Creates new form PlayArea
      */
     public PlayArea() {
         initComponents();
-       jPanelGrid.setLayout(new GridLayout(20,20));
-       Grid = new GUIGrid();
-       
-       for (int i = 0; i<20; i++){
-           for (int j = 0; j<20; j++){
-               JTextField button = new JTextField("x");
-               button.setBackground(Color.green);
-               jPanelGrid.add(button);
-           }
-       }
-       
-       
-       
-       
+        jPanelGrid.setLayout(new GridLayout(20,20));
     }
 
     /**

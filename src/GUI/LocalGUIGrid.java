@@ -15,17 +15,17 @@ import javax.swing.JTextField;
  *
  * @author Shazzama.Pajama
  */
-public class GUIGrid {
-    private GUICell[][] Grid;
+public class LocalGUIGrid {
+    private LocalGUICell[][] Grid;
     private Color ColorChanger;
     
-    public GUIGrid(){
-        Grid = new GUICell[20][20];
+    public LocalGUIGrid(){
+        Grid = new LocalGUICell[20][20];
         ColorChanger = Color.WHITE;
         
         for(int row=0; row<20; row++){
             for(int col=0; col<20; col++){
-                GUICell cell = new GUICell(this);
+                LocalGUICell cell = new LocalGUICell(this);
                 
                 cell.setBorder(BorderFactory.createLineBorder(Color.black));
                 Grid[row][col] = cell;

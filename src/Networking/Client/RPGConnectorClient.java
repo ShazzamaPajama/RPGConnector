@@ -40,6 +40,7 @@ public class RPGConnectorClient {
     
     public synchronized void UpdateCellToken(int row, int col, String Token){
         
+        
     }
     
     public synchronized void UpdateCellColor(int row, int col, String Color){

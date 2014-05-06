@@ -14,13 +14,13 @@ import java.awt.GridLayout;
  * @author Shazzama.Pajama
  */
 public class PlayAreaServerless extends javax.swing.JFrame {
-    private GUIGrid grid;
+    private LocalGUIGrid grid;
     /**
      * Creates new form PlayAreaServerless
      */
     public PlayAreaServerless() {
         initComponents();
-        grid = new GUIGrid();
+        grid = new LocalGUIGrid();
         
         jPanelGrid.setLayout(new GridLayout(20,20));
         

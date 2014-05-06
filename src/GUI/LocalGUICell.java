@@ -17,12 +17,12 @@ import javax.swing.JTextField;
  *
  * @author Amie
  */
-public class GUICell extends JTextField {
+public class LocalGUICell extends JTextField {
     ArrayList<Color> Colors;
     ListIterator<Color> ColorIterator;
-    GUIGrid GridParent;
+    LocalGUIGrid GridParent;
     
-    public GUICell(GUIGrid gridparent){
+    public LocalGUICell(LocalGUIGrid gridparent){
         GridParent = gridparent;
         
         this.addMouseListener(new MouseAdapter(){
