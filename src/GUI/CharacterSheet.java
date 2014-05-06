@@ -9,8 +9,8 @@ package GUI;
 import AssetDB.DBManager;
 import GUI.TableModels.ParallelAbilityModel;
 import GUI.TableModels.ParallelBasicModel;
+import GUI.TableModels.ParallelBasicScoreModel;
 import GUI.TableModels.ParallelSkillModel;
-import GUI.TableModels.ParallelValueModel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -23,7 +23,8 @@ public class CharacterSheet extends javax.swing.JFrame {
     private ParallelBasicModel BasicInfo;
     private ParallelAbilityModel AbilityInfo;
     private ParallelSkillModel SkillInfo;
-    private DBManager Database;
+    private ParallelBasicScoreModel BasicScoreInfo;
+    private DBManager Database; 
     
     /**
      * Creates new form NewJFrame
@@ -33,24 +34,29 @@ public class CharacterSheet extends javax.swing.JFrame {
         BasicInfo = new ParallelBasicModel();
         AbilityInfo = new ParallelAbilityModel();
         SkillInfo = new ParallelSkillModel();
+        BasicScoreInfo = new ParallelBasicScoreModel();
+        
         Database = DB;
         
         jTableBasic.setModel(BasicInfo);
         jTableAbility.setModel(AbilityInfo);
         jTableSkill.setModel(SkillInfo);
+        jTableScores.setModel(BasicScoreInfo);
         
     }
     
-    public CharacterSheet(ArrayList<Object> basic, ArrayList<Object> ability, ArrayList<Object> skill, String Description, String Extras, DBManager DB){
+    public CharacterSheet(ArrayList<String> basic, ArrayList<Integer> BasicScores, ArrayList<Integer> ability, ArrayList<Integer> skill, String Description, String Extras, DBManager DB){
         initComponents();
         BasicInfo = new ParallelBasicModel(basic);
         AbilityInfo = new ParallelAbilityModel(ability);
         SkillInfo = new ParallelSkillModel(skill);
+        BasicScoreInfo = new ParallelBasicScoreModel(BasicScores);
         Database = DB;
         
         jTableBasic.setModel(BasicInfo);
         jTableAbility.setModel(AbilityInfo);
         jTableSkill.setModel(SkillInfo);
+        jTableScores.setModel(BasicScoreInfo);
         jTextAreaDescription.setText(Description);
         jTextAreaExtras.setText(Extras);
     }
@@ -81,6 +87,8 @@ public class CharacterSheet extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTableBasic = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTableScores = new javax.swing.JTable();
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,6 +144,8 @@ public class CharacterSheet extends javax.swing.JFrame {
 
         jScrollPane6.setViewportView(jTableBasic);
 
+        jScrollPane7.setViewportView(jTableScores);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,20 +158,26 @@ public class CharacterSheet extends javax.swing.JFrame {
                         .addComponent(jLabelTitle)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel10))
+                        .addComponent(jLabel11)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(14, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(82, 82, 82)
@@ -177,12 +193,13 @@ public class CharacterSheet extends javax.swing.JFrame {
                 .addComponent(jLabelTitle)
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,6 +215,7 @@ public class CharacterSheet extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -206,43 +224,41 @@ public class CharacterSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ParallelValueModel Basic = (ParallelValueModel)jTableBasic.getModel();
-        ParallelValueModel Abilities = (ParallelValueModel)jTableAbility.getModel();
-        ParallelValueModel Skills = (ParallelValueModel)jTableSkill.getModel();
+        ParallelBasicModel BasicModel = (ParallelBasicModel)jTableBasic.getModel();
+        ParallelBasicScoreModel ScoresModel = (ParallelBasicScoreModel)jTableScores.getModel();
+        ParallelAbilityModel AbilitiesModel = (ParallelAbilityModel)jTableAbility.getModel();
+        ParallelSkillModel SkillsModel = (ParallelSkillModel)jTableSkill.getModel();
         
-        ListIterator BasicIterator = Basic.getIterator();
-        ListIterator AbilityIterator = Abilities.getIterator();
-        ListIterator SkillIterator = Skills.getIterator();
+        ListIterator<String> Basic = BasicModel.getIterator();
+        ListIterator<Integer> Scores = ScoresModel.getIterator();
+        ListIterator<Integer> Abilities = AbilitiesModel.getIterator();
+        ListIterator<Integer> Skills = SkillsModel.getIterator();
+        ListIterator<String> SkillNames = SkillsModel.getSkillNames();
         
-        String Name = BasicIterator.next().toString();
-        System.out.println("Name = " + Name) ;
-        String Race = BasicIterator.next().toString();
-        System.out.println("race = " + Race);
-        String Type = BasicIterator.next().toString();
-        System.out.println("Type = " + Type);
+        String Name = Basic.next();
+        String Race = Basic.next();
+        String Type = Basic.next();
         
         try{
+            this.Database.addBasicInfo(Name, Race, Type,
+                    Basic.next(), Basic.next(), Scores.next(), Scores.next(),
+                    Scores.next(), Scores.next(), jTextAreaDescription.getText(),
+                    jTextAreaExtras.getText());
             
+            this.Database.addAbilitySet(Name, Race, Type, Abilities.next(),
+                    Abilities.next(), Abilities.next(), Abilities.next(),
+                    Abilities.next(), Abilities.next());
             
-            Database.addSkillSet(Name, Race, Type);
+            this.Database.addSkillSet(Name, Race, Type);
             
-            while(SkillIterator.hasNext()){
-                String value = SkillIterator.next().toString();
-                Integer Score;
-                if(value.equals("")){
-                   Score = 0;
-                }else{
-                    Score = Integer.parseInt(value);
-                }
-                
-                Database.updateSkill(Name, Race, Type, Type, Score );
+            while(Skills.hasNext()){
+                this.Database.updateSkill(Name, Race, Type, SkillNames.next(), Skills.next());
             }
             
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
+            System.out.println(ex.getSQLState());
         }
-        
-        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -262,9 +278,11 @@ public class CharacterSheet extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTableAbility;
     private javax.swing.JTable jTableBasic;
+    private javax.swing.JTable jTableScores;
     private javax.swing.JTable jTableSkill;
     private javax.swing.JTextArea jTextAreaDescription;
     private javax.swing.JTextArea jTextAreaExtras;

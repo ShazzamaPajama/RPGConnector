@@ -17,7 +17,6 @@ import org.sqlite.SQLiteConfig;
  * @author paul.koroski
  */
 public class DBManager {
-    private ArrayList<Character> Characters;
     private Connection Database;
     private Statement stmt;
     
@@ -26,32 +25,82 @@ public class DBManager {
      * Creates empty character, item, skillset, and abilityset tables if they do not exist.
      */
     public DBManager(){
-        Characters = new ArrayList<>();
-        String SQLString;
+        String SQL;
         try {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
             Database = DriverManager.getConnection("jdbc:sqlite:DND.db");
             stmt = Database.createStatement();
             
-            //Character basic data table creation
-            SQLString = "CREATE TABLE IF NOT EXISTS Characters "
-                    + "(Name TEXT NOT NULL,"
-                    + " Race TEXT NOT NULL,"
-                    + " Type TEXT NOT NULL,"
-                    + " Class TEXT NOT NULL,"
-                    + " Alignment TEXT NOT NULL,"
-                    + " Level INTEGER NOT NULL,"
-                    + " HitPoints INTEGER NOT NULL,"
-                    + " ArmorClass INTEGER NOT NULL,"
-                    + " AtkBonus INTEGER NOT NULL,"
-                    + " Description TEXT NOT NULL,"
-                    + " ExtraAbilities TEXT NOT NULL,"
-                    + " PRIMARY KEY (Name, Race, Type))";
-            this.stmt.executeUpdate(SQLString);
             
+            //Create Tables
+            this.initCharacters();
+            this.initAbilitySets();
+            this.initSkillSets();
+            this.initItems();
+            this.initGrids();
             
-            SQLString = "CREATE TABLE IF NOT EXISTS SkillSets "
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not establish Connection");
+        }
+    }
+    
+    
+    //Tablie Initialization Methods
+    
+    private void initCharacters(){
+        String SQL;
+        //Character basic data table creation
+            SQL = "CREATE TABLE IF NOT EXISTS Characters "
+                + "(Name TEXT NOT NULL,"
+                + " Race TEXT NOT NULL,"
+                + " Type TEXT NOT NULL,"
+                + " Class TEXT NOT NULL,"
+                + " Alignment TEXT NOT NULL,"
+                + " Level INTEGER NOT NULL,"
+                + " HitPoints INTEGER NOT NULL,"
+                + " ArmorClass INTEGER NOT NULL,"
+                + " AtkBonus INTEGER NOT NULL,"
+                + " Description TEXT NOT NULL,"
+                + " ExtraAbilities TEXT NOT NULL,"
+                + " PRIMARY KEY (Name, Race, Type))";        
+        try {            
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize Characters Table");
+        }
+    }
+    
+    private void initAbilitySets(){
+        String SQL;
+        SQL = "CREATE TABLE IF NOT EXISTS AbilitySets "
+                + "(Name TEXT NOT NULL,"
+                + " Race TEXT NOT NULL,"
+                + " Type TEXT NOT NULL,"
+                + " Strength INTEGER NOT NULL,"
+                + " Constitution INTEGER NOT NULL,"
+                + " Dexterity INTEGER NOT NULL,"
+                + " Intelligence INTEGER NOT NULL,"
+                + " Wisdom INTEGER NOT NULL,"
+                + " Charisma INTEGER NOT NULL,"
+                + " PRIMARY KEY (Name, Race, Type)"
+                + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
+        try {                
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize AbilitySets Table");
+        }
+                                
+        
+    }
+    
+    private void initSkillSets(){
+    String SQL;
+    
+        SQL = "CREATE TABLE IF NOT EXISTS SkillSets "
                     + "(Name TEXT NOT NULL,"
                     + " Race TEXT NOT NULL,"
                     + " Type TEXT NOT NULL,"
@@ -74,35 +123,50 @@ public class DBManager {
                     + " Thievery INTEGER,"
                     + " PRIMARY KEY (Name, Race, Type),"
                     + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
-            this.stmt.executeUpdate(SQLString);
-            
-            SQLString = "CREATE TABLE IF NOT EXISTS AbilitySets "
-                    + "(Name TEXT NOT NULL,"
-                    + " Race TEXT NOT NULL,"
-                    + " Type TEXT NOT NULL,"
-                    + " Strength INTEGER NOT NULL,"
-                    + " Constitution INTEGER NOT NULL,"
-                    + " Dexterity INTEGER NOT NULL,"
-                    + " Intelligence INTEGER NOT NULL,"
-                    + " Wisdom INTEGER NOT NULL,"
-                    + " Charisma INTEGER NOT NULL,"
-                    + " PRIMARY KEY (Name, Race, Type)"
-                    + " FOREIGN KEY (Name, Race, Type) REFERENCES Characters(Name, Race, Type) ON DELETE CASCADE ON UPDATE CASCADE)";
-            this.stmt.executeUpdate(SQLString);
-           
-            SQLString = "CREATE TABLE IF NOT EXISTS Items "
-                    + "(Name TEXT NOT NULL, "
-                    + "Type TEXT NOT NULL, "
-                    + "Price TEXT NOT NULL, "
-                    + "Magic NUMERIC NOT NULL, "
-                    + "Description TEXT NOT NULL,"
-                    + "PRIMARY KEY (Name, Type))";
-            this.stmt.executeUpdate(SQLString);
-            
+        try {    
+            this.stmt.executeUpdate(SQL);
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize SkillSets Table");
         }
     }
+    
+    private void initItems() {
+        String SQL;
+
+        SQL = "CREATE TABLE IF NOT EXISTS Items "
+                + "(Name TEXT NOT NULL, "
+                + "Type TEXT NOT NULL, "
+                + "Price TEXT NOT NULL, "
+                + "Magic NUMERIC NOT NULL, "
+                + "Description TEXT NOT NULL,"
+                + "PRIMARY KEY (Name, Type))";
+        try {
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize Items Table");
+        }
+    }
+    
+    private void initGrids(){
+        String SQL;
+        
+        SQL = "CREATE TABLE IF NOT EXISTS Grids "
+                + "(Name TEXT PRIMARY KEY NOT NULL, "
+                + "Row INTEGER NOT NULL, "
+                + "Column INTEGER NOT NULL, "
+                + "Token TEXT NOT NULL, "
+                + "Color TEXT NOT NULL)";
+        
+        try {
+            this.stmt.executeUpdate(SQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not initialize Grids Table");
+        }
+    }
+    
     
     //Query Methods
     
@@ -115,6 +179,7 @@ public class DBManager {
         
         return result;
     }
+    
     
     /**
      *Executes a query for a character with a specific stat in the Character's table
@@ -252,79 +317,76 @@ public class DBManager {
             String Desc,
             String Extra) throws SQLException{
         
-        //Prepare strings for sql statement
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
-        String classname = "'" + Class + "'";
-        String align = "'" + Alignment + "'";
-        String desc = "'" + Desc + "'";
-        String extra = "'"+Extra+"'";
         
+        String SQL = "INSERT OR REPLACE INTO  Characters "
+                + "VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?)";
         
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Race);
+        PrepStmt.setString(3, Type);
+        PrepStmt.setString(4, Class);
+        PrepStmt.setString(5, Alignment);
+        PrepStmt.setInt(6, Level);
+        PrepStmt.setInt(7, HP);
+        PrepStmt.setInt(8, AC);
+        PrepStmt.setInt(9, ATK);
+        PrepStmt.setString(10, Desc);
+        PrepStmt.setString(11, Extra);
         
-        
-        String SQL = "INSERT OR REPLACE INTO Characters "
-                + "VALUES ("
-                +  name + ", "
-                +  race + ", "
-                +  type + ", "
-                +  classname +", "
-                +  align + ", "
-                +  Level + ", "
-                +  HP + ", "
-                +  AC + ", "
-                +  ATK + ", "
-                +  desc + ", "
-                +  extra +" )";
-        
-        stmt.executeUpdate(SQL);
+        PrepStmt.executeUpdate();
+            
     }
     
     public void addAbilitySet(String Name, String Race, String Type, Integer STR, Integer CON, Integer DEX, Integer INT, Integer WIS, Integer CHA) throws SQLException{
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
         
-        String SQL = "INSERT OR REPLACE INTO AbilitySets VALUES ("
-                + name + ", "
-                + race + ", "
-                + type + ", "
-                + STR + ", "
-                + CON + ", "
-                + DEX + ", "
-                + INT + ", "
-                + WIS + ", "
-                + CHA + ")";
+        String SQL = "INSERT OR REPLACE INTO AbilitySets (Name, Race, Type, Strength, Constitution, Dexterity, Intelligence, Wisdom, Charisma)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
-        stmt.execute(SQL);
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Race);
+        PrepStmt.setString(3, Type);
+        PrepStmt.setInt(4, STR);
+        PrepStmt.setInt(5, CON);
+        PrepStmt.setInt(6, DEX);
+        PrepStmt.setInt(7, INT);
+        PrepStmt.setInt(8, WIS);
+        PrepStmt.setInt(9, CHA);
+        
+        PrepStmt.executeUpdate();
+        
     }
     
     public void addSkillSet(String Name, String Race, String Type) throws SQLException{
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
         
-        String SQL = "INSERT OR REPLACE INTO SkillSets (Name, Race, Type) VALUES ("
-                + name + ", "
-                + race + ", "
-                + type + ")";
+        String SQL = "INSERT OR REPLACE INTO SkillSets (Name, Race, Type) VALUES (?, ?, ?)";
         
-        stmt.executeUpdate(SQL);
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Race);
+        PrepStmt.setString(3, Type);
+        
+        PrepStmt.executeUpdate();
     }
     
     public void updateSkill(String Name, String Race, String Type, String Skill, Integer Value) throws SQLException{
-        String name = "'" + Name + "'";
-        String race = "'" + Race + "'";
-        String type = "'" + Type + "'";
         
         String SQL = "UPDATE SkillSets "
-                + "SET " + Skill + " = " + Value
-                + " WHERE Name = " + name
-                + " AND Race = " + race
-                + " AND Type = " + type;
+                + "SET "+Skill+" = ? "
+                + "WHERE Name = ? "
+                + "AND Race = ? "
+                + "AND Type = ? ";
         
-        stmt.executeUpdate(SQL);
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setInt(1, Value);
+        PrepStmt.setString(2, Name);
+        PrepStmt.setString(3, Race);
+        PrepStmt.setString(4, Type);
+        
+        PrepStmt.executeUpdate();
+        
+        
     }
     
     
@@ -410,8 +472,8 @@ public class DBManager {
         return ModelArray;
     }
     
-    public ArrayList<Object> getCharacterBasicInfo(String name, String race, String type) throws SQLException{
-        ArrayList<Object> BasicInfo = new ArrayList<>();
+    public ArrayList<String> getCharacterBasicInfo(String name, String race, String type) throws SQLException{
+        ArrayList<String> BasicInfo = new ArrayList<>();
         ResultSet results;
         String SQL;
         String Name = "'"+name+"'";
@@ -430,16 +492,39 @@ public class DBManager {
         BasicInfo.add(results.getString("Type"));
         BasicInfo.add(results.getString("Class"));
         BasicInfo.add(results.getString("Alignment"));
-        BasicInfo.add(results.getInt("Level"));
-        BasicInfo.add(results.getInt("Hitpoints"));
-        BasicInfo.add(results.getInt("ArmorClass"));
-        BasicInfo.add(results.getInt("AtkBonus"));
         
         return BasicInfo;
     }
     
-    public ArrayList<Object> getCharacterAbilities(String name, String race, String type) throws SQLException{
-        ArrayList<Object> AbilityInfo = new ArrayList<>();
+    public ArrayList<Integer> getCharacterBasicScores(String name, String race, String type) throws SQLException{
+        ArrayList<Integer> Scores = new ArrayList<>();
+        String SQL;
+        ResultSet results;
+        
+        SQL = "SELECT Level, Hitpoints, ArmorClass, AtkBonus FROM Characters "
+                + "WHERE Name = ? "
+                + "AND Race = ?"
+                + "AND Type = ?";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, name);
+        PrepStmt.setString(2, race);
+        PrepStmt.setString(3, type);
+        results = PrepStmt.executeQuery();
+        
+        results.next();
+        
+        Scores.add(results.getInt("Level"));
+        Scores.add(results.getInt("Hitpoints"));
+        Scores.add(results.getInt("ArmorClass"));
+        Scores.add(results.getInt("AtkBonus"));
+        
+        return Scores;
+        
+    }
+    
+    public ArrayList<Integer> getCharacterAbilities(String name, String race, String type) throws SQLException{
+        ArrayList<Integer> AbilityInfo = new ArrayList<>();
         ResultSet results;
         String SQL;
         String Name = "'"+name+"'";
@@ -463,8 +548,8 @@ public class DBManager {
         
     }
     
-    public ArrayList<Object> getCharacterSkills(String name, String race, String type) throws SQLException{
-        ArrayList<Object> SkillInfo = new ArrayList<>();
+    public ArrayList<Integer> getCharacterSkills(String name, String race, String type) throws SQLException{
+        ArrayList<Integer> SkillInfo = new ArrayList<>();
         ResultSet results;
         String SQL;
         String Name = "'"+name+"'";

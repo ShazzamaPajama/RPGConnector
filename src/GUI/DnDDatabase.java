@@ -82,7 +82,7 @@ public class DnDDatabase extends javax.swing.JFrame {
         NameField = new javax.swing.JTextField();
         jButtonViewAll = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTableCharacters.setAutoCreateRowSorter(true);
         jTableCharacters.setModel(new BasicInfoModel());
@@ -317,6 +317,7 @@ public class DnDDatabase extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTypeActionPerformed
@@ -456,13 +457,15 @@ public class DnDDatabase extends javax.swing.JFrame {
             String Type = (String)row.get(2);
             
             try {
-                ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
-                ArrayList<Object> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
-                ArrayList<Object> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                ArrayList<String> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
+                ArrayList<Integer> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
+                ArrayList<Integer> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                ArrayList<Integer> BasicScoreInfo = dbManager.getCharacterBasicScores(Name, Race, Type);
+                
                 String Desc = dbManager.getCharacterDescription(Name, Race, Type);
                 String Extra = dbManager.getCharacterExtras(Name, Race, Type);
                 
-                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
+                new CharacterSheet(BasicInfo,BasicScoreInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
                 
                 
             } catch (SQLException ex) {
@@ -483,14 +486,15 @@ public class DnDDatabase extends javax.swing.JFrame {
                 String Type = (String)row.get(2);
             
                 try {
-                    ArrayList<Object> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
-                    ArrayList<Object> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
-                    ArrayList<Object> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                    ArrayList<String> BasicInfo = dbManager.getCharacterBasicInfo(Name, Race, Type);
+                    ArrayList<Integer> AbilityInfo = dbManager.getCharacterAbilities(Name, Race, Type);
+                    ArrayList<Integer> SkillInfo = dbManager.getCharacterSkills(Name, Race, Type);
+                    ArrayList<Integer> BasicScores = dbManager.getCharacterBasicScores(Name, Race, Type);
                     String Desc = dbManager.getCharacterDescription(Name, Race, Type);
                     String Extra = dbManager.getCharacterExtras(Name, Race, Type);
                 
                 
-                new CharacterSheet(BasicInfo, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
+                new CharacterSheet(BasicInfo, BasicScores, AbilityInfo, SkillInfo, Desc, Extra, this.dbManager).setVisible(true);
                 
                 
                 } catch (SQLException ex) {

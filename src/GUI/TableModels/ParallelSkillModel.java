@@ -8,12 +8,14 @@ package GUI.TableModels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ListIterator;
 
 /**
  *
  * @author Shazzama.Pajama
  */
 public class ParallelSkillModel extends ParallelValueModel {
+    private ArrayList<Integer> Values;
     
     public ParallelSkillModel(){
         String[] titles = new String[] {
@@ -43,12 +45,12 @@ public class ParallelSkillModel extends ParallelValueModel {
         
         Labels.addAll(Arrays.asList(titles));
         for (String i: Labels){
-            Values.add("");
+            Values.add(0);
         }        
     }
     
     
-    public ParallelSkillModel(ArrayList<Object> values){
+    public ParallelSkillModel(ArrayList<Integer> values){
         String[] titles = new String[] {
             "Acrobatics",
             "Arcana",
@@ -66,7 +68,7 @@ public class ParallelSkillModel extends ParallelValueModel {
             "Religion",
             "Stealth",
             "Streetwise",
-            "Tievery"
+            "Thievery"
         };
         
         
@@ -75,5 +77,34 @@ public class ParallelSkillModel extends ParallelValueModel {
         Columns = new String[]{"Skill", "Values"};
         
         Labels.addAll(Arrays.asList(titles));        
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if(columnIndex == 0){
+            return Labels.get(rowIndex);
+        }else{
+            return Values.get(rowIndex);
+        }
+    }
+    
+    
+    @Override
+    public void setValueAt(Object val, int rowIndex, int colIndex){
+        if(colIndex == 1){
+            try{
+                Values.add(rowIndex, Integer.parseInt(val.toString()));
+            }catch(NumberFormatException ex){
+                
+            } 
+        }
+    }
+    
+    public ListIterator getIterator(){
+        return Values.listIterator();
+    }
+    
+    public ListIterator<String> getSkillNames(){
+        return Labels.listIterator();
     }
 }

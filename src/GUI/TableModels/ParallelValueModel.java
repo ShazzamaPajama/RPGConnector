@@ -6,8 +6,8 @@
 
 package GUI.TableModels;
 
+
 import java.util.ArrayList;
-import java.util.ListIterator;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -16,8 +16,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public abstract class ParallelValueModel extends AbstractTableModel {
    protected ArrayList<String> Labels;
-   protected ArrayList<Object> Values;
    protected String[] Columns;
+   
     
 
     @Override
@@ -34,15 +34,6 @@ public abstract class ParallelValueModel extends AbstractTableModel {
     public int getColumnCount() {
         return 2;
     }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        if(columnIndex == 0){
-            return Labels.get(rowIndex);
-        }else{
-            return Values.get(rowIndex);
-        }
-    }
     
     @Override
     public boolean isCellEditable(int row, int col){
@@ -53,12 +44,5 @@ public abstract class ParallelValueModel extends AbstractTableModel {
         }
     }
     
-   @Override
-    public void setValueAt(Object val, int row, int col){
-        Values.add(row, val);
-    }
-    
-    public ListIterator<Object> getIterator(){
-        return this.Values.listIterator();
-    }
+   
 }

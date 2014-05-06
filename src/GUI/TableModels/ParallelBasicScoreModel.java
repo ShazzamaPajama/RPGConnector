@@ -14,30 +14,31 @@ import java.util.ListIterator;
  *
  * @author Shazzama.Pajama
  */
-public class ParallelBasicModel extends ParallelValueModel {
-    private ArrayList<String> Values;
+public class ParallelBasicScoreModel extends ParallelValueModel {
+    private ArrayList<Integer> Values;
     
-    public ParallelBasicModel(){
-        String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment"};
+    public ParallelBasicScoreModel(){
+        String[] titles = new String[] {"Level", "HP", "AC", "ATKBonus"};
         Labels = new ArrayList<>();
         Values = new ArrayList<>();
         Columns = new String[]{"BasicInfo", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
         for (String i: Labels){
-            Values.add("");
+            Values.add(0);
         }        
     }
     
-    public ParallelBasicModel(ArrayList<String> values){
-        String[] titles = new String[] {"Name", "Race", "Type", "Class", "Alignment"};
+    public ParallelBasicScoreModel(ArrayList<Integer> values){
+        String[] titles = new String[] {"Level", "HP", "AC", "ATKBonus"};
         Labels = new ArrayList<>();
         Values = values;
-        Columns = new String[]{"BasicInfo", "Values"};
+        Columns = new String[]{"BasicValues", "Values"};
         
         Labels.addAll(Arrays.asList(titles));
     }
-
+    
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if(columnIndex == 0){
@@ -51,7 +52,7 @@ public class ParallelBasicModel extends ParallelValueModel {
     public void setValueAt(Object val, int row, int col){
         if(col == 1){
             try{
-                Values.add(row, (String)val);
+                Values.add(row, Integer.parseInt(val.toString()));
             }catch(NumberFormatException ex){
                 
             }
@@ -62,5 +63,4 @@ public class ParallelBasicModel extends ParallelValueModel {
     public ListIterator getIterator(){
         return Values.listIterator();
     }
-    
 }

@@ -13,13 +13,13 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.JsonObject;
 
 /**
  *
  * @author Shazzama.Pajama
  */
 public class RPGConnectorServer {
-    private ArrayList<User> Users;
     private ArrayList<PrintWriter> ClientOutputStreams;
     private ServerMessageBuilder MessageBuilder;
     private ServerThread ConnectionReceiver;
@@ -27,38 +27,71 @@ public class RPGConnectorServer {
     private ServerSocket ServerConnection;
     
     public RPGConnectorServer(){
-        Users = new ArrayList<>();
         ClientOutputStreams = new ArrayList<>();
         MessageBuilder = new ServerMessageBuilder();
         TacticalGrid = new Grid("NewGrid");
         
         try {
             ServerConnection = new ServerSocket(1337);
+            
         } catch (IOException ex) {
             Logger.getLogger(RPGConnectorServer.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
         }
-        
-        
     }
     
     public RPGConnectorServer(Grid oldergrid){
         
     }
     
+    //Adding Client Methods
     
     
-    public synchronized void UpdateCellToken(int x, int y, String t){
-        //Update Cell Token
-        TacticalGrid.setCellToken(x, y, null);
-        
-        //Sent update message to all users
+    public synchronized void addClientOutput(PrintWriter clientwriter){
+        this.ClientOutputStreams.add(clientwriter);
     }
     
-    public synchronized  void UpdateCellColor(){
-        //Udate Cell Color
+
+    
+    //Cell Updating Methods
+    
+    public synchronized  void UpdateCellColor(int row, int col, String Color){
+        //Update Cell Color
+        this.TacticalGrid.setCellColor(row, col, Color);
         
-        //Sent update message to all users
         
+        //Send update message to all users
+        JsonObject message = MessageBuilder.UpdateCellColorMessage(row, col, Color);
+        for(PrintWriter client : ClientOutputStreams){
+            client.println(message.toString());
+        }
+        
+    }
+    
+    public synchronized void UpdateCellToken(int row, int col, String Token){
+        //update cell token
+        this.TacticalGrid.setCellToken(row, col, Token);
+        
+        //Send Update message to all users
+        JsonObject message = MessageBuilder.UpdateCellTokenMessage(row, col, Token);
+        for(PrintWriter client : ClientOutputStreams){
+            client.println(message.toString());
+        }
+    }
+    
+    //Chat Methods
+    
+    public synchronized void Updatechat(String name, String chatmsg){
+        JsonObject message = MessageBuilder.UpdateChatMessage(name, chatmsg);
+        
+        for(PrintWriter client : ClientOutputStreams){
+            client.println(message);
+        }
+        
+    }
+    
+    
+    //Server Thread messages
+    public void StarServerThread(){
+        new ServerThread(ServerConnection, this).start();
     }
 }
