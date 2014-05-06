@@ -6,6 +6,7 @@
 
 package GUI;
 
+import Networking.Client.RPGConnectorClient;
 import java.awt.Color;
 
 /**
@@ -14,4 +15,29 @@ import java.awt.Color;
  */
 public class MPGUIGrid {
     private Color CurrentColorChanger;
+    private MPGUICell[][] Grid;
+    
+    
+    public MPGUIGrid(){
+        CurrentColorChanger = Color.white;
+        Grid = new MPGUICell[20][20];
+        
+    }
+    
+    public void initGrid(RPGConnectorClient client){
+        for (int row=0; row<20;row++){
+            for(int col=0; col<20; col++){
+                MPGUICell newcell = new MPGUICell(row,col, client, this);
+                Grid[row][col] = newcell;
+            }
+        }
+    }
+    
+    public Color getColorChanger(){
+        return this.CurrentColorChanger;
+    }
+    
+    public void SetColorChanger(Color color){
+        this.CurrentColorChanger = color;
+    }
 }

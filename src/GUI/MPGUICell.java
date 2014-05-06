@@ -15,18 +15,31 @@ import javax.swing.JTextField;
  * @author ShazzamaPajama
  */
 public class MPGUICell extends JTextField {
-    RPGConnectorClient listener;
-    MPGUIGrid GridParent;
+    private RPGConnectorClient listener;
+    private MPGUIGrid GridParent;
+    private int Row;
+    private int Col;
     
-    public MPGUICell(RPGConnectorClient client, MPGUIGrid parent){
+    public MPGUICell(int row, int col, RPGConnectorClient client, MPGUIGrid parent){
         listener = client;
         GridParent = parent;
-        
-        
-        
+        Row = row;
+        Col = col;
     }
     
     public void ChangeColor(Color newcolor){
         this.setBackground(newcolor);
+    }
+    
+    public int getRow(){
+        return Row;
+    }
+    
+    public int getCol(){
+        return Col;
+    }
+    
+    public Color GetColorChange(){
+        return this.GridParent.getColorChanger();
     }
 }
