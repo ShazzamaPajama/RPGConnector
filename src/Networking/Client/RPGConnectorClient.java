@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -31,14 +32,22 @@ public class RPGConnectorClient {
     
     
     public RPGConnectorClient(String Host, PlayArea MPGUI) throws IOException{
-        Client = new Socket(Host, 1337);
+        if (Host.equals("Local")){
+            Client = new Socket(InetAddress.getLocalHost(), 1337);
+        }else{
+            Client = new Socket(Host, 1337);
+        }
+        System.out.println("Connected to server");
         ServerWriter = new PrintWriter(Client.getOutputStream(), true);
         MessageBuilder = new ClientMessageBuilder();
         ServerReader = new BufferedReader(new InputStreamReader(Client.getInputStream()));
         ClientScreen = MPGUI;
+        
+        this.StartClientThread();
+        
     }
     
-    public void StartClientThread(){
+    private void StartClientThread(){
         new ClientThread(ServerReader, new ServerMessageProcessor(this)).start();
     }
     
@@ -55,7 +64,8 @@ public class RPGConnectorClient {
     }
     
     public synchronized void UpdateChat(String User, String ChatMessage){
-        
+        String Chat = User +": " + ChatMessage;
+        ClientScreen.addMessage(Chat);
     }
     
     //Message Methods
@@ -73,4 +83,6 @@ public class RPGConnectorClient {
         JsonObject message = MessageBuilder.ChatUpdateMessage(ChatMessage);
         ServerWriter.println(message.toString());
     }
+    
+    
 }

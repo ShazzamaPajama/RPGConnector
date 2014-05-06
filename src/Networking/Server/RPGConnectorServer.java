@@ -27,16 +27,18 @@ public class RPGConnectorServer {
     private ServerSocket ServerConnection;
     
     public RPGConnectorServer(){
-        ClientOutputStreams = new ArrayList<>();
-        MessageBuilder = new ServerMessageBuilder();
-        TacticalGrid = new Grid("NewGrid");
-        
         try {
-            ServerConnection = new ServerSocket(1337);
+            ClientOutputStreams = new ArrayList<>();
+            MessageBuilder = new ServerMessageBuilder();
+            TacticalGrid = new Grid("NewGrid");
             
+            ServerConnection = new ServerSocket(1337);
+            this.StarServerThread();
         } catch (IOException ex) {
             Logger.getLogger(RPGConnectorServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        
     }
     
     public RPGConnectorServer(Grid oldergrid){
@@ -91,7 +93,7 @@ public class RPGConnectorServer {
     
     
     //Server Thread messages
-    public void StarServerThread(){
+    private void StarServerThread(){
         new ServerThread(ServerConnection, this).start();
     }
 }

@@ -58,7 +58,7 @@ public class UserMessageProcessor {
         try{
             String Name = name;
             String ChatMessage = message.getString("ChatMessage");
-            this.Server.Updatechat(name, Name);
+            this.Server.Updatechat(Name, ChatMessage);
             
         }catch(NullPointerException ex){
             

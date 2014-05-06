@@ -28,15 +28,18 @@ public class PlayArea extends javax.swing.JFrame {
      */
     public PlayArea(String host) {
         try {
+            Client = new RPGConnectorClient(host, this);
             initComponents();
             jPanelGrid.setLayout(new GridLayout(20,20));
             Grid = new MPGUIGrid(); 
-            Client = new RPGConnectorClient(host, this);
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(PlayArea.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
+    
     
     public void addMessage(String Message){
         jTextAreaChatLog.append(Message);
@@ -181,9 +184,10 @@ public class PlayArea extends javax.swing.JFrame {
 
     private void jTextAreaChatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaChatFieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-            String ChatMessage = jTextAreaChatField.getText();
-            Client.sendChatUpdate(ChatMessage);
+            String chat = jTextAreaChatField.getText().trim();
+            Client.sendChatUpdate(chat);
             jTextAreaChatField.setText("");
+            System.out.println(chat);
         }
     }//GEN-LAST:event_jTextAreaChatFieldKeyPressed
 
