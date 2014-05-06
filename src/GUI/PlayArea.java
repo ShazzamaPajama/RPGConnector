@@ -38,7 +38,10 @@ public class PlayArea extends javax.swing.JFrame {
         
     }
     
-    
+    public void addMessage(String Message){
+        jTextAreaChatLog.append(Message);
+        jTextAreaChatLog.append("\n");
+    }
     
     
 

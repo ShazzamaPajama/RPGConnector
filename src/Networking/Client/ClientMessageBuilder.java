@@ -50,4 +50,13 @@ public class ClientMessageBuilder {
         
         return message;
     }
+    
+    public JsonObject UpdateNameMessage(String username){
+        JsonObject message = Json.createObjectBuilder()
+                .add("MessageType", "UpdateName")
+                .add("Name", username)
+                .build();
+        
+        return message;
+    }
 }

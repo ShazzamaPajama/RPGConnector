@@ -12,10 +12,10 @@ import javax.json.JsonObject;
  *
  * @author Shazzama.Pajama
  */
-public class ClientMessageProcessor {
+public class ServerMessageProcessor {
     RPGConnectorClient Client;
     
-    public ClientMessageProcessor(RPGConnectorClient client){
+    public ServerMessageProcessor(RPGConnectorClient client){
         Client = client;
     }
     

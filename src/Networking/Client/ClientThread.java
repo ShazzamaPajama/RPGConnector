@@ -22,10 +22,10 @@ import javax.json.JsonReader;
  */
 public class ClientThread extends Thread {
     private BufferedReader ServerReader;
-    private ClientMessageProcessor MessageReader;
+    private ServerMessageProcessor MessageReader;
     private JsonReader JsonObjectBuilder;
     
-    public ClientThread(BufferedReader reader, ClientMessageProcessor MessageProcessor){
+    public ClientThread(BufferedReader reader, ServerMessageProcessor MessageProcessor){
         ServerReader = reader;
         MessageReader = MessageProcessor;
     }
