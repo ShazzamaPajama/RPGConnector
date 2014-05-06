@@ -28,4 +28,26 @@ public class ClientMessageBuilder {
         
         return message;
     }
+    
+    public JsonObject UpdateTokenMessage(int row, int col, String token){
+        JsonObject message = Json.createObjectBuilder()
+                .add("MessageType", "UpdateToken")
+                .add("CellRow", row)
+                .add("CellCol", col)
+                .add("Token", token)
+                .build();
+        
+        return message;
+    }
+    
+    public JsonObject UpdateColorMessage(int row, int col, String color){
+        JsonObject message = Json.createObjectBuilder()
+                .add("MessageType", "UpdateColor")
+                .add("CellRow", row)
+                .add("CellCol", col)
+                .add("Color", color)
+                .build();
+        
+        return message;
+    }
 }

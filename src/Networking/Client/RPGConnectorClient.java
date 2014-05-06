@@ -6,11 +6,15 @@
 
 package Networking.Client;
 
+import GUI.MPGUIGrid;
+import GUI.PlayArea;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  *
@@ -22,6 +26,8 @@ public class RPGConnectorClient {
     private ClientMessageBuilder MessageBuilder;
     private ClientThread ProcessingThread;
     private BufferedReader ServerReader;
+    private PlayArea ClientScreen;
+    private MPGUIGrid Grid;
     
     
     public RPGConnectorClient(String Host) throws IOException{
@@ -49,5 +55,21 @@ public class RPGConnectorClient {
     
     public synchronized void UpdateChat(String User, String ChatMessage){
         
+    }
+    
+    //Message Methods
+    public void sendColorUpdate(int row, int col, String Color){
+        JsonObject message = MessageBuilder.UpdateColorMessage(row, col, Color);
+        ServerWriter.println(message.toString());
+    }
+    
+    public void sendTokenUpdate(int row, int col, String token){
+        JsonObject message = MessageBuilder.UpdateTokenMessage(row, col, token);
+        ServerWriter.println(message.toString());
+    }
+    
+    public void sendChatUpdate(String ChatMessage){
+        JsonObject message = MessageBuilder.ChatUpdateMessage(ChatMessage);
+        ServerWriter.println(message.toString());
     }
 }

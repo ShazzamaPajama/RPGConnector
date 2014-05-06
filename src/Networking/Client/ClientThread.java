@@ -7,7 +7,12 @@
 package Networking.Client;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
@@ -28,10 +33,19 @@ public class ClientThread extends Thread {
     public void run(){
         
         while (true){
-            JsonObjectBuilder = Json.createReader(ServerReader);
-            JsonObject message = JsonObjectBuilder.readObject();
-            MessageReader.ProcessMessage(message);
-             
+            String JsonMessage;
+            try {
+                JsonMessage = ServerReader.readLine();
+                StringReader stReader = new StringReader(JsonMessage);
+                
+                JsonObjectBuilder = Json.createReader(stReader);
+                JsonObject message = JsonObjectBuilder.readObject();
+                MessageReader.ProcessMessage(message);
+                
+            } catch (IOException | JsonException ex) {
+                Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
         }
     }
 }
