@@ -83,7 +83,7 @@ public class PlayArea extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaChatField = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListUsers = new javax.swing.JList();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -139,13 +139,8 @@ public class PlayArea extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTextAreaChatField);
 
-        jList1.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList1);
+        jListUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
+        jScrollPane3.setViewportView(jListUsers);
 
         ColorGroup.add(jRadioButton1);
         jRadioButton1.setText("White");
@@ -457,7 +452,7 @@ public class PlayArea extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList jList1;
+    private javax.swing.JList jListUsers;
     private javax.swing.JPanel jPanelGrid;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;

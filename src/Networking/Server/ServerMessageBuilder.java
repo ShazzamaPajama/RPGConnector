@@ -52,4 +52,13 @@ public class ServerMessageBuilder {
         return message;
     }
     
+    public JsonObject UpdateNameListMessage(String name){
+        JsonObject message = Json.createObjectBuilder()
+                .add("MessageType", "UpdateNameList")
+                .add("Name", name)
+                .build();
+        
+        return message;
+    }
+    
 }

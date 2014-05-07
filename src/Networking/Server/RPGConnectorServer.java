@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class RPGConnectorServer {
     private ArrayList<PrintWriter> ClientOutputStreams;
+    private ArrayList<String> Names;
     private ServerMessageBuilder MessageBuilder;
     private ServerThread ConnectionReceiver;
     private Grid TacticalGrid;
@@ -33,6 +34,7 @@ public class RPGConnectorServer {
             ClientOutputStreams = new ArrayList<>();
             MessageBuilder = new ServerMessageBuilder();
             TacticalGrid = new Grid("NewGrid");
+            Names = new ArrayList<>();
             
             ServerConnection = new ServerSocket(1337);
             this.StarServerThread();
@@ -55,6 +57,10 @@ public class RPGConnectorServer {
     
     public synchronized void addClientOutput(PrintWriter clientwriter){
         this.ClientOutputStreams.add(clientwriter);
+    }
+    
+    public synchronized void addName(String name){
+        Names.add(name);
     }
     
 
@@ -95,6 +101,10 @@ public class RPGConnectorServer {
         }
         
     }
+    
+    //UserList update methods
+    
+    
     
     
     //Server Thread messages
