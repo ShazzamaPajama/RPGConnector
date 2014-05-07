@@ -8,6 +8,7 @@ package GUI;
 
 import Networking.Client.RPGConnectorClient;
 import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 /**
@@ -25,6 +26,8 @@ public class MPGUICell extends JTextField {
         GridParent = parent;
         Row = row;
         Col = col;
+        
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
     
     public void ChangeColor(Color newcolor){

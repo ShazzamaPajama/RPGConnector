@@ -40,4 +40,8 @@ public class MPGUIGrid {
     public void SetColorChanger(Color color){
         this.CurrentColorChanger = color;
     }
+    
+    public MPGUICell getCell(int row, int col){
+        return Grid[row][col];
+    }
 }

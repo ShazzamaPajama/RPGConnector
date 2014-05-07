@@ -140,13 +140,15 @@ public class StartPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String Username = jTextFieldUsername.getText();
-        String Address = jTextFieldServerAddress.getText().trim();
-        if (Address.length() == 0){
-           new PlayArea("Local", Username).setVisible(true);
-        }else{
-           new PlayArea(Address, Username).setVisible(true);
-        }
+
+            String Username = jTextFieldUsername.getText();
+            String Address = jTextFieldServerAddress.getText().trim();
+            if (Address.length() == 0) {
+                new PlayArea("Local", Username).setVisible(true);
+            } else {
+                new PlayArea(Address, Username).setVisible(true);
+            }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
