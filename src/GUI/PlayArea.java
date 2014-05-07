@@ -53,6 +53,7 @@ public class PlayArea extends javax.swing.JFrame {
     public void addMessage(String Message){
         jTextAreaChatLog.append(Message);
         jTextAreaChatLog.append("\n");
+        jTextAreaChatLog.setCaretPosition(jTextAreaChatLog.getDocument().getLength());
     }
     
     
@@ -193,16 +194,46 @@ public class PlayArea extends javax.swing.JFrame {
         });
 
         jButton2.setText("D6");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("D8");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("D10");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("D12");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("D20");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("D100");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Color Chooser:");
 
@@ -358,6 +389,50 @@ public class PlayArea extends javax.swing.JFrame {
         
         Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int RandomD6 = new Random().nextInt(6) +1;
+        String chat = "Rolls a D6 for " + RandomD6;
+        
+        Client.sendChatUpdate(chat);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int RandomD8 = new Random().nextInt(8) +1;
+        String chat = "Rolls a D8 for " + RandomD8;
+        Client.sendChatUpdate(chat);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int RandomD10 = new Random().nextInt(10) + 1;
+        String chat = "Rolls a D10 for "+ RandomD10;
+        Client.sendChatUpdate(chat);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int RandomD12 = new Random().nextInt(12) + 1;
+        String chat = "Rolls a D12 for " + RandomD12;
+        Client.sendChatUpdate(chat);
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        int RandomD20 = new Random().nextInt(20) +1;
+        String chat = "Rolls a D12 for "+ RandomD20;
+        Client.sendChatUpdate(chat);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        int RandomD100 = new Random().nextInt(100) +1;
+        String chat = "Rolls a D100 for "+ RandomD100;
+        Client.sendChatUpdate(chat);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     
 

@@ -66,6 +66,7 @@ public class RPGConnectorClient {
     public synchronized void UpdateChat(String User, String ChatMessage){
         String Chat = User +": " + ChatMessage;
         ClientScreen.addMessage(Chat);
+        
     }
     
     //Message Methods
