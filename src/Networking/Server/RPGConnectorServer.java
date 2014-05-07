@@ -9,6 +9,7 @@ package Networking.Server;
 import TacticalGrid.Grid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -35,7 +36,9 @@ public class RPGConnectorServer {
             
             ServerConnection = new ServerSocket(1337);
             this.StarServerThread();
-            JOptionPane.showMessageDialog(null, "Server Started");
+            JOptionPane.showMessageDialog(null, "Server Started\n"+"Server Address: " 
+                    +InetAddress.getLocalHost().toString());
+            
         } catch (IOException ex) {
             Logger.getLogger(RPGConnectorServer.class.getName()).log(Level.SEVERE, null, ex);
         }
