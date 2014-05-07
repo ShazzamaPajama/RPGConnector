@@ -26,8 +26,9 @@ public class MPGUICell extends JTextField {
         GridParent = parent;
         Row = row;
         Col = col;
-        
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+        
     }
     
     public void ChangeColor(Color newcolor){
@@ -42,7 +43,7 @@ public class MPGUICell extends JTextField {
         return Col;
     }
     
-    public Color GetColorChange(){
+    public String GetColorChange(){
         return this.GridParent.getColorChanger();
     }
 }

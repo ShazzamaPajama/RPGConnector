@@ -14,12 +14,12 @@ import java.awt.Color;
  * @author ShazzamaPajama
  */
 public class MPGUIGrid {
-    private Color CurrentColorChanger;
+    private String CurrentColorChanger;
     private MPGUICell[][] Grid;
     
     
     public MPGUIGrid(){
-        CurrentColorChanger = Color.white;
+        CurrentColorChanger = "White";
         Grid = new MPGUICell[20][20];
         
     }
@@ -33,11 +33,11 @@ public class MPGUIGrid {
         }
     }
     
-    public Color getColorChanger(){
+    public String getColorChanger(){
         return this.CurrentColorChanger;
     }
     
-    public void SetColorChanger(Color color){
+    public void SetColorChanger(String color){
         this.CurrentColorChanger = color;
     }
     
