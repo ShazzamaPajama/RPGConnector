@@ -84,5 +84,10 @@ public class RPGConnectorClient {
         ServerWriter.println(message.toString());
     }
     
+    public void sendNameUpdate(String name){
+        JsonObject message = MessageBuilder.UpdateNameMessage(name);
+        ServerWriter.println(message.toString());
+    }
+    
     
 }

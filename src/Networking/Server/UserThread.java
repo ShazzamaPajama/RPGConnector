@@ -26,7 +26,7 @@ public class UserThread extends Thread {
     private final BufferedReader ClientReader;
     private StringReader reader;
     private JsonReader ObjectReader;
-    
+    PrintWriter ClientWriter;
     
     public UserThread(Socket client, RPGConnectorServer server) throws IOException{
         // get client, server, message processor
@@ -34,8 +34,8 @@ public class UserThread extends Thread {
         MessageReader = new UserMessageProcessor(Server);
         Client = client;
         ClientReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        ClientWriter = new PrintWriter(Client.getOutputStream(), true);
         
-        PrintWriter ClientWriter = new PrintWriter(Client.getOutputStream(), true);
         Server.addClientOutput(ClientWriter);
     }
     

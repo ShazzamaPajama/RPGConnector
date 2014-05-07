@@ -23,9 +23,10 @@ public class PlayArea extends javax.swing.JFrame {
     /**
      * Creates new form PlayArea
      */
-    public PlayArea(String host) {
+    public PlayArea(String host, String Username) {
         try {
             Client = new RPGConnectorClient(host, this);
+            
             initComponents();
             jPanelGrid.setLayout(new GridLayout(20,20));
             Grid = new MPGUIGrid(); 
