@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +35,7 @@ public class RPGConnectorServer {
             
             ServerConnection = new ServerSocket(1337);
             this.StarServerThread();
+            JOptionPane.showMessageDialog(null, "Server Started");
         } catch (IOException ex) {
             Logger.getLogger(RPGConnectorServer.class.getName()).log(Level.SEVERE, null, ex);
         }
