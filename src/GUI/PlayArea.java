@@ -7,6 +7,7 @@
 package GUI;
 
 import Networking.Client.RPGConnectorClient;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -54,6 +55,14 @@ public class PlayArea extends javax.swing.JFrame {
         jTextAreaChatLog.append(Message);
         jTextAreaChatLog.append("\n");
         jTextAreaChatLog.setCaretPosition(jTextAreaChatLog.getDocument().getLength());
+    }
+    
+    public void changeCellColor(int row, int col, Color color){
+        Grid.getCell(row, col).ChangeColor(color);
+    }
+    
+    public void ChangeCellToken(int row, int col, String token){
+        
     }
     
     
@@ -347,7 +356,6 @@ public class PlayArea extends javax.swing.JFrame {
             String chat = jTextAreaChatField.getText().trim();
             Client.sendChatUpdate(chat);
             jTextAreaChatField.setText("");
-            System.out.println(chat);
         }
     }//GEN-LAST:event_jTextAreaChatFieldKeyPressed
 

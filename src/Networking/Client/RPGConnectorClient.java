@@ -6,17 +6,16 @@
 
 package Networking.Client;
 
-import GUI.MPGUIGrid;
 import GUI.PlayArea;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import javax.json.Json;
+import java.util.HashMap;
 import javax.json.JsonObject;
-import javax.swing.JTextArea;
 
 /**
  *
@@ -29,6 +28,7 @@ public class RPGConnectorClient {
     private ClientThread ProcessingThread;
     private BufferedReader ServerReader;
     private PlayArea ClientScreen;
+    private HashMap<String, Color> ColorMap;
     
     
     public RPGConnectorClient(String Host, PlayArea MPGUI) throws IOException{
@@ -42,6 +42,9 @@ public class RPGConnectorClient {
         MessageBuilder = new ClientMessageBuilder();
         ServerReader = new BufferedReader(new InputStreamReader(Client.getInputStream()));
         ClientScreen = MPGUI;
+        this.initColorMap();
+        
+        
         
         this.StartClientThread();
         
@@ -60,7 +63,9 @@ public class RPGConnectorClient {
     }
     
     public synchronized void UpdateCellColor(int row, int col, String Color){
-        
+        if (ColorMap.containsKey(Color)){
+            ClientScreen.changeCellColor(row, col, ColorMap.get(Color));
+        }
     }
     
     public synchronized void UpdateChat(String User, String ChatMessage){
@@ -90,5 +95,14 @@ public class RPGConnectorClient {
         ServerWriter.println(message.toString());
     }
     
-    
+    private void initColorMap(){
+        ColorMap = new HashMap<>();
+        
+        ColorMap.put("White", Color.WHITE);
+        ColorMap.put("Green", Color.GREEN.brighter());
+        ColorMap.put("Red", Color.RED.brighter());
+        ColorMap.put("Blue", Color.BLUE.brighter());
+        ColorMap.put("Orange", Color.ORANGE);
+        ColorMap.put("Black", Color.BLACK);
+    }
 }

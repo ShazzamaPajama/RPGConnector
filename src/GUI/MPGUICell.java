@@ -8,6 +8,8 @@ package GUI;
 
 import Networking.Client.RPGConnectorClient;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
@@ -27,6 +29,17 @@ public class MPGUICell extends JTextField {
         Row = row;
         Col = col;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+        
+        //add listeners
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if(evt.getClickCount() == 2){
+                    listener.sendColorUpdate(Row, Col, GridParent.getColorChanger());
+                }
+            }
+        });
         
         
     }
