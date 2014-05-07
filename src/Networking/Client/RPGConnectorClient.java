@@ -58,7 +58,7 @@ public class RPGConnectorClient {
     //Update Methods
     
     public synchronized void UpdateCellToken(int row, int col, String Token){
-        
+        ClientScreen.ChangeCellToken(row, col, Token);
         
     }
     

@@ -62,7 +62,7 @@ public class PlayArea extends javax.swing.JFrame {
     }
     
     public void ChangeCellToken(int row, int col, String token){
-        
+        Grid.getCell(row, col).setText(token);
     }
     
     
