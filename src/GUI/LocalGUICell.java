@@ -67,7 +67,7 @@ public class LocalGUICell extends JTextField {
         return color;
     }
     
-    public String setToken(String token){
+    public void setToken(String token){
         this.setText(token);
     }
 }

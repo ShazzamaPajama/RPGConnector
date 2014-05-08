@@ -37,7 +37,6 @@ public class UserThread extends Thread {
         ClientWriter = new PrintWriter(Client.getOutputStream(), true);
         Server.addClientOutput(ClientWriter);
         
-        Server.PopulateUserList(ClientWriter);
     }
     
     

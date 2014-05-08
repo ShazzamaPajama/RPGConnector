@@ -89,7 +89,7 @@ public class RPGConnectorClient {
         ServerWriter.println(message.toString());
     }
     
-    public void sendChatUpdate(String ChatMessage){
+    public synchronized void sendChatUpdate(String ChatMessage){
         JsonObject message = MessageBuilder.ChatUpdateMessage(ChatMessage);
         ServerWriter.println(message.toString());
     }

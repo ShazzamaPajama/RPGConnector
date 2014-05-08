@@ -57,8 +57,7 @@ public class PlayAreaServerless extends javax.swing.JFrame {
                 String color = GridCells.getString("Color");
                 
                 grid.getCell(row, col).ChangeColor(color);
-                grid.getCell(row, col)
-                
+                grid.getCell(row, col).setToken(token);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PlayAreaServerless.class.getName()).log(Level.SEVERE, null, ex);

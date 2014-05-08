@@ -138,7 +138,6 @@ public class DBManager {
                 + "(Name TEXT NOT NULL, "
                 + "Type TEXT NOT NULL, "
                 + "Price TEXT NOT NULL, "
-                + "Magic NUMERIC NOT NULL, "
                 + "Description TEXT NOT NULL,"
                 + "PRIMARY KEY (Name, Type))";
         try {
@@ -171,6 +170,55 @@ public class DBManager {
     
     //Query Methods
     
+    public ResultSet getItem(String Name, String Type) throws SQLException{
+        ResultSet result;
+        
+        String SQL = "SELECT * FROM Items "
+                + "Where Name = ? AND Type = ?";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Type);
+        
+        result = PrepStmt.executeQuery();
+        return result;
+    }
+    
+    public ResultSet getAllItems() throws SQLException{
+        ResultSet result;
+        
+        String SQL = "SELECT * FROM Items";
+        
+        result = stmt.executeQuery(SQL);
+        return result;
+    }
+    
+    public ResultSet ItemSearch(String attribute, String Value) throws SQLException{
+        ResultSet result;
+        
+        String SQL = "SELECT * FROM Items "
+                + "WHERE " + attribute+ " = ?";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Value);
+        
+        result = PrepStmt.executeQuery();
+        return result;
+    }
+    
+    public ResultSet ItemSearchPrice(Integer Value) throws SQLException{
+        ResultSet result;
+        String SQL = "SELECT * FROM Items "
+                + "WHERE Price = ?";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setInt(1, Value);
+        
+        result = PrepStmt.executeQuery();
+        return result;
+    }
+    
+    
     public ResultSet getAllCharacters() throws SQLException{
         ResultSet result;
         
@@ -194,7 +242,7 @@ public class DBManager {
     public ResultSet getGridCells(String GridName) throws SQLException{
         ResultSet result;
         
-        String SQL = "SELECT * Grids "
+        String SQL = "SELECT * FROM Grids "
                 + "WHERE Name = ?";
         
         PreparedStatement PrepStmt = Database.prepareStatement(SQL);
@@ -654,4 +702,19 @@ public class DBManager {
         String Extras = result.getString("ExtraAbilities");
         return Extras;        
     }
+    
+    public void addItem(String Name, String Type, Integer Price, String Description) throws SQLException{
+        
+        String SQL = "INSERT OR REPLACE INTO Items (Name, Type, Price, Description) "
+                + "VALUES (?, ?, ?, ?)";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, Name);
+        PrepStmt.setString(2, Type);
+        PrepStmt.setInt(3, Price);
+        PrepStmt.setString(4, Description);
+        
+        PrepStmt.execute();
+    }
+    
 }

@@ -28,9 +28,9 @@ public class PlayArea extends javax.swing.JFrame {
      */
     public PlayArea(String host, String Username) {
         try {
-            
+            String name = Username;
             Client = new RPGConnectorClient(host, this);
-            Client.sendNameUpdate(Username);
+            
             Grid = new MPGUIGrid();
             Grid.initGrid(Client);
             
@@ -45,7 +45,7 @@ public class PlayArea extends javax.swing.JFrame {
                 }
             }
             
-            
+            Client.sendNameUpdate(name);
         } catch (IOException ex) {
             Logger.getLogger(PlayArea.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -396,7 +396,7 @@ public class PlayArea extends javax.swing.JFrame {
         int RandomD4 = new Random().nextInt(4) + 1;
         String chat = "Rolls a D4 for " + RandomD4;
         
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -404,28 +404,28 @@ public class PlayArea extends javax.swing.JFrame {
         int RandomD6 = new Random().nextInt(6) +1;
         String chat = "Rolls a D6 for " + RandomD6;
         
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int RandomD8 = new Random().nextInt(8) +1;
         String chat = "Rolls a D8 for " + RandomD8;
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int RandomD10 = new Random().nextInt(10) + 1;
         String chat = "Rolls a D10 for "+ RandomD10;
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         int RandomD12 = new Random().nextInt(12) + 1;
         String chat = "Rolls a D12 for " + RandomD12;
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -433,14 +433,14 @@ public class PlayArea extends javax.swing.JFrame {
         // TODO add your handling code here:
         int RandomD20 = new Random().nextInt(20) +1;
         String chat = "Rolls a D12 for "+ RandomD20;
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         int RandomD100 = new Random().nextInt(100) +1;
         String chat = "Rolls a D100 for "+ RandomD100;
-        Client.sendChatUpdate(chat);
+        this.Client.sendChatUpdate(chat);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     
