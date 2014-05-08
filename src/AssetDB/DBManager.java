@@ -153,11 +153,12 @@ public class DBManager {
         String SQL;
         
         SQL = "CREATE TABLE IF NOT EXISTS Grids "
-                + "(Name TEXT PRIMARY KEY NOT NULL, "
+                + "(Name TEXT NOT NULL, "
                 + "Row INTEGER NOT NULL, "
                 + "Column INTEGER NOT NULL, "
                 + "Token TEXT NOT NULL, "
-                + "Color TEXT NOT NULL)";
+                + "Color TEXT NOT NULL, "
+                + "PRIMARY KEY (Name, Row, Column))";
         
         try {
             this.stmt.executeUpdate(SQL);
@@ -180,6 +181,29 @@ public class DBManager {
         return result;
     }
     
+    public ResultSet getGridNames() throws SQLException{
+        ResultSet result;
+        
+        String SQL = "SELECT DISTINCT Name "
+                + "FROM Grids ";
+        
+        result = stmt.executeQuery(SQL);
+        return result;
+    }
+    
+    public ResultSet getGridCells(String GridName) throws SQLException{
+        ResultSet result;
+        
+        String SQL = "SELECT * Grids "
+                + "WHERE Name = ?";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, GridName);
+        
+        result = PrepStmt.executeQuery();
+        
+        return result;
+    }
     
     /**
      *Executes a query for a character with a specific stat in the Character's table
@@ -368,6 +392,20 @@ public class DBManager {
         PrepStmt.setString(3, Type);
         
         PrepStmt.executeUpdate();
+    }
+    
+    public void addGridCell(String GridName, int row, int col, String Color, String Token) throws SQLException{
+        String SQL = "INSERT OR REPLACE INTO Grids (Name, Row, Column, Token, Color) "
+                + "VALUES (?,?,?,?,?)";
+        
+        PreparedStatement PrepStmt = Database.prepareStatement(SQL);
+        PrepStmt.setString(1, GridName);
+        PrepStmt.setInt(2, row);
+        PrepStmt.setInt(3, col);
+        PrepStmt.setString(4, Token);
+        PrepStmt.setString(5, Color);
+        
+        PrepStmt.execute();
     }
     
     public void updateSkill(String Name, String Race, String Type, String Skill, Integer Value) throws SQLException{

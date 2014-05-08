@@ -17,11 +17,11 @@ import javax.swing.JTextField;
  */
 public class LocalGUIGrid {
     private LocalGUICell[][] Grid;
-    private Color ColorChanger;
+    private String ColorChanger;
     
     public LocalGUIGrid(){
         Grid = new LocalGUICell[20][20];
-        ColorChanger = Color.WHITE;
+        ColorChanger = "White";
         
         for(int row=0; row<20; row++){
             for(int col=0; col<20; col++){
@@ -33,7 +33,7 @@ public class LocalGUIGrid {
         }
     }
     
-    public JTextField getCell(int row, int col){
+    public LocalGUICell getCell(int row, int col){
         return Grid[row][col];
     }
     
@@ -41,11 +41,11 @@ public class LocalGUIGrid {
         return this.Grid;
     }
     
-    public void changeColorValue(Color c){
+    public void changeColorValue(String c){
         ColorChanger = c;
     }
     
-    public Color getColorChanger(){
+    public String getColorChanger(){
         return this.ColorChanger;
     }
 }

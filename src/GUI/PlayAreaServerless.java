@@ -6,8 +6,12 @@
 
 package GUI;
 
-import java.awt.Color;
+import AssetDB.DBManager;
 import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +34,38 @@ public class PlayAreaServerless extends javax.swing.JFrame {
             }
         }
     }
+    
+    public PlayAreaServerless(ResultSet GridCells){
+        initComponents();
+        grid = new LocalGUIGrid();
+        
+        jPanelGrid.setLayout(new GridLayout(20,20));
+        
+        //init grid
+        for(int row=0; row<20;row++){
+            for(int col=0; col<20; col++){
+                jPanelGrid.add(grid.getCell(row, col));
+            }
+        }
+        
+        try {
+            //populate grid by grid cells
+            while(GridCells.next()){
+                int row = GridCells.getInt("Row");
+                int col = GridCells.getInt("Column");
+                String token = GridCells.getString("Token");
+                String color = GridCells.getString("Color");
+                
+                grid.getCell(row, col).ChangeColor(color);
+                grid.getCell(row, col)
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlayAreaServerless.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,7 +80,7 @@ public class PlayAreaServerless extends javax.swing.JFrame {
         jRadioButton5 = new javax.swing.JRadioButton();
         jPanelGrid = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -69,12 +105,17 @@ public class PlayAreaServerless extends javax.swing.JFrame {
         );
         jPanelGridLayout.setVerticalGroup(
             jPanelGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGap(0, 549, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Grid Name: ");
 
         jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         ColorGroup.add(jRadioButton1);
         jRadioButton1.setText("Green");
@@ -134,7 +175,7 @@ public class PlayAreaServerless extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
@@ -173,7 +214,7 @@ public class PlayAreaServerless extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -183,33 +224,50 @@ public class PlayAreaServerless extends javax.swing.JFrame {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
-         grid.changeColorValue(Color.GREEN);
+         grid.changeColorValue("Green");
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
-        grid.changeColorValue(Color.RED.brighter());
+        grid.changeColorValue("Red");
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
         // TODO add your handling code here:
-        grid.changeColorValue(Color.BLUE.brighter());
+        grid.changeColorValue("Blue");
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
         // TODO add your handling code here:
-        grid.changeColorValue(Color.ORANGE);
+        grid.changeColorValue("Orange");
     }//GEN-LAST:event_jRadioButton7ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
         // TODO add your handling code here:
-        grid.changeColorValue(Color.WHITE);
+        grid.changeColorValue("White");
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
         // TODO add your handling code here:
-        grid.changeColorValue(Color.BLACK);
+        grid.changeColorValue("Black");
     }//GEN-LAST:event_jRadioButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        DBManager database = new DBManager();
+        String GridName = jTextFieldName.getText();
+        
+        for(int row=0; row<20;row++){
+            for(int col=0; col<20; col++){
+                try {
+                    database.addGridCell(GridName, row, col, grid.getCell(row, col).getColor(), grid.getCell(row, col).getToken());
+                    System.out.println("Adding Cell: "+row+","+col);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PlayAreaServerless.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +316,6 @@ public class PlayAreaServerless extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 }
