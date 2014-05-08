@@ -21,6 +21,7 @@ public class ServerMessageProcessor {
     
     
     public synchronized void ProcessMessage(JsonObject message){
+        String x = message.toString();
         try {
             switch (message.getString("MessageType")) {
                 case "UpdateCellColor":
@@ -34,12 +35,20 @@ public class ServerMessageProcessor {
                 case "UpdateChat":
                     this.UpdateChatCommand(message);
                     break;
+                case "UpdateNameList":
+                    this.UpdateNameList(message);
+                    break;
+                    
             }
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
         }
     }
     
+    public void UpdateNameList(JsonObject message){
+        String name = message.getString("Name");
+        this.Client.UpdateNamelist(name);
+    }
     
     public void UpdateCellColorCommand(JsonObject message){
         int CellRow = message.getInt("CellRow");

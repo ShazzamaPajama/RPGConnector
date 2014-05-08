@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -36,6 +37,7 @@ public class PlayArea extends javax.swing.JFrame {
             //Set Up GUI
             initComponents();
             jPanelGrid.setLayout(new GridLayout(20,20));
+            jListUsers.setModel(new DefaultListModel());
             
             for (int row=0; row<20; row++){
                 for (int col=0; col<20; col++){
@@ -65,6 +67,10 @@ public class PlayArea extends javax.swing.JFrame {
         Grid.getCell(row, col).setText(token);
     }
     
+    public void addName(String Name){
+        DefaultListModel model = (DefaultListModel)jListUsers.getModel();
+        model.addElement(Name);
+    }
     
 
     /**

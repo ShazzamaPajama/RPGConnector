@@ -74,6 +74,10 @@ public class RPGConnectorClient {
         
     }
     
+    public synchronized void UpdateNamelist(String name){
+        ClientScreen.addName(name);
+    }
+    
     //Message Methods
     public void sendColorUpdate(int row, int col, String Color){
         JsonObject message = MessageBuilder.UpdateColorMessage(row, col, Color);

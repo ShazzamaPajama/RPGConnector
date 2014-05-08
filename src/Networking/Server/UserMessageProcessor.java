@@ -49,7 +49,10 @@ public class UserMessageProcessor {
     
     public void UpdateName(JsonObject message){
         try{
-            this.UserName = message.getString("Name");
+            String name = message.getString("Name");
+            this.UserName = name;
+            this.Server.addName(this.UserName);
+            this.Server.UpdateUserlist(this.UserName);
         }catch(NullPointerException ex){   
         }
     }

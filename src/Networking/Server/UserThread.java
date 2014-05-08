@@ -35,8 +35,9 @@ public class UserThread extends Thread {
         Client = client;
         ClientReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
         ClientWriter = new PrintWriter(Client.getOutputStream(), true);
-        
         Server.addClientOutput(ClientWriter);
+        
+        Server.PopulateUserList(ClientWriter);
     }
     
     
